@@ -1,0 +1,4 @@
+TODO: Save system
+
+Step 1: Save resources
+Step 2: Apply card effects from last time
