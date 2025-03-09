@@ -147,7 +147,7 @@ function update() {
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2]).toFixed(2)
     player.autoclicker.cps = 20 / player.defaultcountdowns.current
     // Visual updates
-    document.getElementById("points").textContent = parseFloat((player.points).toFixed(2))
+    document.getElementById("points").textContent = player.points.toFixed(2)
     document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
     document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
     document.getElementById("autoclickstr").textContent = player.autoclicker.strength
