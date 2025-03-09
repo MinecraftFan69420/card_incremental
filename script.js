@@ -26,8 +26,9 @@ var player = {
         2: {amount: 0, cost: 100},
         3: {amount: 0, cost: 1000}
     },
-    autoclicker: { strength: 0, cooldown: 20 }, // in ticks. 1 tick: 50 ms
-    defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 }
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // in ticks. 1 tick: 50 ms
+    defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 },
+    
 }
 
 // Switch the tab
@@ -142,12 +143,13 @@ function reset() { if (confirm("Are you sure?")) { localStorage.removeItem("play
 
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-    player.ppc.mult.totalmanual = Math.round(Math.round(player.ppc.mult.pre6total) * player.ppc.mult[3.1])
-    player.ppc.mult.totalauto = Math.round(Math.round(player.ppc.mult.pre6total) * player.ppc.mult[3.2])
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1]).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2]).toFixed(2)
+    player.autoclicker.cps = 20 / player.defaultcountdowns.current
     // Visual updates
-    document.getElementById("points").textContent = player.points
-    document.getElementById("ppc").textContent = player.ppc.base * player.ppc.mult.totalmanual
-    document.getElementById("pps").textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns.current)
+    document.getElementById("points").textContent = (player.points).toFixed(2)
+    document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
+    document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
     document.getElementById("autoclickstr").textContent = player.autoclicker.strength
     document.getElementById("buyable1cost").textContent = player.buyables[1].cost
     if (player.autoclicker.strength >= 5) document.getElementById("buyable2cost").textContent = "MAX"
@@ -168,7 +170,7 @@ function update() {
     document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
     document.getElementById('ppcmultpre6total').textContent = Math.round(player.ppc.mult.pre6total)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
-    document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns[player.autoclicker.strength])
+    document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns.current)
     document.getElementById('ppcautocps').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
     document.getElementById('ppcautocpsstat').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
     // autoclicker
