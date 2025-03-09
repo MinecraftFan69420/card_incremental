@@ -85,8 +85,8 @@ function swaptab(tab) {
     }
 }
 
-function getpoints() {player.points += (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)}
-function autoclick() {player.points += (player.ppc.base * player.ppc.mult.totalauto).toFixed(2)}
+function getpoints() {player.points += (player.ppc.base * player.ppc.mult.totalmanual)}
+function autoclick() {player.points += (player.ppc.base * player.ppc.mult.totalauto)}
 
 function cardeffect(card) {
     switch (card) {
