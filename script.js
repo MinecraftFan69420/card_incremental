@@ -31,6 +31,12 @@ var player = {
     
 }
 
+var shorthands = {
+    tabs: {
+        main: document.getElementById("main")
+    }
+}
+
 // Switch the tab
 
 function swaptab(tab) {
@@ -180,7 +186,7 @@ function update() {
         player.defaultcountdowns.current = player.defaultcountdowns[player.autoclicker.strength]
     }
     // Scaling
-    if (! player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
+    if (! player.cards[4].has) {player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount))}
     else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
     player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
