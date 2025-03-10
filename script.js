@@ -1,99 +1,95 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-    var player = {
-        points: 0,
-        ppc: {
-            base: 1,
-            mult: {
-                1: 1,
-                2: 1,
-                pre6total: 1,
-                3.1: 1,
-                3.2: 1,
-                totalmanual: 1,
-                totalauto: 1,
-            }
-        },
-        cards: {
-            1: { cost: 20, has: false },
-            2: { cost: 200, has: false },
-            3: { cost: 500, has: false },
-            4: { cost: 2000, has: false },
-            5: { cost: 2000, has: false },
-            6.1: { cost: 5000, has: false },
-            6.2: { cost: 5000, has: false },
-        },
-        buyables: {
-            1: { amount: 0, cost: 20 },
-            2: { amount: 0, cost: 100 },
-            3: { amount: 0, cost: 1000 }
-        },
-        autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // in ticks. 1 tick: 50 ms
-        defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 },
-    
-    }
-
-    var shorthands = {
-        tabs: {
-            main: document.getElementById('main')
+var player = {
+    points: 0,
+    ppc: {
+        base: 1,
+        mult: {
+            1: 1,
+            2: 1,
+            pre6total: 1,
+            3.1: 1,
+            3.2: 1,
+            totalmanual: 1,
+            totalauto: 1,
         }
+    },
+    cards: {
+        1: { cost: 20, has: false },
+        2: { cost: 200, has: false },
+        3: { cost: 500, has: false },
+        4: { cost: 2000, has: false },
+        5: { cost: 2000, has: false },
+        6.1: { cost: 5000, has: false },
+        6.2: { cost: 5000, has: false },
+    },
+    buyables: {
+        1: { amount: 0, cost: 20 },
+        2: { amount: 0, cost: 100 },
+        3: { amount: 0, cost: 1000 }
+    },
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // in ticks. 1 tick: 50 ms
+    defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 },
+
+}
+
+var shorthands = {
+    tabs: {
+        main: document.getElementById('main')
     }
+}
 
-    // Switch the tab
-
-    function swaptab(tab) {
-        switch (tab) {
-            case 1: // Go to the main tab
-                shorthands.tabs.main.style.display = "block"
-                document.getElementById("cards").style.display = "none"
-                document.getElementById("buyables").style.display = "none"
-                document.getElementById("stats").style.display = "none"
-                document.getElementById("story").style.display = "none"
-                document.getElementById("save").style.display = "none"
-                break;
-            case 2: // Go to the cards tab
-                shorthands.tabs.main.style.display = "none"
-                document.getElementById("cards").style.display = "block"
-                document.getElementById("buyables").style.display = "none"
-                document.getElementById("stats").style.display = "none"
-                document.getElementById("story").style.display = "none"
-                document.getElementById("save").style.display = "none"
-                break;
-            case 3: // Go to the buyables tab
-                shorthands.tabs.main.style.display = "none"
-                document.getElementById("cards").style.display = "none"
-                document.getElementById("buyables").style.display = "block"
-                document.getElementById("stats").style.display = "none"
-                document.getElementById("story").style.display = "none"
-                document.getElementById("save").style.display = "none"
-                break;
-            case 4: // Go to the buyables tab
-                shorthands.tabs.main.style.display = "none"
-                document.getElementById("cards").style.display = "none"
-                document.getElementById("buyables").style.display = "none"
-                document.getElementById("stats").style.display = "block"
-                document.getElementById("story").style.display = "none"
-                document.getElementById("save").style.display = "none"
-                break;
-            case 5:
-                shorthands.tabs.main.style.display = "none"
-                document.getElementById("cards").style.display = "none"
-                document.getElementById("buyables").style.display = "none"
-                document.getElementById("stats").style.display = "none"
-                document.getElementById("story").style.display = "block"
-                document.getElementById("save").style.display = "none"
-                break
-            case 6:
-                shorthands.tabs.main.style.display = "none"
-                document.getElementById("cards").style.display = "none"
-                document.getElementById("buyables").style.display = "none"
-                document.getElementById("stats").style.display = "none"
-                document.getElementById("story").style.display = "none"
-                document.getElementById("save").style.display = "block"
-        }
+function swaptab(tab) {
+    switch (tab) {
+        case 1: // Go to the main tab
+            shorthands.tabs.main.style.display = "block"
+            document.getElementById("cards").style.display = "none"
+            document.getElementById("buyables").style.display = "none"
+            document.getElementById("stats").style.display = "none"
+            document.getElementById("story").style.display = "none"
+            document.getElementById("save").style.display = "none"
+            break;
+        case 2: // Go to the cards tab
+            shorthands.tabs.main.style.display = "none"
+            document.getElementById("cards").style.display = "block"
+            document.getElementById("buyables").style.display = "none"
+            document.getElementById("stats").style.display = "none"
+            document.getElementById("story").style.display = "none"
+            document.getElementById("save").style.display = "none"
+            break;
+        case 3: // Go to the buyables tab
+            shorthands.tabs.main.style.display = "none"
+            document.getElementById("cards").style.display = "none"
+            document.getElementById("buyables").style.display = "block"
+            document.getElementById("stats").style.display = "none"
+            document.getElementById("story").style.display = "none"
+            document.getElementById("save").style.display = "none"
+            break;
+        case 4: // Go to the buyables tab
+            shorthands.tabs.main.style.display = "none"
+            document.getElementById("cards").style.display = "none"
+            document.getElementById("buyables").style.display = "none"
+            document.getElementById("stats").style.display = "block"
+            document.getElementById("story").style.display = "none"
+            document.getElementById("save").style.display = "none"
+            break;
+        case 5:
+            shorthands.tabs.main.style.display = "none"
+            document.getElementById("cards").style.display = "none"
+            document.getElementById("buyables").style.display = "none"
+            document.getElementById("stats").style.display = "none"
+            document.getElementById("story").style.display = "block"
+            document.getElementById("save").style.display = "none"
+            break
+        case 6:
+            shorthands.tabs.main.style.display = "none"
+            document.getElementById("cards").style.display = "none"
+            document.getElementById("buyables").style.display = "none"
+            document.getElementById("stats").style.display = "none"
+            document.getElementById("story").style.display = "none"
+            document.getElementById("save").style.display = "block"
     }
+}
 
-    function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) }
+function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) }
     function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) }
 
     function cardeffect(card) {
@@ -195,4 +191,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     setInterval(update, 50) // A tick is 50 ms
-})
