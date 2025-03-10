@@ -42,7 +42,7 @@ var shorthands = {
 function swaptab(tab) {
     switch (tab) {
         case 1: // Go to the main tab
-            main.style.display = "block"
+            shorthands.tabs.main.style.display = "block"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
@@ -50,7 +50,7 @@ function swaptab(tab) {
             document.getElementById("save").style.display = "none"
             break;
         case 2: // Go to the cards tab
-            main.style.display = "none"
+            shorthands.tabs.main.style.display = "none"
             document.getElementById("cards").style.display = "block"
             document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
@@ -58,7 +58,7 @@ function swaptab(tab) {
             document.getElementById("save").style.display = "none"
             break;
         case 3: // Go to the buyables tab
-            main.style.display = "none"
+            shorthands.tabs.main.style.display = "none"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "block"
             document.getElementById("stats").style.display = "none"
@@ -66,7 +66,7 @@ function swaptab(tab) {
             document.getElementById("save").style.display = "none"
             break;
         case 4: // Go to the buyables tab
-            main.style.display = "none"
+            shorthands.tabs.main.style.display = "none"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "block"
@@ -74,7 +74,7 @@ function swaptab(tab) {
             document.getElementById("save").style.display = "none"
             break;
         case 5:
-            main.style.display = "none"
+            shorthands.tabs.main.style.display = "none"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
@@ -82,7 +82,7 @@ function swaptab(tab) {
             document.getElementById("save").style.display = "none"
             break
         case 6:
-            main.style.display = "none"
+            shorthands.tabs.main.style.display = "none"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
