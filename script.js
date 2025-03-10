@@ -144,6 +144,7 @@ function getpoints() { player.points += (player.ppc.base * player.ppc.mult.total
         player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1]).toFixed(2)
         player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2]).toFixed(2)
         player.autoclicker.cps = 20 / player.defaultcountdowns.current
+        player.defaultcountdowns.current = player.defaultcountdowns[player.autoclicker.strength]
         // Visual updates
         document.getElementById("points").textContent = player.points.toFixed(2)
         document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
@@ -174,8 +175,8 @@ function getpoints() { player.points += (player.ppc.base * player.ppc.mult.total
         // autoclicker
         player.autoclicker.cooldown--
         if (player.autoclicker.cooldown <= 0 && player.autoclicker.strength != 0) {
-            autoclick(); player.autoclicker.cooldown = player.defaultcountdowns[player.autoclicker.strength]
-            player.defaultcountdowns.current = player.defaultcountdowns[player.autoclicker.strength]
+            autoclick(); player.autoclicker.cooldown = player.defaultcountdowns.current
+            
         }
         // Scaling
         if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
