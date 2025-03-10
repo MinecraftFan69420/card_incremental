@@ -154,7 +154,7 @@ function getpoints() { player.points += (player.ppc.base * player.ppc.mult.total
         else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
         document.getElementById("buyable3cost").textContent = player.buyables[3].cost
         // Stats
-        document.getElementById("buyable3eff").textContent = player.ppc.mult[2]
+        document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
         document.getElementById("buyable1eff").textContent = player.buyables[1].amount
         document.getElementById("ppcbasetotal").textContent = player.ppc.base
         document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
