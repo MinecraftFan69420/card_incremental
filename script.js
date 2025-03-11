@@ -1,4 +1,4 @@
-var player = {
+var player = { // The player object.
     points: 0,
     ppc: {
         base: 1,
@@ -30,6 +30,8 @@ var player = {
     defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 },
 
 }
+
+// Swap tab!
 
 function swaptab(tab) {
     switch (tab) {
@@ -86,6 +88,8 @@ function swaptab(tab) {
 function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) }
 function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) }
 
+// Apply a card's effect
+
 function cardeffect(card) {
     switch (card) {
         case 1:
@@ -107,6 +111,8 @@ function cardeffect(card) {
     }
 }
 
+// Buy a card
+
 function buycard(card) {
     if (player.points >= player.cards[card].cost) {
         player.points -= player.cards[card].cost
@@ -115,6 +121,8 @@ function buycard(card) {
     }
     cardeffect(card)
 }
+
+// Buy a buyable.
 
 function buybuyable(buyable) {
     if (player.points >= player.buyables[buyable].cost) {
@@ -128,12 +136,16 @@ function buybuyable(buyable) {
     }
 }
 
+// Apply save boosts based on what cards you have
+
 function applysaveboosts() {
     if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
     for (i = 1; i <= 5; i++) {
         if (player.cards[i].has) { document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i) }
     }
 }
+
+// Save menu
 
 function save() { localStorage.setItem("player", JSON.stringify(player)) }
 function load() { player = JSON.parse(localStorage.getItem("player")); applysaveboosts() }
