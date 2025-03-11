@@ -84,105 +84,105 @@ function swaptab(tab) {
 }
 
 function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) }
-    function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) }
+function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) }
 
-    function cardeffect(card) {
-        switch (card) {
-            case 1:
-                document.getElementById("buyable1").style.display = "block" // Show buyable 1
-                document.getElementById('notunlocked').style.display = 'none'; break
-            case 2:
-                document.getElementById("buyable2").style.display = 'block' // show buyable 2
-                document.getElementById("autoclickers").style.display = 'block'; break
-            case 3: player.ppc.mult[1] = 2; break // Double ppc
-            case 5: document.getElementById("buyable3").style.display = 'block'; break
-            case 6.1:
-                player.ppc.mult[3.1] = 3
-                document.getElementById("card6pairwarning").style.display = 'none'
-                document.getElementById("card6.2").style.display = 'none'; break
-            case 6.2:
-                player.ppc.mult[3.2] = 2;
-                document.getElementById("card6pairwarning").style.display = 'none'
-                document.getElementById("card6.1").style.display = 'none'; break
+function cardeffect(card) {
+    switch (card) {
+        case 1:
+            document.getElementById("buyable1").style.display = "block" // Show buyable 1
+            document.getElementById('notunlocked').style.display = 'none'; break
+        case 2:
+            document.getElementById("buyable2").style.display = 'block' // show buyable 2
+            document.getElementById("autoclickers").style.display = 'block'; break
+        case 3: player.ppc.mult[1] = 2; break // Double ppc
+        case 5: document.getElementById("buyable3").style.display = 'block'; break
+        case 6.1:
+            player.ppc.mult[3.1] = 3
+            document.getElementById("card6pairwarning").style.display = 'none'
+            document.getElementById("card6.2").style.display = 'none'; break
+        case 6.2:
+            player.ppc.mult[3.2] = 2;
+            document.getElementById("card6pairwarning").style.display = 'none'
+            document.getElementById("card6.1").style.display = 'none'; break
+    }
+}
+
+function buycard(card) {
+    if (player.points >= player.cards[card].cost) {
+        player.points -= player.cards[card].cost
+        player.cards[card].has = true
+        document.getElementById(`card${card}`).style.display = "none"
+    }
+    cardeffect(card)
+}
+
+function buybuyable(buyable) {
+    if (player.points >= player.buyables[buyable].cost) {
+        player.points -= player.buyables[buyable].cost
+        player.buyables[buyable].amount++
+        switch (buyable) {
+            case 1: player.ppc.base = 1 + player.buyables[1].amount; break
+            case 2: if (player.autoclicker.strength <= 5) { player.autoclicker.strength++ }; break
+            case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
         }
     }
+}
 
-    function buycard(card) {
-        if (player.points >= player.cards[card].cost) {
-            player.points -= player.cards[card].cost
-            player.cards[card].has = true
-            document.getElementById(`card${card}`).style.display = "none"
-        }
-        cardeffect(card)
+function applysaveboosts() {
+    if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
+    for (i = 1; i <= 5; i++) {
+        if (player.cards[i].has) { document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i) }
     }
+}
 
-    function buybuyable(buyable) {
-        if (player.points >= player.buyables[buyable].cost) {
-            player.points -= player.buyables[buyable].cost
-            player.buyables[buyable].amount++
-            switch (buyable) {
-                case 1: player.ppc.base = 1 + player.buyables[1].amount; break
-                case 2: if (player.autoclicker.strength <= 5) { player.autoclicker.strength++ }; break
-                case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
-            }
-        }
+function save() { localStorage.setItem("player", JSON.stringify(player)) }
+function load() { player = JSON.parse(localStorage.getItem("player")); applysaveboosts() }
+function reset() { if (confirm("Are you sure?")) { localStorage.removeItem("player"); load() } }
+
+function update() {
+    player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1]).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2]).toFixed(2)
+    player.autoclicker.cps = 20 / player.defaultcountdowns.current
+    player.defaultcountdowns.current = player.defaultcountdowns[player.autoclicker.strength]
+    // Visual updates
+    document.getElementById("points").textContent = player.points.toFixed(2)
+    document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
+    document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
+    document.getElementById("autoclickstr").textContent = player.autoclicker.strength
+    document.getElementById("buyable1cost").textContent = player.buyables[1].cost
+    if (player.autoclicker.strength >= 5) document.getElementById("buyable2cost").textContent = "MAX"
+    else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
+    document.getElementById("buyable3cost").textContent = player.buyables[3].cost
+    // Stats
+    document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
+    document.getElementById("buyable1eff").textContent = player.buyables[1].amount
+    document.getElementById("ppcbasetotal").textContent = player.ppc.base
+    document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
+    document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
+    document.getElementById("ppcbase").textContent = player.ppc.base
+    document.getElementById('ppcautobase').textContent = player.ppc.base
+    document.getElementById('ppcmultstat').textContent = player.ppc.mult.totalmanual
+    document.getElementById('ppcmultautostat').textContent = player.ppc.mult.totalauto
+    document.getElementById('ppcmult').textContent = player.ppc.mult[1]
+    document.getElementById('ppcmult3a').textContent = player.ppc.mult[3.1]
+    document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
+    document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
+    document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
+    document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns.current)
+    document.getElementById('ppcautocps').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
+    document.getElementById('ppcautocpsstat').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
+    // autoclicker
+    player.autoclicker.cooldown--
+    if (player.autoclicker.cooldown <= 0 && player.autoclicker.strength != 0) {
+        autoclick(); player.autoclicker.cooldown = player.defaultcountdowns.current
+        
     }
+    // Scaling
+    if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
+    else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
+    player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
+    player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
+}
 
-    function applysaveboosts() {
-        if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
-        for (i = 1; i <= 5; i++) {
-            if (player.cards[i].has) { document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i) }
-        }
-    }
-
-    function save() { localStorage.setItem("player", JSON.stringify(player)) }
-    function load() { player = JSON.parse(localStorage.getItem("player")); applysaveboosts() }
-    function reset() { if (confirm("Are you sure?")) { localStorage.removeItem("player"); load() } }
-
-    function update() {
-        player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-        player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1]).toFixed(2)
-        player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2]).toFixed(2)
-        player.autoclicker.cps = 20 / player.defaultcountdowns.current
-        player.defaultcountdowns.current = player.defaultcountdowns[player.autoclicker.strength]
-        // Visual updates
-        document.getElementById("points").textContent = player.points.toFixed(2)
-        document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
-        document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
-        document.getElementById("autoclickstr").textContent = player.autoclicker.strength
-        document.getElementById("buyable1cost").textContent = player.buyables[1].cost
-        if (player.autoclicker.strength >= 5) document.getElementById("buyable2cost").textContent = "MAX"
-        else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
-        document.getElementById("buyable3cost").textContent = player.buyables[3].cost
-        // Stats
-        document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
-        document.getElementById("buyable1eff").textContent = player.buyables[1].amount
-        document.getElementById("ppcbasetotal").textContent = player.ppc.base
-        document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
-        document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
-        document.getElementById("ppcbase").textContent = player.ppc.base
-        document.getElementById('ppcautobase').textContent = player.ppc.base
-        document.getElementById('ppcmultstat').textContent = player.ppc.mult.totalmanual
-        document.getElementById('ppcmultautostat').textContent = player.ppc.mult.totalauto
-        document.getElementById('ppcmult').textContent = player.ppc.mult[1]
-        document.getElementById('ppcmult3a').textContent = player.ppc.mult[3.1]
-        document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
-        document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
-        document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
-        document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns.current)
-        document.getElementById('ppcautocps').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
-        document.getElementById('ppcautocpsstat').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
-        // autoclicker
-        player.autoclicker.cooldown--
-        if (player.autoclicker.cooldown <= 0 && player.autoclicker.strength != 0) {
-            autoclick(); player.autoclicker.cooldown = player.defaultcountdowns.current
-            
-        }
-        // Scaling
-        if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
-        else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
-        player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
-        player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
-    }
-
-    setInterval(update, 50) // A tick is 50 ms
+setInterval(update, 50) // A tick is 50 ms
