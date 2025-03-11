@@ -28,7 +28,6 @@ var player = { // The player object.
     },
     autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // in ticks. 1 tick: 50 ms
     defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 },
-
 }
 
 // Swap tab!
