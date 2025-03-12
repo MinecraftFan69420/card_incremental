@@ -2,17 +2,17 @@ var player = { // The player object.
     points: 0,
     ppc: {
         base: 1,
-        mult: {
+        mult: { // A list of multipliers to the point gain.
             1: 1,
             2: 1,
-            pre6total: 1,
+            pre6total: 1, // The total of all multiplies before card 6
             3.1: 1,
             3.2: 1,
-            totalmanual: 1,
-            totalauto: 1,
+            totalmanual: 1, // Total of manual bonuses
+            totalauto: 1, // Total of autoclick bonuses
         }
     },
-    cards: {
+    cards: { // Costs of cards & if the player has them.
         1: { cost: 20, has: false },
         2: { cost: 200, has: false },
         3: { cost: 500, has: false },
@@ -21,18 +21,17 @@ var player = { // The player object.
         6.1: { cost: 5000, has: false },
         6.2: { cost: 5000, has: false },
     },
-    buyables: {
+    buyables: { // Cost of buyables & how many the player has.
         1: { amount: 0, cost: 20 },
         2: { amount: 0, cost: 100 },
         3: { amount: 0, cost: 1000 }
     },
-    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // in ticks. 1 tick: 50 ms
-    defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 },
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 197.
+    defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 }
+    // Default autoclicker countdowns
 }
 
-// Swap tab!
-
-function swaptab(tab) {
+function swaptab(tab) { // Switch tabs!
     switch (tab) {
         case 1: // Go to the main tab
             document.getElementById("main").style.display = "block"
@@ -66,7 +65,7 @@ function swaptab(tab) {
             document.getElementById("story").style.display = "none"
             document.getElementById("save").style.display = "none"
             break;
-        case 5:
+        case 5: // Go to the story tab
             document.getElementById("main").style.display = "none"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "none"
@@ -74,7 +73,7 @@ function swaptab(tab) {
             document.getElementById("story").style.display = "block"
             document.getElementById("save").style.display = "none"
             break
-        case 6:
+        case 6: // Go to the save tab
             document.getElementById("main").style.display = "none"
             document.getElementById("cards").style.display = "none"
             document.getElementById("buyables").style.display = "none"
@@ -87,9 +86,7 @@ function swaptab(tab) {
 function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) }
 function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) }
 
-// Apply a card's effect
-
-function cardeffect(card) {
+function cardeffect(card) { // Apply a card's effect
     switch (card) {
         case 1:
             document.getElementById("buyable1").style.display = "block" // Show buyable 1
@@ -111,7 +108,6 @@ function cardeffect(card) {
 }
 
 // Buy a card
-
 function buycard(card) {
     if (player.points >= player.cards[card].cost) {
         player.points -= player.cards[card].cost
@@ -122,7 +118,6 @@ function buycard(card) {
 }
 
 // Buy a buyable.
-
 function buybuyable(buyable) {
     if (player.points >= player.buyables[buyable].cost) {
         player.points -= player.buyables[buyable].cost
@@ -136,16 +131,21 @@ function buybuyable(buyable) {
 }
 
 // Apply save boosts based on what cards you have
-
 function applysaveboosts() {
     if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
-    for (i = 1; i <= 5; i++) {
-        if (player.cards[i].has) { document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i) }
+    for (i = 1; i <= 5; i++) { // Hide all cards and apply card effects
+        if (player.cards[i].has) {
+            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)
+        }
+    }
+    for (i = 6.1; i <= 6.2; i += 0.1) {
+        if (player.cards[i].has) {
+            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)
+        }
     }
 }
 
 // Save menu
-
 function save() { localStorage.setItem("player", JSON.stringify(player)) }
 function load() { player = JSON.parse(localStorage.getItem("player")); applysaveboosts() }
 function reset() { if (confirm("Are you sure?")) { localStorage.removeItem("player"); load() } }
@@ -181,13 +181,12 @@ function update() {
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns.current)
-    document.getElementById('ppcautocps').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
-    document.getElementById('ppcautocpsstat').textContent = 20 / (player.defaultcountdowns[player.autoclicker.strength])
+    document.getElementById('ppcautocps').textContent = player.autoclicker.cps
+    document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
     // autoclicker
     player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0 && player.autoclicker.strength != 0) {
         autoclick(); player.autoclicker.cooldown = player.defaultcountdowns.current
-        
     }
     // Scaling
     if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
@@ -195,5 +194,4 @@ function update() {
     player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
 }
-
 setInterval(update, 50) // A tick is 50 ms
