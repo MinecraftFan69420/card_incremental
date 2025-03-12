@@ -26,7 +26,7 @@ var player = { // The player object.
         2: { amount: 0, cost: 100 },
         3: { amount: 0, cost: 1000 }
     },
-    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 194.
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 191.
     defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 }
     // Default autoclicker countdowns
 }
@@ -135,11 +135,8 @@ function applysaveboosts() { // Apply save boosts based on what cards you have
             document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)
         }
     }
-    for (i = 6.1; i <= 6.2; i += 0.1) {
-        if (player.cards[i].has) {
-            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)
-        }
-    }
+    if (player.cards[6.1].has) document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)
+    if (player.cards[6.2].has) document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)
 }
 
 // Save menu
@@ -177,7 +174,7 @@ function update() {
     document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
-    document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * (20 / player.defaultcountdowns.current)
+    document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
     // autoclicker
