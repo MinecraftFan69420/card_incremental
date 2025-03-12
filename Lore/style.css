@@ -2,4 +2,5 @@ p.narrator {color: #aaa}
 p.player {color: black}
 p.playerfriend {color:#444}
 p.boss {color: gray}
-p.shopkeeper {color: brown}
+p.shopkeeper {color: #d2691e}
+p.shopkeeperfriend {color: #a52a2a}
