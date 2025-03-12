@@ -27,7 +27,7 @@ var player = { // The player object.
         3: { amount: 0, cost: 1000 }
     },
     autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 188.
-    defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 }
+    defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 }
     // Default autoclicker countdowns
 }
 
@@ -145,8 +145,8 @@ function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
     player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1]).toFixed(2)
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2]).toFixed(2)
-    player.autoclicker.cps = 20 / player.defaultcountdowns.current
-    player.defaultcountdowns.current = player.defaultcountdowns[player.autoclicker.strength]
+    player.autoclicker.cps = 20 / player.defaultcooldowns.current
+    player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
     document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
@@ -177,7 +177,7 @@ function update() {
     // autoclicker
     player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0 && player.autoclicker.strength != 0) {
-        autoclick(); player.autoclicker.cooldown = player.defaultcountdowns.current
+        autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current
     }
     // Scaling
     if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
