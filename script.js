@@ -26,7 +26,7 @@ var player = { // The player object.
         2: { amount: 0, cost: 100 },
         3: { amount: 0, cost: 1000 }
     },
-    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 188.
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 187.
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 } // Default autoclicker cooldowns
 }
 
