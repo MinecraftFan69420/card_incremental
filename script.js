@@ -26,7 +26,7 @@ var player = { // The player object.
         2: { amount: 0, cost: 100 },
         3: { amount: 0, cost: 1000 }
     },
-    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 197.
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 194.
     defaultcountdowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 }
     // Default autoclicker countdowns
 }
@@ -107,8 +107,7 @@ function cardeffect(card) { // Apply a card's effect
     }
 }
 
-// Buy a card
-function buycard(card) {
+function buycard(card) { // Buy a card
     if (player.points >= player.cards[card].cost) {
         player.points -= player.cards[card].cost
         player.cards[card].has = true
@@ -117,8 +116,7 @@ function buycard(card) {
     cardeffect(card)
 }
 
-// Buy a buyable.
-function buybuyable(buyable) {
+function buybuyable(buyable) { // Buy a buyable
     if (player.points >= player.buyables[buyable].cost) {
         player.points -= player.buyables[buyable].cost
         player.buyables[buyable].amount++
@@ -130,8 +128,7 @@ function buybuyable(buyable) {
     }
 }
 
-// Apply save boosts based on what cards you have
-function applysaveboosts() {
+function applysaveboosts() { // Apply save boosts based on what cards you have
     if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
     for (i = 1; i <= 5; i++) { // Hide all cards and apply card effects
         if (player.cards[i].has) {
