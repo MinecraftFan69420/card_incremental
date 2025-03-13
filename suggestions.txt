@@ -1,6 +1,6 @@
-LIST OF SUGGESTIONS:
+LIST OF SUGGESTIONS
 
 From Regret:
-Card 7 multiplying points
-Card 8 strengthen autoclicker
-Card 9 another buy one from a pair thing
+TODO: Card 7 multiplying points
+TODO: Card 8 strengthen autoclicker
+TODO: Card 9 another buy one from a pair thing
