@@ -3,13 +3,13 @@ var player = { // The player object.
     ppc: {
         base: 1,
         mult: { // A list of multipliers to the point gain.
-            1: 1,
-            2: 1,
+            1: 1, // Multiplier #1 from card 3
+            2: 1, // Multiplier #2 from card 5 / buyable 3
             pre6total: 1, // The total of all multiplies before card 6
-            3.1: 1,
-            3.2: 1,
+            3.1: 1, // Multiplier #3A from card 6A
+            3.2: 1, // Multiplier #3B from card 6B
             totalmanual: 1, // Total of manual bonuses
-            totalauto: 1, // Total of autoclick bonuses
+            totalauto: 1, // Total of autoclicker multipliers
         }
     },
     cards: { // Costs of cards & if the player has them.
@@ -26,7 +26,7 @@ var player = { // The player object.
         2: { amount: 0, cost: 100 },
         3: { amount: 0, cost: 1000 }
     },
-    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 186.
+    autoclicker: { strength: 0, cooldown: 20, cps: 0 }, // Stats. Cooldown in ticks, refer to line 187.
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: 20 } // Default autoclicker cooldowns
 }
 
