@@ -82,11 +82,11 @@ function swaptab(tab) { // Switch tabs!
     }
 }
 
-function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) }
-function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) }
+function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) } // Manual click
+function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) } // Autoclicker press
 
 function cardeffect(card) { // Apply a card's effect
-    switch (card) {
+    switch (card) { // Which card is it?
         case 1:
             document.getElementById("buyable1").style.display = "block" // Show buyable 1
             document.getElementById('notunlocked').style.display = 'none'; break
@@ -96,11 +96,11 @@ function cardeffect(card) { // Apply a card's effect
         case 3: player.ppc.mult[1] = 2; break // Double ppc
         case 5: document.getElementById("buyable3").style.display = 'block'; break
         case 6.1:
-            player.ppc.mult[3.1] = 3
+            player.ppc.mult[3.1] = 3 // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.2").style.display = 'none'; break
         case 6.2:
-            player.ppc.mult[3.2] = 2;
+            player.ppc.mult[3.2] = 2 // Double autoclicker click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.1").style.display = 'none'; break
     }
@@ -127,8 +127,9 @@ function buybuyable(buyable) { // Buy a buyable
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
     if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
-    for (i = 1; i <= 5; i++) { // Hide all cards and apply card effects
-        if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
+    for (i = 1; i <= 7; i++) { // Hide all cards which the player has and apply card effects
+        if (i === 6) continue
+        else {if (player.cards[i].has) { document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}}
     }
     if (player.cards[6.1].has) document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)
     if (player.cards[6.2].has) document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)
