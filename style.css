@@ -1,11 +1,8 @@
 #autoclickers{display: none}
-div#cards{display: none}
-div#buyables{display: none}
-div#stats{display: none}
-div#story{display: none;}
-div#save {display: none;}
+div.tab {display: none}
+div#main {display: block}
 button.buyable{display: none}
-.filler{display: none;}
+.filler{display: none}
 
 .card {
     border-style: solid;
