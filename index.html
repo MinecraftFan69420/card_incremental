@@ -19,14 +19,25 @@
         <div id="tabnav"> <!-- Tab navigation section -->
             <button id="gomain" onclick="swaptab(1)">Main</button>
             <button id="gocards" onclick="swaptab(2)">Cards</button> 
-            <button id="gobuyables" onclick="swaptab(3)">Buyables</button>
-            <button id="gostats" onclick="swaptab(4)">Statistics</button>
-            <button id="gostory" onclick="swaptab(5)">Story</button>
-            <button id="gosave" onclick="swaptab(6)">Save</button>
+            <button id="gobuyables" onclick="swaptab(3)">Statistics</button>
+            <button id="gostats" onclick="swaptab(4)">Story</button>
+            <button id="gostory" onclick="swaptab(5)">Save</button>
         </div> <hr>
         <div id="main" class="tab"> <!-- Main tab -->
             <h1>Main</h1>
             <button id="getpoints" onclick="getpoints()">Get point(s)</button>
+            <button id="buyable1" class="buyable" onclick="buybuyable(1)">
+                #1: This is what increment means!: Add 1 to the point gain base per purchase. 
+                Cost: <span id="buyable1cost"></span> points 
+            </button>
+            <button id="buyable2" class="buyable" onclick="buybuyable(2)">
+                #2: Click for me!: Buy the autoclicker. Clicks the button for you. Subsequent upgrades speed it up.
+                Cost: <span id="buyable2cost"></span> points
+            </button>
+            <button id="buyable3" class="buyable" onclick="buybuyable(3)">
+                #3: I replican!: Multiply point gain by x1.2 every purchase.
+                Cost: <span id="buyable3cost"></span> points
+            </button>
         </div>
         <div id="cards" class="tab"> <!-- Cards tab -->
             <h1>Cards</h1>
@@ -73,20 +84,7 @@
             </div>
         </div>
         <div id="buyables" class="tab"> <!-- Buyables tab -->
-            <h1>Buyables</h1>
-            <p id="notunlocked">You haven't unlocked this feature yet!</p>
-            <button id="buyable1" class="buyable" onclick="buybuyable(1)">
-                #1: This is what increment means!: Add 1 to the point gain base per purchase. 
-                Cost: <span id="buyable1cost"></span> points 
-            </button>
-            <button id="buyable2" class="buyable" onclick="buybuyable(2)">
-                #2: Click for me!: Buy the autoclicker. Clicks the button for you. Subsequent upgrades speed it up.
-                Cost: <span id="buyable2cost"></span> points
-            </button>
-            <button id="buyable3" class="buyable" onclick="buybuyable(3)">
-                #3: I replican!: Multiply point gain by x1.2 every purchase.
-                Cost: <span id="buyable3cost"></span> points
-            </button>
+            
         </div>
         <div id="stats" class="tab"> <!-- Stats tab -->
             <h1>Statistics</h1>

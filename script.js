@@ -73,47 +73,30 @@ function swaptab(tab) { // Switch tabs!
         case 1: // Go to the main tab
             document.getElementById("main").style.display = "block"
             document.getElementById("cards").style.display = "none"
-            document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
             document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none"
-            break;
+            document.getElementById("save").style.display = "none"; break;
         case 2: // Go to the cards tab
             document.getElementById("main").style.display = "none"
             document.getElementById("cards").style.display = "block"
-            document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
             document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none"
-            break;
-        case 3: // Go to the buyables tab
+            document.getElementById("save").style.display = "none"; break;
+        case 3: // Go to the stats tab
             document.getElementById("main").style.display = "none"
             document.getElementById("cards").style.display = "none"
-            document.getElementById("buyables").style.display = "block"
-            document.getElementById("stats").style.display = "none"
-            document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none"
-            break;
-        case 4: // Go to the buyables tab
-            document.getElementById("main").style.display = "none"
-            document.getElementById("cards").style.display = "none"
-            document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "block"
             document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none"
-            break;
-        case 5: // Go to the story tab
+            document.getElementById("save").style.display = "none";  break;
+        case 4: // Go to the story tab
             document.getElementById("main").style.display = "none"
             document.getElementById("cards").style.display = "none"
-            document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
             document.getElementById("story").style.display = "block"
-            document.getElementById("save").style.display = "none"
-            break
-        case 6: // Go to the save tab
+            document.getElementById("save").style.display = "none"; break
+        case 5: // Go to the save tab
             document.getElementById("main").style.display = "none"
             document.getElementById("cards").style.display = "none"
-            document.getElementById("buyables").style.display = "none"
             document.getElementById("stats").style.display = "none"
             document.getElementById("story").style.display = "none"
             document.getElementById("save").style.display = "block"
@@ -125,9 +108,7 @@ function autoclick() { player.points += (player.ppc.base * player.ppc.mult.total
 
 function cardeffect(card) { // Apply a card's effect
     switch (card) { // Which card is it?
-        case 1:
-            document.getElementById("buyable1").style.display = "block" // Show buyable 1
-            document.getElementById('notunlocked').style.display = 'none'; break
+        case 1: document.getElementById("buyable1").style.display = "block"; break // Show buyable 1
         case 2:
             document.getElementById("buyable2").style.display = 'block' // show buyable 2
             document.getElementById("autoclickers").style.display = 'block'; break
@@ -159,7 +140,7 @@ function buybuyable(buyable) { // Buy a buyable
         switch (buyable) {
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
-                if (player.autoclicker.strength <= 5) { player.autoclicker.strength++ };
+                if (player.autoclicker.strength < 5) { player.autoclicker.strength++ };
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
             case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
         }
