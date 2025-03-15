@@ -5,7 +5,6 @@ div#stats{display: none}
 div#story{display: none;}
 div#save {display: none;}
 button.buyable{display: none}
-#notunlocked{display: block;}
 .filler{display: none;}
 
 .card {
