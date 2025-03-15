@@ -17,18 +17,18 @@
             <h2 id="autoclickers">The Auto-Clicker strength level: <span id="autoclickstr"></span>/5</h2>
         </div>
         <div id="tabnav"> <!-- Tab navigation section -->
-            <button id="gomain" onclick="swaptab(1)" class="tab">Main</button>
-            <button id="gocards" onclick="swaptab(2)" class="tab">Cards</button> 
-            <button id="gobuyables" onclick="swaptab(3)" class="tab">Buyables</button>
-            <button id="gostats" onclick="swaptab(4)" class="tab">Statistics</button>
-            <button id="gostory" onclick="swaptab(5)" class="tab">Story</button>
-            <button id="gosave" onclick="swaptab(6)" class="tab">Save</button>
+            <button id="gomain" onclick="swaptab(1)">Main</button>
+            <button id="gocards" onclick="swaptab(2)">Cards</button> 
+            <button id="gobuyables" onclick="swaptab(3)">Buyables</button>
+            <button id="gostats" onclick="swaptab(4)">Statistics</button>
+            <button id="gostory" onclick="swaptab(5)">Story</button>
+            <button id="gosave" onclick="swaptab(6)">Save</button>
         </div> <hr>
-        <div id="main"> <!-- Main tab -->
+        <div id="main" class="tab"> <!-- Main tab -->
             <h1>Main</h1>
             <button id="getpoints" onclick="getpoints()">Get point(s)</button>
         </div>
-        <div id="cards"> <!-- Cards tab -->
+        <div id="cards" class="tab"> <!-- Cards tab -->
             <h1>Cards</h1>
             <div id="card1" class="card" onclick="buycard(1)">
                 <h2>Humble Beginnings</h2> <p>#1</p>
@@ -72,7 +72,7 @@
                 <h3>Cost:</h3><p>10 000 points</p>
             </div>
         </div>
-        <div id="buyables"> <!-- Buyables tab -->
+        <div id="buyables" class="tab"> <!-- Buyables tab -->
             <h1>Buyables</h1>
             <p id="notunlocked">You haven't unlocked this feature yet!</p>
             <button id="buyable1" class="buyable" onclick="buybuyable(1)">
@@ -88,7 +88,7 @@
                 Cost: <span id="buyable3cost"></span> points
             </button>
         </div>
-        <div id="stats"> <!-- Stats tab -->
+        <div id="stats" class="tab"> <!-- Stats tab -->
             <h1>Statistics</h1>
             <h2> Points per click or second</h2>
                 <h3>Points per click or second base: </h3>
@@ -117,14 +117,14 @@
                 <h3>Per second: 
                 <span id="ppcautobase"></span> * <span id="ppcmultautostat"></span> * <span id="ppcautocpsstat"></span> = <ppc id="ppcautostat"></ppc> </h3>
         </div>
-        <div id="story"> <!-- Story tab -->
+        <div id="story" class="tab"> <!-- Story tab -->
             <h1>Story / Lore</h1>
             <p>Don't forget to save your progress first. Autosave does not exist!</p>
             <a href="Lore/i.html"><h2>Chapter I: First Day</h2></a>
             <a href="Lore/ii.html"><h2>Chapter II: Cards of Magic </h2></a>
             <a href="Lore/iii.html"><h2>Chapter III: The Buyable Lab</h2></a>
         </div>
-        <div id="save">
+        <div id="save" class="tab">
             <h1>Save Menu</h1>
             <button onclick="save()">Save</button>
             <button onclick="load()">Load</button>
