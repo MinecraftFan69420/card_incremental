@@ -4,9 +4,7 @@ div#buyables{display: none}
 div#stats{display: none}
 div#story{display: none;}
 div#save {display: none;}
-#buyable1{display: none}
-#buyable2{display: none;}
-#buyable3{display: none;}
+button.buyable{display: none}
 #notunlocked{display: block;}
 .filler{display: none;}
 
