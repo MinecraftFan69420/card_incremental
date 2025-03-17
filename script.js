@@ -108,20 +108,32 @@ function autoclick() { player.points += (player.ppc.base * player.ppc.mult.total
 
 function cardeffect(card) { // Apply a card's effect
     switch (card) { // Which card is it?
-        case 1: document.getElementById("buyable1").style.display = "block"; break // Show buyable 1
+        case 1:
+            document.getElementById("buyable1").style.display = "block";
+            document.getElementById("card2").style.display = "block";  break // Show buyable 1
         case 2:
             document.getElementById("buyable2").style.display = 'block' // show buyable 2
-            document.getElementById("autoclickers").style.display = 'block'; break
-        case 3: player.ppc.mult[1] = 2; break // Double ppc
-        case 5: document.getElementById("buyable3").style.display = 'block'; break
+            document.getElementById("autoclickers").style.display = 'block'
+            document.getElementById("ppsdisp").style.display = 'block'
+            document.getElementById("card3").style.display = "block"; break
+        case 3:
+            player.ppc.mult[1] = 2
+            document.getElementById("card4").style.display = "block"; break // Double ppc
+        case 4: document.getElementById("card5").style.display = "block"; break
+        case 5:
+            document.getElementById("buyable3").style.display = 'block'
+            document.getElementById("card6.1").style.display = 'block';
+            document.getElementById("card6.2").style.display; break
         case 6.1:
             player.ppc.mult[3.1] = 3 // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
-            document.getElementById("card6.2").style.display = 'none'; break
+            document.getElementById("card6.2").style.display = 'none'; 
+            document.getElementById("card7").style.display = "block"; break
         case 6.2:
             player.ppc.mult[3.2] = 2 // Double autoclicker click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
-            document.getElementById("card6.1").style.display = 'none'; break
+            document.getElementById("card6.1").style.display = 'none'
+            document.getElementById("card7").style.display = "block"; break
         case 7: player.ppc.mult[4] = 3; break // Triple the point gain
     }
 }

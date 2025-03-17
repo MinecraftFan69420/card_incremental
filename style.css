@@ -1,7 +1,13 @@
 #autoclickers{display: none}
-#ppcdisp {display: none;}
+#ppsdisp {display: none;}
 div.tab {display: none}
 div#main {display: block}
+
+div.card {display: none;}
+div#card1 {display: block;}
+
+#card6pairwarning {display: none;}
+
 button.buyable{display: none}
 .filler{display: none}
 
