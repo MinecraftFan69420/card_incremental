@@ -106,21 +106,24 @@ function swaptab(tab) { // Switch tabs!
 function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) } // Manual click
 function autoclick() { player.points += (player.ppc.base * player.ppc.mult.totalauto) } // Autoclicker press
 
-function shownextcard(card) {
-    if (card !== 6) document.getElementById(`card${Math.round(card)++}`).style.display = "block"
-}
-
 function cardeffect(card) { // Apply a card's effect
     switch (card) { // Which card is it?
-        case 1: document.getElementById("buyable1").style.display = "block"; break // Show buyable 1
+        case 1: 
+            document.getElementById("buyable1").style.display = "block"
+            document.getElementById("card2").style.display = "block"; break // Show buyable 1
         case 2:
             document.getElementById("buyable2").style.display = 'block' // show buyable 2
             document.getElementById("autoclickers").style.display = 'block'
-            document.getElementById("ppsdisp").style.display = 'block'; break
-        case 3: player.ppc.mult[1] = 2; break // Double ppc
+            document.getElementById("ppsdisp").style.display = 'block'
+            document.getElementById("card3").style.display = 'block'; break
+        case 3: 
+            player.ppc.mult[1] = 2
+            document.getElementById("card4").style.display = 'block'; break // Double ppc
+        case 4: document.getElementById("card5").style.display = 'block'
         case 5:
             document.getElementById("buyable3").style.display = 'block'
-            document.getElementById("card6.1").style.display = 'block';break
+            document.getElementById("card6.1").style.display = 'block';
+            document.getElementById("card6.2").style.display = 'block';break
         case 6.1:
             player.ppc.mult[3.1] = 3 // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
@@ -136,7 +139,7 @@ function cardeffect(card) { // Apply a card's effect
 function buycard(card) { // Buy a card
     if (player.points >= player.cards[card].cost) {
         player.points -= player.cards[card].cost; player.cards[card].has = true
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
+        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card); shownextcard(card)
     }
 }
 
@@ -158,7 +161,9 @@ function applysaveboosts() { // Apply save boosts based on what cards you have
     if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
     for (i = 1; i <= 7; i++) { // Hide all cards which the player has and apply card effects
         if (i === 6) continue
-        else if (player.cards[i].has) { document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i) }
+        else if (player.cards[i].has) { 
+            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i); shownextcard() 
+        }
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
     if (player.cards[6.2].has) {document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)}
@@ -168,8 +173,7 @@ function applysaveboosts() { // Apply save boosts based on what cards you have
 function save() { localStorage.setItem("player", JSON.stringify(player)) }
 function load() {
     if (localStorage.getItem("player") != null) {
-        player = JSON.parse(localStorage.getItem("player"));
-        applysaveboosts()
+        player = JSON.parse(localStorage.getItem("player")); applysaveboosts()
     }
 }
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
@@ -178,8 +182,7 @@ function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
     player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult[4]).toFixed(2)
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult[4]).toFixed(2)
-    if (player.autoclicker.strength === 0) { player.defaultcooldowns.current = Infinity } 
-    else player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
+    player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
