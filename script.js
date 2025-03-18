@@ -139,7 +139,7 @@ function cardeffect(card) { // Apply a card's effect
 function buycard(card) { // Buy a card
     if (player.points >= player.cards[card].cost) {
         player.points -= player.cards[card].cost; player.cards[card].has = true
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card); shownextcard(card)
+        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
     }
 }
 
@@ -158,11 +158,10 @@ function buybuyable(buyable) { // Buy a buyable
 }
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
-    if (player.cards[1].has) document.getElementById("notunlocked").style.display = 'none'
     for (i = 1; i <= 7; i++) { // Hide all cards which the player has and apply card effects
         if (i === 6) continue
         else if (player.cards[i].has) { 
-            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i); shownextcard() 
+            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)
         }
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
