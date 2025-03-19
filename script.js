@@ -29,7 +29,7 @@ player = { // The player object.
         3: { amount: 0, cost: 1000 }
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks.
-    defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns
+    defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns
 }
 
 function resetplayer() {
@@ -127,27 +127,29 @@ function cardeffect(card) { // Apply a card's effect
         case 6.1:
             player.ppc.mult[3.1] = 3 // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
-            document.getElementById("card6.2").style.display = 'none'; break
+            document.getElementById("card6.2").style.display = 'none'
+            document.getElementById("card7").style.display = 'none'; break
         case 6.2:
             player.ppc.mult[3.2] = 2 // Double autoclicker click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
-            document.getElementById("card6.1").style.display = 'none'; break
+            document.getElementById("card6.1").style.display = 'none'
+            document.getElementById("card7").style.display = 'none'; break
         case 7: player.ppc.mult[4] = 3; break // Triple the point gain
     }
 }
 
 function buycard(card) { // Buy a card
     if (player.points >= player.cards[card].cost) {
-        player.points -= player.cards[card].cost; player.cards[card].has = true
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
+        player.points -= player.cards[card].cost; player.cards[card].has = true 
+        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card) // Hide card and apply eff
     }
 }
 
 function buybuyable(buyable) { // Buy a buyable
     if (player.points >= player.buyables[buyable].cost) {
         player.points -= player.buyables[buyable].cost
-        player.buyables[buyable].amount++
-        switch (buyable) {
+        player.buyables[buyable].amount++ 
+        switch (buyable) { // Apply the buyable thing
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
                 if (player.autoclicker.strength < 5) { player.autoclicker.strength++ };
@@ -181,7 +183,8 @@ function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
     player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult[4]).toFixed(2)
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult[4]).toFixed(2)
-    player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
+    if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
+    else player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
