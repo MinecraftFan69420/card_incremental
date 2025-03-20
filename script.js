@@ -6,8 +6,7 @@ player = { // The player object.
             1: 1, // #1 from card 3
             2: 1, // #2 from card 5 / buyable 3
             pre6total: 1, // The total of all multiplies before card 6
-            3.1: 1, // #3A from card 6A
-            3.2: 1, // #3B from card 6B
+            3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
             4: 1, // #4 from card 7
             totalmanual: 1, // Total of manual bonuses
             totalauto: 1, // Total of autoclicker multipliers
@@ -147,8 +146,7 @@ function buycard(card) { // Buy a card
 
 function buybuyable(buyable) { // Buy a buyable
     if (player.points >= player.buyables[buyable].cost) {
-        player.points -= player.buyables[buyable].cost
-        player.buyables[buyable].amount++ 
+        player.points -= player.buyables[buyable].cost; player.buyables[buyable].amount++ 
         switch (buyable) { // Apply the buyable thing
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
@@ -161,10 +159,8 @@ function buybuyable(buyable) { // Buy a buyable
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
     for (i = 1; i <= 7; i++) { // Hide all cards which the player has and apply card effects
-        if (i === 6) continue
-        else if (player.cards[i].has) { 
-            document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)
-        }
+        if (i === 6) continue // Skip card 6 cuz it is a pair
+        else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
     if (player.cards[6.2].has) {document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)}
