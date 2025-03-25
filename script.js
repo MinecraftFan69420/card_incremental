@@ -67,38 +67,9 @@ function resetplayer() {
 }
 
 function swaptab(tab) { // Switch tabs!
-    switch (tab) {
-        case 1: // Go to the main tab
-            document.getElementById("main").style.display = "block"
-            document.getElementById("cards").style.display = "none"
-            document.getElementById("stats").style.display = "none"
-            document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none"; break;
-        case 2: // Go to the cards tab
-            document.getElementById("main").style.display = "none"
-            document.getElementById("cards").style.display = "block"
-            document.getElementById("stats").style.display = "none"
-            document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none"; break;
-        case 3: // Go to the stats tab
-            document.getElementById("main").style.display = "none"
-            document.getElementById("cards").style.display = "none"
-            document.getElementById("stats").style.display = "block"
-            document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "none";  break;
-        case 4: // Go to the story tab
-            document.getElementById("main").style.display = "none"
-            document.getElementById("cards").style.display = "none"
-            document.getElementById("stats").style.display = "none"
-            document.getElementById("story").style.display = "block"
-            document.getElementById("save").style.display = "none"; break
-        case 5: // Go to the save tab
-            document.getElementById("main").style.display = "none"
-            document.getElementById("cards").style.display = "none"
-            document.getElementById("stats").style.display = "none"
-            document.getElementById("story").style.display = "none"
-            document.getElementById("save").style.display = "block"
-    }
+    const tabnames = ["main", "cards", "stats", "story", "save"]
+    tabnames.forEach(t => document.getElementById(t).style.display = "none")
+    document.getElementById(tabnames[tab - 1]).style.display = "block"
 }
 
 function getpoints() { player.points += (player.ppc.base * player.ppc.mult.totalmanual) } // Manual click
