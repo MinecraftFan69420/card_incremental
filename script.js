@@ -1,38 +1,5 @@
-player = { // The player object.
-    points: 0,
-    ppc: {
-        base: 1,
-        mult: { // A list of multipliers to the point gain.
-            1: 1, // #1 from card 3
-            2: 1, // #2 from card 5 / buyable 3
-            pre6total: 1, // The total of all multiplies before card 6
-            3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
-            4: 1, // #4 from card 7
-            totalmanual: 1, // Total of manual bonuses
-            totalauto: 1, // Total of autoclicker multipliers
-        }
-    },
-    cards: { // Costs of cards & if the player has them.
-        1: { cost: 20, has: false },
-        2: { cost: 200, has: false },
-        3: { cost: 500, has: false },
-        4: { cost: 2000, has: false },
-        5: { cost: 2000, has: false },
-        6.1: { cost: 5000, has: false },
-        6.2: { cost: 5000, has: false }, 
-        7: {cost: 10_000, has: false},
-    },
-    buyables: { // Cost of buyables & how many the player has.
-        1: { amount: 0, cost: 20 },
-        2: { amount: 0, cost: 100 },
-        3: { amount: 0, cost: 1000 }
-    },
-    autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks.
-    defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns in ticks
-}
-
-function resetplayer() {
-    player = { // The player object.
+function makedefaultplayer() {
+    return {
         points: 0,
         ppc: {
             base: 1,
@@ -65,6 +32,9 @@ function resetplayer() {
         defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns in ticks
     }
 }
+
+player = makedefaultplayer()
+function resetplayer() {player = makedefaultplayer()}
 
 function swaptab(tab) { // Switch tabs!
     const tabnames = ["main", "cards", "stats", "story", "save"]
