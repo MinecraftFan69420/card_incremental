@@ -104,7 +104,7 @@ function buybuyable(buyable) { // Buy a buyable
 }
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
-    for (i = 1; i <= 7; i++) { // Hide all cards which the player has and apply card effects
+    for (i = 1; i <= 8; i++) { // Hide all cards which the player has and apply card effects
         if (i === 6) continue // Skip card 6 cuz it is a pair
         else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
     }
