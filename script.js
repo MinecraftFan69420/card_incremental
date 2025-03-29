@@ -10,6 +10,7 @@ function makedefaultplayer() {
                 3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
                 4: 1, // #4 from card 7
                 5: 1, // #5 from card 8
+                C9A: 1, // #5 from card 8
                 totalmanual: 1, // Total of manual bonuses
                 totalauto: 1, // Total of autoclicker multipliers
             }
@@ -24,13 +25,15 @@ function makedefaultplayer() {
             6.2: { cost: 5000, has: false }, 
             7: {cost: 10_000, has: false},
             8: {cost: 31_415, has: false},
+            9.1: { cost: 100_000, has: false },
+            9.2: { cost: 100_000, has: false },
         },
         buyables: { // Cost of buyables & how many the player has.
             1: { amount: 0, cost: 20 },
             2: { amount: 0, cost: 100 },
             3: { amount: 0, cost: 1000 }
         },
-        autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks.
+        autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks. (is there a way to make it so the strangth goes up once the level is past 5?)
         defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns in ticks
     }
 }
@@ -76,9 +79,16 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card6.1").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 7: 
-            player.ppc.mult[4] = 3;
+            player.ppc.mult[4] = 3
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
-        case 8: player.ppc.mult[5] = 3.14
+        case 8: 
+            player.ppc.mult[5] = 3.14
+            document.getElementById("card9.1").style.display = "block"
+            document.getElementById("card9.2").style.display = "block"; break
+        case 9.1:
+            document.getElementById("card9.2").style.display = "none"; break
+        case 9.2:
+            document.getElementById("card9.1").style.display = "none"; break
     }
 }
 
@@ -95,7 +105,7 @@ function buybuyable(buyable) { // Buy a buyable
         switch (buyable) { // Apply the buyable thing
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
-                if (player.autoclicker.strength < 5) { player.autoclicker.strength++ };
+                if (player.autoclicker.strength < 5) { player.autoclicker.strength++ }; // I think the strat is to replace the 5 with a variable
                 player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
             case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
