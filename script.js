@@ -9,6 +9,7 @@ function makedefaultplayer() {
                 pre6total: 1, // The total of all multiplies before card 6
                 3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
                 4: 1, // #4 from card 7
+                5: 1, // #5 from card 8
                 totalmanual: 1, // Total of manual bonuses
                 totalauto: 1, // Total of autoclicker multipliers
             }
@@ -22,6 +23,7 @@ function makedefaultplayer() {
             6.1: { cost: 5000, has: false },
             6.2: { cost: 5000, has: false }, 
             7: {cost: 10_000, has: false},
+            8: {cost: 31_415, has: false},
         },
         buyables: { // Cost of buyables & how many the player has.
             1: { amount: 0, cost: 20 },
@@ -58,7 +60,7 @@ function cardeffect(card) { // Apply a card's effect
         case 3: 
             player.ppc.mult[1] = 2
             document.getElementById("card4").style.display = 'block'; break // Double ppc
-        case 4: document.getElementById("card5").style.display = 'block'
+        case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
             document.getElementById("buyable3").style.display = 'block'
             document.getElementById("card6.1").style.display = 'block';
@@ -67,13 +69,16 @@ function cardeffect(card) { // Apply a card's effect
             player.ppc.mult[3.1] = 3 // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.2").style.display = 'none'
-            document.getElementById("card7").style.display = 'none'; break
+            document.getElementById("card7").style.display = 'block'; break
         case 6.2:
             player.ppc.mult[3.2] = 2 // Double autoclicker click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.1").style.display = 'none'
-            document.getElementById("card7").style.display = 'none'; break
-        case 7: player.ppc.mult[4] = 3; break // Triple the point gain
+            document.getElementById("card7").style.display = 'block'; break
+        case 7: 
+            player.ppc.mult[4] = 3;
+            document.getElementById("card8").style.display = "block"; break // Triple the point gain
+        case 8: player.ppc.mult[5] = 3.14
     }
 }
 
@@ -117,8 +122,8 @@ function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.re
 
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult[4]).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult[4]).toFixed(2)
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult[4] * player.ppc.mult[5]).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult[4] * player.ppc.mult[5]).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
@@ -145,6 +150,7 @@ function update() {
     document.getElementById('ppcmult3a').textContent = player.ppc.mult[3.1]
     document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
     document.getElementById('ppcmult4').textContent = player.ppc.mult[4]
+    document.getElementById("ppcmult5").textContent = player.ppc.mult[5]
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
