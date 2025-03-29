@@ -1,0 +1,4 @@
+BUGS:
+Autoclicker level 1 doesn't do anything (same as level 0)
+Card 7 doesn't show up when you buy 6A or 6B
+6A and 6B show up before you buy card 5
