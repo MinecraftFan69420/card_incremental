@@ -1,0 +1,2 @@
+BUGS:
+Autoclicker level 1 doesn't do anything (same as level 0)
