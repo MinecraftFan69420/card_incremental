@@ -5,3 +5,4 @@ TODO: Card 9 another buy one from a pair thing
 
 From Random:
 TODO: Charge
+TODO: Card 10 which will unlock charge
