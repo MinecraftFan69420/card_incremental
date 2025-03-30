@@ -87,10 +87,8 @@ function cardeffect(card) { // Apply a card's effect
             player.ppc.mult[5] = 3.14
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
-        case 9.1:
-            document.getElementById("card9.2").style.display = "none"; break
-        case 9.2:
-            document.getElementById("card9.1").style.display = "none"; break
+        case 9.1: document.getElementById("card9.2").style.display = "none"; break
+        case 9.2: document.getElementById("card9.1").style.display = "none"; break
     }
 }
 
@@ -143,6 +141,7 @@ function update() {
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
+    if (player.cards[9.1].has) {player.ppc.mult[6] = ( player.autoclicker.cps * player.ppc.mult[3.2]) ** 0.5}
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
