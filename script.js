@@ -10,7 +10,8 @@ function makedefaultplayer() {
                 3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
                 4: 1, // #4 from card 7
                 5: 1, // #5 from card 8
-                C9A: 1, // #5 from card 8
+                post6simpletotal: 1, //this is the total of all constant multipliers after card 6
+                C9A: 1, // Boost from card 9A
                 totalmanual: 1, // Total of manual bonuses
                 totalauto: 1, // Total of autoclicker multipliers
             }
@@ -34,7 +35,8 @@ function makedefaultplayer() {
             3: { amount: 0, cost: 1000 }
         },
         autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks. (is there a way to make it so the strangth goes up once the level is past 5?)
-        defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns in ticks
+        defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
+        buyable2power: {0: 1, 1: 1, 2: 1,3: 1, 4: 1, 5: 1, 6: 2, 7: 3}
     }
 }
 
@@ -114,12 +116,15 @@ function buybuyable(buyable) { // Buy a buyable
 }
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
-    for (i = 1; i <= 8; i++) { // Hide all cards which the player has and apply card effects
+    for (i = 1; i <= 9; i++) { // Hide all cards which the player has and apply card effects
         if (i === 6) continue // Skip card 6 cuz it is a pair
+        else if (i === 9) continue
         else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
     if (player.cards[6.2].has) {document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)}
+    if (player.cards[9.1].has) {document.getElementById('card9.1').style.display = 'none'; cardeffect(9.1)}
+    if (player.cards[9.2].has) {document.getElementById('card9.2').style.display = 'none'; cardeffect(9.2)}
 }
 
 // Save menu
@@ -133,8 +138,9 @@ function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.re
 
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult[4] * player.ppc.mult[5]).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult[4] * player.ppc.mult[5]).toFixed(2)
+    player.ppc.mult.post6simpletotal = player.ppc.mult[4]*player.ppc.mult[5]
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult.post6simpletotal).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6simpletotal).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
@@ -151,6 +157,7 @@ function update() {
     document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
+    document.getElementById("ppcpost6simpletotal").textContent = player.ppc.base
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
     document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
     document.getElementById("ppcbase").textContent = player.ppc.base
