@@ -28,9 +28,9 @@ function makedefaultplayer() {
             9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
         },
         buyables: { // Cost of buyables & how many the player has.
-            1: { amount: 0, cost: 20 },
-            2: { amount: 0, cost: 100 },
-            3: { amount: 0, cost: 1000 }
+            1: { amount: 0, cost: 20, maxpurchases: Infinity },
+            2: { amount: 0, cost: 100, maxpurchases: 5 },
+            3: { amount: 0, cost: 1000, maxpurchases: Infinity }
         },
         autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks. (is there a way to make it so the strangth goes up once the level is past 5?)
         defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
@@ -86,7 +86,9 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: document.getElementById("card9.2").style.display = "none"; break
-        case 9.2: maxbuyable2 = 7; document.getElementById("card9.1").style.display = "none"; break
+        case 9.2:
+            player.buyables[2].maxpurchases = 7;
+            document.getElementById("card9.1").style.display = "none"; break
     }
 }
 
@@ -98,12 +100,12 @@ function buycard(card) { // Buy a card
 }
 
 function buybuyable(buyable) { // Buy a buyable
-    if (player.points >= player.buyables[buyable].cost) {
+    if (player.points >= player.buyables[buyable].cost && player.buyables[buyable].amount <= player.buyables[buyable].maxpurchases) {
         player.points -= player.buyables[buyable].cost; player.buyables[buyable].amount++ 
         switch (buyable) { // Apply the buyable thing
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
-                if (player.autoclicker.strength < maxbuyable2) { player.autoclicker.strength++ }; // I think the strat is to replace the 5 with a variable
+                if (player.autoclicker.strength < maxbuyable2) { player.autoclicker.strength++ };
                 player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
             case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
@@ -113,8 +115,7 @@ function buybuyable(buyable) { // Buy a buyable
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
     for (i = 1; i <= 9; i++) { // Hide all cards which the player has and apply card effects
-        if (i === 6) continue // Skip card 6 cuz it is a pair
-        else if (i === 9) continue
+        if (i === 6 || i === 9) continue // Skip the card 6 & 9 pairs
         else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
@@ -144,10 +145,10 @@ function update() {
     else player.ppc.mult[6.1] = 1
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
-            case 6: player.ppc.mult[6.2] == 2 
-            case 7: player.ppc.mult[6.2] == 4
+            case 6: player.ppc.mult[6.2] == 2; break
+            case 7: player.ppc.mult[6.2] == 4; break
         }
-    } else {player.ppc.mult[6.2] = 1}
+    } else player.ppc.mult[6.2] = 1
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
