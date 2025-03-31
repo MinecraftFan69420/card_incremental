@@ -34,7 +34,6 @@ function makedefaultplayer() {
         },
         autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
         defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
-        buyable2power: {0: 1, 1: 1, 2: 1,3: 1, 4: 1, 5: 1, 6: 2, 7: 4}
     }
 }
 player = makedefaultplayer()
