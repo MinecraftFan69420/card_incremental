@@ -11,7 +11,8 @@ function makedefaultplayer() {
                 4: 1, // #4 from card 7
                 5: 1, // #5 from card 8
                 post6constantstotal: 1, //this is the total of all constant multipliers after card 6
-                6: 1, // #6 from card 9A
+                6.1: 1, // #6A from card 9A
+                6.2: 1, // #6B from card 9B
                 totalmanual: 1, // Total of manual bonuses
                 totalauto: 1, // Total of autoclicker multipliers
             }
@@ -22,12 +23,10 @@ function makedefaultplayer() {
             3: { cost: 500, has: false },
             4: { cost: 2000, has: false },
             5: { cost: 2000, has: false },
-            6.1: { cost: 5000, has: false },
-            6.2: { cost: 5000, has: false }, 
+            6.1: { cost: 5000, has: false }, 6.2: { cost: 5000, has: false }, 
             7: {cost: 10_000, has: false},
             8: {cost: 31_415, has: false},
-            9.1: { cost: 100_000, has: false },
-            9.2: { cost: 100_000, has: false },
+            9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
         },
         buyables: { // Cost of buyables & how many the player has.
             1: { amount: 0, cost: 20 },
@@ -88,9 +87,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: document.getElementById("card9.2").style.display = "none"; break
-        case 9.2: 
-            maxbuyable2 = 7
-            document.getElementById("card9.1").style.display = "none"; break
+        case 9.2: maxbuyable2 = 7; document.getElementById("card9.1").style.display = "none"; break
     }
 }
 
@@ -144,7 +141,14 @@ function update() {
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
     player.defaultcooldowns.power = player.buyable2power[player.autoclicker.strength]
-    if (player.cards[9.1].has) {player.ppc.mult[6] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.buyable2power) ** 0.5}
+    if (player.cards[9.1].has) {player.ppc.mult[6.1] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.buyable2power) ** 0.5}
+    else player.ppc.mult[6.1] = 1
+    if (player.autoclicker.strength > 5) {
+        switch (player.autoclicker.strength) {
+            case 6: player.ppc.mult[6.2] == 2 
+            case 7: player.ppc.mult[6.3] == 3
+        }
+    } else {player.ppc.mult[6.2] = 1}
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
@@ -171,7 +175,7 @@ function update() {
     document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
     document.getElementById('ppcmult4').textContent = player.ppc.mult[4]
     document.getElementById("ppcmult5").textContent = player.ppc.mult[5]
-    document.getElementById("ppcmult6").textContent = player.ppc.mult[6]
+    document.getElementById("ppcmult6").textContent = player.ppc.mult[6.1]
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps

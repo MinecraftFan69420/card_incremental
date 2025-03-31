@@ -1,8 +1,4 @@
 LIST OF SUGGESTIONS (DEV ONLY)
 
-From Regret:
-
-
 From Random:
-TODO: Charge
-TODO: Card 10 which will unlock charge
+TODO: Card 10 which will unlock charge which is like a prestige layer
