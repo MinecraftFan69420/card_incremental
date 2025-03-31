@@ -87,9 +87,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: document.getElementById("card9.2").style.display = "none"; break
-        case 9.2: 
-            maxbuyable2 = 7
-            document.getElementById("card9.1").style.display = "none"; break
+        case 9.2: maxbuyable2 = 7; document.getElementById("card9.1").style.display = "none"; break
     }
 }
 
