@@ -135,8 +135,8 @@ function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.re
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
     player.ppc.mult.post6constantstotal = (player.ppc.mult[4] * player.ppc.mult[5])
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult.post6constantstotal).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal * player.defaultcooldowns.power).toFixed(2)
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult.post6constantstotal * player.ppc.mult[6.1]).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal * player.ppc.mult[6.2]).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
     player.defaultcooldowns.power = player.buyable2power[player.autoclicker.strength]
@@ -145,7 +145,7 @@ function update() {
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
             case 6: player.ppc.mult[6.2] == 2 
-            case 7: player.ppc.mult[6.3] == 3
+            case 7: player.ppc.mult[6.2] == 4
         }
     } else {player.ppc.mult[6.2] = 1}
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
