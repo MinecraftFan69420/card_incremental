@@ -159,7 +159,7 @@ function update() {
     document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
-    document.getElementById("ppcmultpost6constantstotal").textContent = player.ppc.mult.post6constantstotal
+    document.getElementById("ppcmultpost6constantstotal").textContent = player.ppc.mult.post6constantstotal.toFixed(2)
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
     document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
     document.getElementById("ppcbase").textContent = player.ppc.base
