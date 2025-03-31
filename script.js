@@ -138,7 +138,7 @@ function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.re
 
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-    player.ppc.mult.post6constantstotal = player.ppc.mult[4] * player.ppc.mult[5]
+    player.ppc.mult.post6constantstotal = (player.ppc.mult[4] * player.ppc.mult[5])
     player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult.post6constantstotal).toFixed(2)
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal * player.defaultcooldowns.power).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
@@ -159,7 +159,7 @@ function update() {
     document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
-    document.getElementById("ppcpost6constantstotal").textContent = player.ppc.post6constantstotal
+    document.getElementById("ppcpost6constantstotal").textContent = player.ppc.mult.post6constantstotal
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
     document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
     document.getElementById("ppcbase").textContent = player.ppc.base
