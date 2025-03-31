@@ -36,7 +36,7 @@ function makedefaultplayer() {
         },
         autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks. (is there a way to make it so the strangth goes up once the level is past 5?)
         defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
-        buyable2power: {0: 1, 1: 1, 2: 1,3: 1, 4: 1, 5: 1, 6: 2, 7: 3}
+        buyable2power: {0: 1, 1: 1, 2: 1,3: 1, 4: 1, 5: 1, 6: 2, 7: 4}
     }
 }
 maxbuyable2 = 5
@@ -144,7 +144,7 @@ function update() {
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
     player.defaultcooldowns.power = player.buyable2power[player.autoclicker.strength]
-    if (player.cards[9.1].has) {player.ppc.mult[6] = ( player.autoclicker.cps * player.ppc.mult[3.2]) ** 0.5}
+    if (player.cards[9.1].has) {player.ppc.mult[6] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.buyable2power) ** 0.5}
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
@@ -183,7 +183,7 @@ function update() {
     // Scaling
     if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
     else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
-    player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
+    player.buyables[2].cost = Math.floor(Math.max((100 * (3 ** player.buyables[2].amount)),(0.81*(10**player.buyables[2].amount))))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
 }
 setInterval(update, 50) // A tick is 50 ms
