@@ -174,7 +174,8 @@ function update() {
     document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
     document.getElementById('ppcmult4').textContent = player.ppc.mult[4]
     document.getElementById("ppcmult5").textContent = player.ppc.mult[5]
-    document.getElementById("ppcmult6").textContent = player.ppc.mult[6.1]
+    document.getElementById("ppcmult6a").textContent = player.ppc.mult[6.1]
+    document.getElementById("ppcmult6b").textContent = player.ppc.mult[6.2]
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
