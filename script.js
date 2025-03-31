@@ -10,6 +10,8 @@ function makedefaultplayer() {
                 3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
                 4: 1, // #4 from card 7
                 5: 1, // #5 from card 8
+                post6constantstotal: 1, //this is the total of all constant multipliers after card 6
+                6: 1, // #6 from card 9A
                 totalmanual: 1, // Total of manual bonuses
                 totalauto: 1, // Total of autoclicker multipliers
             }
@@ -24,17 +26,20 @@ function makedefaultplayer() {
             6.2: { cost: 5000, has: false }, 
             7: {cost: 10_000, has: false},
             8: {cost: 31_415, has: false},
+            9.1: { cost: 100_000, has: false },
+            9.2: { cost: 100_000, has: false },
         },
         buyables: { // Cost of buyables & how many the player has.
             1: { amount: 0, cost: 20 },
             2: { amount: 0, cost: 100 },
             3: { amount: 0, cost: 1000 }
         },
-        autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks.
-        defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity } // Default autoclicker cooldowns in ticks
+        autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats. Cooldown in ticks. (is there a way to make it so the strangth goes up once the level is past 5?)
+        defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
+        buyable2power: {0: 1, 1: 1, 2: 1,3: 1, 4: 1, 5: 1, 6: 2, 7: 4}
     }
 }
-
+maxbuyable2 = 5
 player = makedefaultplayer()
 function resetplayer() {player = makedefaultplayer()}
 
@@ -76,9 +81,16 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card6.1").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 7: 
-            player.ppc.mult[4] = 3;
+            player.ppc.mult[4] = 3
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
-        case 8: player.ppc.mult[5] = 3.14
+        case 8: 
+            player.ppc.mult[5] = 3.14
+            document.getElementById("card9.1").style.display = "block"
+            document.getElementById("card9.2").style.display = "block"; break
+        case 9.1: document.getElementById("card9.2").style.display = "none"; break
+        case 9.2: 
+            maxbuyable2 = 7
+            document.getElementById("card9.1").style.display = "none"; break
     }
 }
 
@@ -95,7 +107,7 @@ function buybuyable(buyable) { // Buy a buyable
         switch (buyable) { // Apply the buyable thing
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
-                if (player.autoclicker.strength < 5) { player.autoclicker.strength++ };
+                if (player.autoclicker.strength < maxbuyable2) { player.autoclicker.strength++ }; // I think the strat is to replace the 5 with a variable
                 player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
             case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
@@ -104,12 +116,15 @@ function buybuyable(buyable) { // Buy a buyable
 }
 
 function applysaveboosts() { // Apply save boosts based on what cards you have
-    for (i = 1; i <= 8; i++) { // Hide all cards which the player has and apply card effects
+    for (i = 1; i <= 9; i++) { // Hide all cards which the player has and apply card effects
         if (i === 6) continue // Skip card 6 cuz it is a pair
+        else if (i === 9) continue
         else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
     if (player.cards[6.2].has) {document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)}
+    if (player.cards[9.1].has) {document.getElementById('card9.1').style.display = 'none'; cardeffect(9.1)}
+    if (player.cards[9.2].has) {document.getElementById('card9.2').style.display = 'none'; cardeffect(9.2)}
 }
 
 // Save menu
@@ -123,10 +138,13 @@ function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.re
 
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult[4] * player.ppc.mult[5]).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult[4] * player.ppc.mult[5]).toFixed(2)
+    player.ppc.mult.post6constantstotal = (player.ppc.mult[4] * player.ppc.mult[5])
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult.post6constantstotal).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal * player.defaultcooldowns.power).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
-    else player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
+    else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
+    player.defaultcooldowns.power = player.buyable2power[player.autoclicker.strength]
+    if (player.cards[9.1].has) {player.ppc.mult[6] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.buyable2power) ** 0.5}
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
@@ -134,13 +152,14 @@ function update() {
     document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
     document.getElementById("autoclickstr").textContent = player.autoclicker.strength
     document.getElementById("buyable1cost").textContent = player.buyables[1].cost
-    if (player.autoclicker.strength >= 5) document.getElementById("buyable2cost").textContent = "MAX"
+    if (player.autoclicker.strength >= maxbuyable2) document.getElementById("buyable2cost").textContent = "MAX"
     else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
     document.getElementById("buyable3cost").textContent = player.buyables[3].cost
     // Stats
     document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
+    document.getElementById("ppcmultpost6constantstotal").textContent = player.ppc.mult.post6constantstotal.toFixed(2)
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
     document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
     document.getElementById("ppcbase").textContent = player.ppc.base
@@ -152,6 +171,7 @@ function update() {
     document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
     document.getElementById('ppcmult4').textContent = player.ppc.mult[4]
     document.getElementById("ppcmult5").textContent = player.ppc.mult[5]
+    document.getElementById("ppcmult6").textContent = player.ppc.mult[6]
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
@@ -163,7 +183,7 @@ function update() {
     // Scaling
     if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
     else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
-    player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
+    player.buyables[2].cost = Math.floor(Math.max((100 * (3 ** player.buyables[2].amount)),(0.81*(10**player.buyables[2].amount))))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
 }
 setInterval(update, 50) // A tick is 50 ms
