@@ -27,7 +27,7 @@ function makedefaultplayer() {
             8: {cost: 31_415, has: false},
             9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
         },
-        buyables: { // Cost of buyables & how many the player has.
+        buyables: { // Cost of buyables & how many the player has, and maximum purchases. Infinity means no limit.
             1: { amount: 0, cost: 20, maxpurchases: Infinity },
             2: { amount: 0, cost: 100, maxpurchases: 5 },
             3: { amount: 0, cost: 1000, maxpurchases: Infinity }
