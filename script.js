@@ -11,8 +11,7 @@ function makedefaultplayer() {
                 4: 1, // #4 from card 7
                 5: 1, // #5 from card 8
                 post6constantstotal: 1, //this is the total of all constant multipliers after card 6
-                6.1: 1, // #6A from card 9A
-                6.2: 1, // #6B from card 9B
+                6.1: 1, 6.2: 1, // #6A from card 9A, 6B from card 9B.
                 totalmanual: 1, // Total of manual bonuses
                 totalauto: 1, // Total of autoclicker multipliers
             }
