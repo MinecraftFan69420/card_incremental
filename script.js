@@ -1,43 +1,41 @@
-function makedefaultplayer() {
-    return {
-        points: 0,
-        ppc: {
-            base: 1,
-            mult: { // A list of multipliers to the point gain.
-                1: 1, // #1 from card 3
-                2: 1, // #2 from card 5 / buyable 3
-                pre6total: 1, // The total of all multiplies before card 6
-                3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
-                4: 1, // #4 from card 7
-                5: 1, // #5 from card 8
-                post6constantstotal: 1, //this is the total of all constant multipliers after card 6
-                6.1: 1, 6.2: 1, // #6A from card 9A, 6B from card 9B.
-                totalmanual: 1, // Total of manual bonuses
-                totalauto: 1, // Total of autoclicker multipliers
-            }
-        },
-        cards: { // Costs of cards & if the player has them.
-            1: { cost: 20, has: false },
-            2: { cost: 200, has: false },
-            3: { cost: 500, has: false },
-            4: { cost: 2000, has: false },
-            5: { cost: 2000, has: false },
-            6.1: { cost: 5000, has: false }, 6.2: { cost: 5000, has: false }, 
-            7: {cost: 10_000, has: false},
-            8: {cost: 31_415, has: false},
-            9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
-        },
-        buyables: { // Cost of buyables & how many the player has, and maximum purchases. Infinity means no limit.
-            1: { amount: 0, cost: 20, maxpurchases: Infinity },
-            2: { amount: 0, cost: 100, maxpurchases: 5 },
-            3: { amount: 0, cost: 1000, maxpurchases: Infinity }
-        },
-        autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
-        defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
-    }
+const default_player = {
+    points: 0,
+    ppc: {
+        base: 1,
+        mult: { // A list of multipliers to the point gain.
+            1: 1, // #1 from card 3
+            2: 1, // #2 from card 5 / buyable 3
+            pre6total: 1, // The total of all multiplies before card 6
+            3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
+            4: 1, // #4 from card 7
+            5: 1, // #5 from card 8
+            post6constantstotal: 1, //this is the total of all constant multipliers after card 6
+            6.1: 1, 6.2: 1, // #6A from card 9A, 6B from card 9B.
+            totalmanual: 1, // Total of manual bonuses
+            totalauto: 1, // Total of autoclicker multipliers
+        }
+    },
+    cards: { // Costs of cards & if the player has them.
+        1: { cost: 20, has: false },
+        2: { cost: 200, has: false },
+        3: { cost: 500, has: false },
+        4: { cost: 2000, has: false },
+        5: { cost: 2000, has: false },
+        6.1: { cost: 5000, has: false }, 6.2: { cost: 5000, has: false }, 
+        7: {cost: 10_000, has: false},
+        8: {cost: 31_415, has: false},
+        9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
+    },
+    buyables: { // Cost of buyables & how many the player has, and maximum purchases. Infinity means no limit.
+        1: { amount: 0, cost: 20, maxpurchases: Infinity },
+        2: { amount: 0, cost: 100, maxpurchases: 5 },
+        3: { amount: 0, cost: 1000, maxpurchases: Infinity }
+    },
+    autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
+    defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
 }
-player = makedefaultplayer()
-function resetplayer() {player = makedefaultplayer()}
+player = default_player
+function resetplayer() {player = default_player}
 
 function swaptab(tab) { // Switch tabs!
     const tabnames = ["main", "cards", "stats", "story", "save"]
