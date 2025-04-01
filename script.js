@@ -190,3 +190,8 @@ function update() {
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
 }
 setInterval(update, 50) // A tick is 50 ms
+
+function aprilfools() {
+    alert("APRIL FOOLS MOTHER F*****")
+    window.open("https://youtube.com/watch?v=dQw4w9WgXcQ")    
+}
