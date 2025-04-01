@@ -153,7 +153,9 @@ function update() {
     document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
     document.getElementById("autoclickstr").textContent = player.autoclicker.strength
     document.getElementById("buyable1cost").textContent = player.buyables[1].cost
-    if (player.autoclicker.strength >= maxbuyable2) document.getElementById("buyable2cost").textContent = "MAX"
+    if (player.autoclicker.strength >= player.buyables[2].maxpurchases) {
+        document.getElementById("buyable2cost").textContent = "MAX"
+    }
     else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
     document.getElementById("buyable3cost").textContent = player.buyables[3].cost
     // Stats
