@@ -138,8 +138,8 @@ function update() {
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal * player.ppc.mult[6.2]).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
-    player.defaultcooldowns.power = player.buyable2power[player.autoclicker.strength]
-    if (player.cards[9.1].has) {player.ppc.mult[6.1] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.buyable2power) ** 0.5}
+    player.defaultcooldowns.power = player.ppc.mult[6.2]
+    if (player.cards[9.1].has) {player.ppc.mult[6.1] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.player.ppc.mult[6.2]) ** 0.5}
     else player.ppc.mult[6.1] = 1
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
