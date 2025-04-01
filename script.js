@@ -101,7 +101,7 @@ function buybuyable(buyable) { // Buy a buyable
         switch (buyable) { // Apply the buyable thing
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
-                if (player.autoclicker.strength < maxbuyable2) { player.autoclicker.strength++ };
+                if (player.autoclicker.strength < player.buyables[2].maxpurchases) player.autoclicker.strength++
                 player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
             case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
