@@ -1,3 +1,4 @@
 LIST OF BUGS (DEV ONLY)
 
-NONE!!!
+Problem with the buyables. For some reason maxpurchases of every thing except buyable 2 is null, thus
+rendering the buyables able to buy just once.
