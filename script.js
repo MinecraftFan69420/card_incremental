@@ -129,7 +129,7 @@ function load() {
             const buyable = player.buyables[buyableID]
             if (buyable.maxpurchases == null) buyable.maxpurchases = Infinity
         } // For some reason localStorage is storing the Infinity as a string so convert it back
-        if (player.autoclicker.cooldown == "Infinity") player.autoclicker.cooldown == Infinity
+        if (player.autoclicker.cooldown == "Infinity") player.autoclicker.cooldown = Infinity
         applysaveboosts()
     }
 }
