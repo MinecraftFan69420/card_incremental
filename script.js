@@ -125,7 +125,8 @@ function save() { localStorage.setItem("player", JSON.stringify(player)) }
 function load() {
     if (localStorage.getItem("player") != null) {
         player = JSON.parse(localStorage.getItem("player")); applysaveboosts()
-        for (buyable in player.buyables) {
+        for (buyableID in player.buyables) {
+            const buyable = player.buyables[buyableID]
             if (buyable.maxpurchases == null) buyable.maxpurchases = Infinity
         } // For some reason localStorage is storing the Infinity as a string so convert it back
         if (player.autoclicker.cooldown == "Infinity") player.autoclicker.cooldown == Infinity
