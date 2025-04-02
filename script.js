@@ -26,10 +26,10 @@ const default_player = {
         8: {cost: 31_415, has: false},
         9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
     },
-    buyables: { // Cost of buyables & how many the player has, and maximum purchases. Infinity means no limit.
-        1: { amount: 0, cost: 20, maxpurchases: Infinity },
+    buyables: { // Cost of buyables & how many the player has, and maximum purchases. e308 means no limit.
+        1: { amount: 0, cost: 20, maxpurchases: 1e308 },
         2: { amount: 0, cost: 100, maxpurchases: 5 },
-        3: { amount: 0, cost: 1000, maxpurchases: Infinity }
+        3: { amount: 0, cost: 1000, maxpurchases: 1e308 }
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
