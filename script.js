@@ -125,6 +125,10 @@ function save() { localStorage.setItem("player", JSON.stringify(player)) }
 function load() {
     if (localStorage.getItem("player") != null) {
         player = JSON.parse(localStorage.getItem("player")); applysaveboosts()
+        for (buyable in Object.values(player.buyables)) {
+            if (buyable.maxpurchases == "Infinity") buyable.maxpurchases = Infinity
+        } // For some reason localStorage is storing the Infinity as a string so convert it back
+        if (player.autoclicker.cooldown == "Infinity") player.autoclicker.cooldown == Infinity
     }
 }
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
