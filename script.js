@@ -3,14 +3,14 @@ const default_player = {
     ppc: {
         base: 1,
         mult: { // A list of multipliers to the point gain.
-            1: 1, // #1 from card 3
-            2: 1, // #2 from card 5 / buyable 3
+            C3: 1, // #1 from card 3
+            C5: 1, // #2 from card 5 / buyable 3
             pre6total: 1, // The total of all multiplies before card 6
-            3.1: 1, 3.2: 1, // 3A from card 6A, and 3B from card 6B.
-            4: 1, // #4 from card 7
-            5: 1, // #5 from card 8
+            C6A: 1, C6B: 1, // 3A from card 6A, and 3B from card 6B.
+            C7: 1, // #4 from card 7
+            C8: 1, // #5 from card 8
             post6constantstotal: 1, //this is the total of all constant multipliers after card 6
-            6.1: 1, 6.2: 1, // #6A from card 9A, 6B from card 9B.
+            C9A: 1, C9B: 1, // #6A from card 9A, 6B from card 9B.
             totalmanual: 1, // Total of manual bonuses
             totalauto: 1, // Total of autoclicker multipliers
         }
@@ -57,7 +57,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("ppsdisp").style.display = 'block'
             document.getElementById("card3").style.display = 'block'; break
         case 3: 
-            player.ppc.mult[1] = 2
+            player.ppc.mult.C3
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
@@ -65,20 +65,20 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card6.1").style.display = 'block';
             document.getElementById("card6.2").style.display = 'block';break
         case 6.1:
-            player.ppc.mult[3.1] = 3 // Triple manual click multiplier
+            player.ppc.mult.C6A = 3 // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.2").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 6.2:
-            player.ppc.mult[3.2] = 2 // Double autoclicker click multiplier
+            player.ppc.mult.C6B = 2 // Double autoclicker click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.1").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 7: 
-            player.ppc.mult[4] = 3
+            player.ppc.mult.C7 = 3
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
         case 8: 
-            player.ppc.mult[5] = 3.14
+            player.ppc.mult.C8 = 3.14
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: document.getElementById("card9.2").style.display = "none"; break
@@ -104,7 +104,7 @@ function buybuyable(buyable) { // Buy a buyable
                 if (player.autoclicker.strength < player.buyables[2].maxpurchases) player.autoclicker.strength++
                 player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
-            case 3: player.ppc.mult[2] = 1.2 ** player.buyables[3].amount; break
+            case 3: player.ppc.mult.C5 = 1.2 ** player.buyables[3].amount; break
         }
     }
 }
@@ -132,20 +132,20 @@ function load() {
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
 
 function update() {
-    player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult[2]
-    player.ppc.mult.post6constantstotal = (player.ppc.mult[4] * player.ppc.mult[5])
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult[3.1] * player.ppc.mult.post6constantstotal * player.ppc.mult[6.1]).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult[3.2] * player.ppc.mult.post6constantstotal * player.ppc.mult[6.2]).toFixed(2)
+    player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult.C5
+    player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8)
+    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult.C6A * player.ppc.mult.post6constantstotal * player.ppc.mult.C9A).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult.C6B * player.ppc.mult.post6constantstotal * player.ppc.mult.C9B).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
-    if (player.cards[9.1].has) {player.ppc.mult[6.1] = ( player.autoclicker.cps * player.ppc.mult[3.2]*player.player.ppc.mult[6.2]) ** 0.5}
-    else player.ppc.mult[6.1] = 1
+    if (player.cards[9.1].has) {player.ppc.mult.C9A = ( player.autoclicker.cps * player.ppc.mult.C6B*player.player.ppc.mult.C9B) ** 0.5}
+    else player.ppc.mult.C9A = 1
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
-            case 6: player.ppc.mult[6.2] == 2; break
-            case 7: player.ppc.mult[6.2] == 4; break
+            case 6: player.ppc.mult.C9B == 2; break
+            case 7: player.ppc.mult.C9B == 4; break
         }
-    } else player.ppc.mult[6.2] = 1
+    } else player.ppc.mult.C9B = 1
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
@@ -159,7 +159,7 @@ function update() {
     else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
     document.getElementById("buyable3cost").textContent = player.buyables[3].cost
     // Stats
-    document.getElementById("buyable3eff").textContent = player.ppc.mult[2].toFixed(2)
+    document.getElementById("buyable3eff").textContent = player.ppc.mult.C5.toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
     document.getElementById("ppcmultpost6constantstotal").textContent = player.ppc.mult.post6constantstotal.toFixed(2)
@@ -170,12 +170,12 @@ function update() {
     document.getElementById('ppcmultstat').textContent = player.ppc.mult.totalmanual
     document.getElementById('ppcmultautostat').textContent = player.ppc.mult.totalauto
     document.getElementById('ppcmult').textContent = player.ppc.mult[1]
-    document.getElementById('ppcmult3a').textContent = player.ppc.mult[3.1]
-    document.getElementById('ppcmult3b').textContent = player.ppc.mult[3.2]
-    document.getElementById('ppcmult4').textContent = player.ppc.mult[4]
-    document.getElementById("ppcmult5").textContent = player.ppc.mult[5]
-    document.getElementById("ppcmult6a").textContent = player.ppc.mult[6.1]
-    document.getElementById("ppcmult6b").textContent = player.ppc.mult[6.2]
+    document.getElementById('ppcmult3a').textContent = player.ppc.mult.C6A
+    document.getElementById('ppcmult3b').textContent = player.ppc.mult.C6B
+    document.getElementById('ppcmult4').textContent = player.ppc.mult.C7
+    document.getElementById("ppcmult5").textContent = player.ppc.mult.C8
+    document.getElementById("ppcmult6a").textContent = player.ppc.mult.C9A
+    document.getElementById("ppcmult6b").textContent = player.ppc.mult.C9B
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
