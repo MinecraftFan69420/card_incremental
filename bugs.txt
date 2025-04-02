@@ -1,2 +1,3 @@
 LIST OF BUGS (DEV ONLY)
 
+You cant buy buyables after loading a saved game
