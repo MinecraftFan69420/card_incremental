@@ -212,10 +212,19 @@ function devauthenticate() {
 }
 
 function devlog(entry) {
-    const newentry = document.createElement("p") // Add something new to the log
-    newentry.textContent = entry
+    let lastdevlog = {message: "", count: 0}
     const devlog = document.getElementById("devlog")
-    devlog.appendChild(newentry)
+    // Check if the last log message was the same as the new entry
+    if (lastdevlog.message === entry) {
+        lastdevlog.count++ // Increment the count of appearances
+        const lastlogelement = devlog.lastElementChild // Make it the last element
+        if (lastlogelement) lastlogelement.textContent = `(${lastdevlog.count}x) ${entry}` // Increment count
+    } else {
+        lastdevlog = { message: entry, count: 1 } // Reset the message and count thing
+        const newdeventry = document.createElement("p") // Make a new element for the new entry
+        newdeventry.textContent = entry; devlog.appendChild(newdeventry) // Make the text of the new entry
+        devlog.appendChild(newdeventry) // Add to the dev log
+    }
 }
 
 function entercommand() {
