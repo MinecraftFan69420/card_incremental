@@ -131,14 +131,6 @@ function load() {
 }
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
 
-// Dev Authentication
-function devauthenticate() {
-    const correct_password = "*#&*[Qgh5]7$y"
-    password_input = prompt("Enter Dev Console password:")
-    if (password_input === correct_password) { alert("Correct!"); swaptab(6) }
-    else alert("INCORRECT! Only a developer would know the password!")
-}
-
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult.C3 * player.ppc.mult.C5
     player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8)
