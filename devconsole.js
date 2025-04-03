@@ -1,6 +1,4 @@
-import { player } from "./script.js"
-import { swaptab } from "./script.js"
-import { cardeffect } from "./script.js"
+import { player, swaptab, cardeffect } from "script.js"
 
 // Dev Authentication
 function devauthenticate() {
