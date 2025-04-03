@@ -199,3 +199,6 @@ function update() {
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
 }
 setInterval(update, 50) // A tick is 50 ms
+
+export {player}
+export {swaptab}
