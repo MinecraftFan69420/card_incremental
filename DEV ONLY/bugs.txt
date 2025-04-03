@@ -1,3 +1,4 @@
 LIST OF BUGS (DEV ONLY)
 
 You cant buy buyables after loading a saved game from an earlier version
+Card 3 is useless
