@@ -213,8 +213,7 @@ function devauthenticate() {
 
 function devlog(entry) {
     let lastdevlog = {message: "", count: 0}
-    const devlog = document.getElementById("devlog")
-    // Check if the last log message was the same as the new entry
+    const devlog = document.getElementById("devlog") // Check if the last log message was the same as the new entry
     if (lastdevlog.message === entry) {
         lastdevlog.count++ // Increment the count of appearances
         const lastlogelement = devlog.lastElementChild // Make it the last element
