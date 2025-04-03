@@ -38,7 +38,7 @@ player = default_player
 function resetplayer() {player = default_player}
 
 function swaptab(tab) { // Switch tabs!
-    const tabnames = ["main", "cards", "stats", "story", "save"]
+    const tabnames = ["main", "cards", "stats", "story", "save", "devconsole"]
     tabnames.forEach(t => document.getElementById(t).style.display = "none")
     document.getElementById(tabnames[tab - 1]).style.display = "block"
 }
@@ -131,6 +131,14 @@ function load() {
 }
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
 
+// Dev Authentication
+function devauthenticate() {
+    const correct_password = ""
+    password_input = prompt("Enter Dev Console password:")
+    if (password_input === correct_password) { alert("Correct!"); swaptab(6) }
+    else alert("INCORRECT! Only a developer would know the password!")
+}
+
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult.C3 * player.ppc.mult.C5
     player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8)
@@ -191,8 +199,3 @@ function update() {
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
 }
 setInterval(update, 50) // A tick is 50 ms
-
-function aprilfools() {
-    alert("APRIL FOOLS MOTHER F*****")
-    window.open("https://youtube.com/watch?v=dQw4w9WgXcQ")    
-}
