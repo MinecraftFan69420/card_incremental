@@ -57,7 +57,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("ppsdisp").style.display = 'block'
             document.getElementById("card3").style.display = 'block'; break
         case 3: 
-            player.ppc.mult.C3
+            player.ppc.mult.C3 = 2
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
