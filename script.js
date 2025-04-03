@@ -133,7 +133,7 @@ function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.re
 
 // Dev Authentication
 function devauthenticate() {
-    const correct_password = ""
+    const correct_password = "*#&*[Qgh5]7$y"
     password_input = prompt("Enter Dev Console password:")
     if (password_input === correct_password) { alert("Correct!"); swaptab(6) }
     else alert("INCORRECT! Only a developer would know the password!")
