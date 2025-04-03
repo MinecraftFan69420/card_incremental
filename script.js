@@ -211,8 +211,8 @@ function devauthenticate() {
     else alert("INCORRECT! Only a developer would know the password!")
 }
 
+let lastLogPattern = { messages: [], count: 0 }; // Track the last pattern and its count
 function devlog(entry) { // Made by Copilot, thank him not me
-    let lastLogPattern = { messages: [], count: 0 }; // Track the last pattern and its count
     const devlog = document.getElementById("devlog"); // The developer log
 
     // Add the new entry to the current pattern
