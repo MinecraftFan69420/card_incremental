@@ -211,19 +211,33 @@ function devauthenticate() {
     else alert("INCORRECT! Only a developer would know the password!")
 }
 
-function devlog(entry) {
-    let lastdevlog = {message: "", count: 0}
-    const devlog = document.getElementById("devlog") // Check if the last log message was the same as the new entry
-    if (lastdevlog.message === entry) {
-        lastdevlog.count++ // Increment the count of appearances
-        const lastlogelement = devlog.lastElementChild // Make it the last element
-        if (lastlogelement) lastlogelement.textContent = `(${lastdevlog.count}x) ${entry}` // Increment count
+function devlog(entry) { // Made by Copilot, thank him not me
+    let lastLogPattern = { messages: [], count: 0 }; // Track the last pattern and its count
+    const devlog = document.getElementById("devlog"); // The developer log
+
+    // Add the new entry to the current pattern
+    const currentPattern = [...lastLogPattern.messages, entry];
+
+    // Check if the new pattern matches the previous one
+    if (
+        lastLogPattern.messages.length > 0 && // The pattern is more than 0 letters
+        currentPattern.join(",") === lastLogPattern.messages.join(",") // The pattern is the same as previous
+    ) {
+        lastLogPattern.count++; // Increment the count
+        const lastLogElement = devlog.lastElementChild; // Get the last log element
+        if (lastLogElement) {
+            lastLogElement.textContent = `(x${lastLogPattern.count}) ${lastLogPattern.messages.join(", ")}`;
+            // Update the last element in the log
+        }
     } else {
-        lastdevlog = { message: entry, count: 1 } // Reset the message and count thing
-        const newdeventry = document.createElement("p") // Make a new element for the new entry
-        newdeventry.textContent = entry; devlog.appendChild(newdeventry) // Make the text of the new entry
-        devlog.appendChild(newdeventry) // Add to the dev log
+        // New pattern detected
+        lastLogPattern = { messages: currentPattern, count: 1 }; // Reset the pattern and count
+        const newEntry = document.createElement("p"); // Make a new p element
+        newEntry.textContent = entry; // Add the new message
+        devlog.appendChild(newEntry); // Add the new element to the devlog
     }
+    // Limit the number of messages in the pattern to avoid infinite growth, a max of 3 elements.
+    if (lastLogPattern.messages.length > 3) lastLogPattern.messages.shift(); // Remove the oldest message
 }
 
 function entercommand() {
