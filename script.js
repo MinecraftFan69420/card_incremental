@@ -194,3 +194,4 @@ setInterval(update, 50) // A tick is 50 ms
 
 export {player}
 export {swaptab}
+export {cardeffect}
