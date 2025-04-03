@@ -192,6 +192,7 @@ function update() {
 }
 setInterval(update, 50) // A tick is 50 ms
 
-export {player}
-export {swaptab}
-export {cardeffect}
+export {
+    player, swaptab, cardeffect, getpoints, update, save, load, reset, applysaveboosts, buybuyable, buycard,
+    resetplayer, default_player, cardeffect, autoclick, 
+}
