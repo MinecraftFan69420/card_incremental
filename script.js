@@ -32,7 +32,7 @@ const default_player = {
         3: { amount: 0, cost: 1000, maxpurchases: 1e308 }
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
-    defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
+    defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
 }
 player = default_player
 function resetplayer() {player = default_player}
