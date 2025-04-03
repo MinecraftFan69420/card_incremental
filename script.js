@@ -132,7 +132,7 @@ function load() {
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
 
 function update() {
-    player.ppc.mult.pre6total = player.ppc.mult[1] * player.ppc.mult.C5
+    player.ppc.mult.pre6total = player.ppc.mult.C3 * player.ppc.mult.C5
     player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8)
     player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult.C6A * player.ppc.mult.post6constantstotal * player.ppc.mult.C9A).toFixed(2)
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult.C6B * player.ppc.mult.post6constantstotal * player.ppc.mult.C9B).toFixed(2)
