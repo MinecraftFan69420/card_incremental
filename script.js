@@ -32,7 +32,8 @@ const default_player = {
         3: { amount: 0, cost: 1000, maxpurchases: 1e308 }
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
-    defaultcooldowns: {0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
+    defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity, power: 1 }, // Default autoclicker cooldowns in ticks
+    consoleunlocked: false
 }
 player = default_player
 function resetplayer() {player = default_player}
@@ -204,9 +205,11 @@ setInterval(update, 50) // A tick is 50 ms
 // Dev Authentication
 function devauthenticate() {
     const correct_password = "*#&*[Qgh5]7$y"
-    password_input = prompt("Enter Dev Console password:")
-    if (password_input === correct_password) { alert("Correct!"); swaptab(6) }
-    else alert("INCORRECT! Only a developer would know the password!")
+    if (!player.consoleunlocked) {
+        password_input = prompt("Enter Dev Console password:")
+        if (password_input === correct_password) { alert("Correct!"); swaptab(6) }
+        else alert("INCORRECT! Only a developer would know the password!")
+    } else swaptab(6)
 }
 
 let lastLog = { message: "", count: 0 }; // Track the last log message and its count
