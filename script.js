@@ -166,7 +166,6 @@ function update() {
     }
     else document.getElementById("buyable2cost").textContent = player.buyables[2].cost
     document.getElementById("buyable3cost").textContent = player.buyables[3].cost
-    devlog("All visual updates succesful")
     // Stats
     document.getElementById("buyable3eff").textContent = player.ppc.mult.C5.toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
@@ -190,7 +189,6 @@ function update() {
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
-    devlog("All stat updates succesful")
     // autoclicker
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
@@ -199,7 +197,7 @@ function update() {
     else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
     player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
-    devlog("All scaling updates succesful")
+    devlog("Update function success")
 }
 setInterval(update, 50) // A tick is 50 ms
 
