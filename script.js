@@ -239,6 +239,7 @@ function entercommand() {
         if (player.cards[cardtosteal]) {
             const cardElement = document.getElementById(`card${cardtosteal}`)
             if (cardElement) {
+                player.cards[cardtosteal].has = true
                 cardElement.style.display = "none"; cardeffect(cardtosteal)
                 devlog(`Card ${cardtosteal} stolen and used!`)
             } else devlog("Steal unsuccesful: that card does not exist!")
