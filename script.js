@@ -40,8 +40,10 @@ function resetplayer() {player = default_player}
 
 function swaptab(tab) { // Switch tabs!
     const tabnames = ["main", "cards", "stats", "story", "save", "devconsole"]
+    tabtoswapto = tabnames[tab - 1]
     tabnames.forEach(t => document.getElementById(t).style.display = "none")
-    document.getElementById(tabnames[tab - 1]).style.display = "block"
+    document.getElementById(tabtoswapto).style.display = "block"
+    devlog(`Tab switch to ${tabtoswapto} succesful`)
 }
 
 function getpoints() {
