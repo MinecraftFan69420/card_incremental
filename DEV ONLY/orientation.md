@@ -24,7 +24,9 @@ all the values of *player* back into their defaults using *resetplayer*.
 This function is found in lines 41 to 45. It's the function used to switch tabs in the game. First off, it
 makes an array of all the *id* attributes of each tab's *div*. Then it picks the tab to swap to based on the
 given parameter *tab*. Thirdly, it hides all the elements by going through each element's *div* and hiding it.
-Lastly, it shows the element the parameter *tab* wants to show.
+Lastly, it shows the element the parameter *tab* wants to show. Then, makes a devlog call.
+### Getting points using the *getpoints* and *autoclick* functions
+WIP
 
 ## The DEV ONLY folder
 WIP
