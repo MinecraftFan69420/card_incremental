@@ -3,14 +3,14 @@ const default_player = {
     ppc: {
         base: 1,
         mult: { // A list of multipliers to the point gain.
-            C3: 1, // #1 from card 3
-            C5: 1, // #2 from card 5 / buyable 3
+            C3: 1,
+            C5: 1,
             pre6total: 1, // The total of all multiplies before card 6
-            C6A: 1, C6B: 1, // 3A from card 6A, and 3B from card 6B.
-            C7: 1, // #4 from card 7
-            C8: 1, // #5 from card 8
+            C6A: 1, C6B: 1,
+            C7: 1,
+            C8: 1,
             post6constantstotal: 1, //this is the total of all constant multipliers after card 6
-            C9A: 1, C9B: 1, // #6A from card 9A, 6B from card 9B.
+            C9A: 1, C9B: 1,
             totalmanual: 1, // Total of manual bonuses
             totalauto: 1, // Total of autoclicker multipliers
         }
