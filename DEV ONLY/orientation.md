@@ -49,7 +49,14 @@ makes an array of all the *id* attributes of each tab's *div*. Then it picks the
 given parameter *tab*. Thirdly, it hides all the elements by going through each element's *div* and hiding it.
 Lastly, it shows the element the parameter *tab* wants to show. Then, makes a devlog call.
 ## Getting points using the *getpoints* and *autoclick* functions
-WIP
+Too obvious. Lines 49 to 56.
+## The card functions: *cardeffect* and *buycard*
+We'll go to *cardeffect* first. It applies the card effect of a card after being bought.
+*buycard* is what happens when you buy a card (if you have enough points). 
+Lose points based on the card's cost, update the ownership status of the card, apply the effect and devlog call.
+## The buyable-buying function: *buybuyable*
+First, it checks if the player has enough points AND if they didn't hit the purchase limit for the buyable.
+Then, lose points, increment the buyable's purchase amount, and apply the buyable effect. 
 
 # The DEV ONLY folder
 WIP
