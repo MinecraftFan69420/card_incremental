@@ -9,6 +9,7 @@ div#card1 {display: block;}
 #card6pairwarning {display: none;}
 
 button.buyable{display: none}
+button.reset{display: none}
 .filler{display: none}
 
 .card {
