@@ -103,16 +103,18 @@ function cardeffect(card) { // Apply a card's effect
 }
 
 function buycard(card) {
-    if (player.points >= player.cards[card].cost) {
-        player.points -= player.cards[card].cost; player.cards[card].has = true 
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card) // Hide card and apply eff
+    const targetcard = player.cards[card]
+    if (player.points >= targetcard.cost) {
+        player.points -= targetcard.cost; targetcard.has = true 
+        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     }
 }
 
 function buybuyable(buyable) {
-    if (player.points >= player.buyables[buyable].cost && player.buyables[buyable].amount <= player.buyables[buyable].maxpurchases) {
-        player.points -= player.buyables[buyable].cost; player.buyables[buyable].amount++ 
+    const targetbuyable = player.buyables[buyable]
+    if (player.points >= targetbuyable.cost && targetbuyable.amount <= targetbuyable.maxpurchases) {
+        player.points -= targetbuyable.cost; targetbuyable.amount++ 
         switch (buyable) {
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
