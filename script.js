@@ -41,20 +41,18 @@ function resetplayer() {player = default_player}
 
 function swaptab(tab) { // Switch tabs!
     const tabnames = ["main", "cards", "stats", "story", "save", "devconsole"]
-    tabtoswapto = tabnames[tab - 1]
+    const tabtoswapto = tabnames[tab - 1]
     tabnames.forEach(t => document.getElementById(t).style.display = "none")
     document.getElementById(tabtoswapto).style.display = "block"
     devlog(`Tab switch to ${tabtoswapto} succesful`)
 }
 
 function getpoints() {
-    player.points += (player.ppc.base * player.ppc.mult.totalmanual)
-    devlog("Manual click success")
-} // Manual click
+    player.points += (player.ppc.base * player.ppc.mult.totalmanual); devlog("Manual click success")
+}
 function autoclick() {
-    player.points += (player.ppc.base * player.ppc.mult.totalauto)
-    devlog("Autoclicker click success")
-} // Autoclicker press
+    player.points += (player.ppc.base * player.ppc.mult.totalauto); devlog("Autoclicker click success")
+}
 
 function cardeffect(card) { // Apply a card's effect
     switch (card) { // Which card is it?
@@ -245,11 +243,11 @@ function entercommand() {
     const words = command.split(" ")
     if (command.startsWith("card steal")) {
         const cardtosteal = words[2] // The number after card steal
-        if (player.cards[cardtosteal]) {
+        const targetcard = player.cards[cardtosteal]
+        if (targetcard) {
             const cardElement = document.getElementById(`card${cardtosteal}`)
             if (cardElement) {
-                player.cards[cardtosteal].has = true
-                cardElement.style.display = "none"; cardeffect(cardtosteal)
+                targetcard.has = true; cardElement.style.display = "none"; cardeffect(cardtosteal)
                 devlog(`Card ${cardtosteal} stolen and used!`)
             } else devlog("Steal unsuccesful: that card does not exist!")
         } else devlog("Steal unsuccesful: that card does not exist!")
