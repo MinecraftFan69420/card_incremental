@@ -34,7 +34,7 @@ const default_player = {
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
-    charge: {amount: 0, potential: 0, requirement: 1_000_000, unlocked: false},
+    charge: {amount: 0, requirement: 1_000_000, unlocked: false, times: 0, persecond: 0},
     consoleunlocked: false
 }
 player = default_player
@@ -70,7 +70,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
-            document.getElementById("buyable3").style.display = 'block'
+            document.getElementById("buyable3").style.display = 'block' // Show buyable 3
             document.getElementById("card6.1").style.display = 'block';
             document.getElementById("card6.2").style.display = 'block';break
         case 6.1:
@@ -97,7 +97,8 @@ function cardeffect(card) { // Apply a card's effect
             player.buyables[2].maxpurchases = 7;
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
-        case 10: player.charge.unlocked = true; break // Someone else write this
+        case 10: player.charge.unlocked = true; break
+            document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
     }
 }
 
@@ -127,7 +128,10 @@ function buybuyable(buyable) {
 }
 
 function chargeprestige() {
-    for (buyable = 1; buyable <= 3; buyable++) {player.buyables[buyable].amount = 0; player.points = 0}
+    if (player.points >= player.charge.requirement) 
+        {for (buyable = 1; buyable <= 3; buyable++) {player.buyables[buyable].amount = 0; player.points = 0}
+        player.charge.times += 1
+        }
 }
 
 function applysaveboosts() {
@@ -167,6 +171,8 @@ function update() {
             case 7: player.ppc.mult.C9B == 4; break
         }
     } else player.ppc.mult.C9B = 1
+    if (player.charge.times === 0 || player.charge.unlocked === false)
+        {player.charge.persecond = 0} else {player.charge.persecond = (2 ** (player.charge.times - 1))}
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
@@ -202,6 +208,7 @@ function update() {
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
+    document.getElementById('chargereq').textContent = player.charge.requirement
     // autoclicker
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
@@ -256,5 +263,10 @@ function entercommand() {
                 devlog(`Card ${cardtosteal} stolen and used!`)
             } else devlog("Steal unsuccesful: that card does not exist!")
         } else devlog("Steal unsuccesful: that card does not exist!")
+    }
+    else if (command.startsWith("point gain")) {
+        const pointstogain = Number(words[2]) // The number after point gain
+                player.points += pointstogain
+                devlog(`${pointstogain} point(s) gained`)
     } else alert("Nonexistent command!")
 }
