@@ -8,13 +8,14 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>Card Incremental Day 51</h1> <hr> <!-- The day counter -->
+        <h1>Card Incremental Day 59</h1> <hr> <!-- The day counter -->
         <div id="resources"> <!-- The resources -->
             <h1>Resources</h1>
             <h2><span id="points"></span> point(s)</h2>
             <p><span id="ppc"></span> per click</p>
             <p id="ppsdisp">The autoclicker clicks <span id="pps"></span> per second</p>
             <h2 id="autoclickers">The Auto-Clicker strength level: <span id="autoclickstr"></span>/5</h2>
+            <h2><span id="charge"></span> charge</h2>
         </div>
         <nav id="tabnav"> <!-- Tab navigation section -->
             <button id="gomain" onclick="swaptab(1)">Main</button>
@@ -97,6 +98,12 @@
                 <h2>Faster autoclick</h2><p>#9B</p>
                 <h3>Effect:</h3><p>Adds 2 to the max purchases of buyable 2 which double the autoclicker power.</p> 
                 <h3>Cost:</h3><p>100 000 points</p>
+            </div>
+            <div id="card10" class="card" onclick="buycard(10)">
+                <h2><b>MAXIMUM POWER!!!</b></h2><p>#10</p>
+                <h3>Effect:</h3><p>Prestige for charge!</p>
+                <h3>Cost:</h3><p>0 points</p>
+                <h3>Potential charge gain:</h3><p id="potentialchargegain">0 charge</p>
             </div>
         </div>
         <div id="stats" class="tab"> <!-- Stats tab -->
