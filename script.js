@@ -34,7 +34,7 @@ const default_player = {
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
-    charge: {amount: 0, potential: 0, requirement: 1_000_000},
+    charge: {amount: 0, potential: 0, requirement: 1_000_000, unlocked: false},
     consoleunlocked: false
 }
 player = default_player
@@ -97,7 +97,7 @@ function cardeffect(card) { // Apply a card's effect
             player.buyables[2].maxpurchases = 7;
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
-        case 10: chargeprestige(); break // Someone else write this
+        case 10: player.charge.unlocked = true; break // Someone else write this
     }
 }
 
