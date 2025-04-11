@@ -98,11 +98,11 @@ function cardeffect(card) { // Apply a card's effect
             player.buyables[2].maxpurchases = 7;
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
-        case 10: chargeprestige(); break
+        case 10: chargeprestige(); break // Someone else write this
     }
 }
 
-function buycard(card) { // Buy a card
+function buycard(card) {
     if (player.points >= player.cards[card].cost) {
         player.points -= player.cards[card].cost; player.cards[card].has = true 
         document.getElementById(`card${card}`).style.display = "none"; cardeffect(card) // Hide card and apply eff
@@ -110,10 +110,10 @@ function buycard(card) { // Buy a card
     }
 }
 
-function buybuyable(buyable) { // Buy a buyable
+function buybuyable(buyable) {
     if (player.points >= player.buyables[buyable].cost && player.buyables[buyable].amount <= player.buyables[buyable].maxpurchases) {
         player.points -= player.buyables[buyable].cost; player.buyables[buyable].amount++ 
-        switch (buyable) { // Apply the buyable thing
+        switch (buyable) {
             case 1: player.ppc.base = 1 + player.buyables[1].amount; break
             case 2:
                 if (player.autoclicker.strength < player.buyables[2].maxpurchases) player.autoclicker.strength++
@@ -125,9 +125,9 @@ function buybuyable(buyable) { // Buy a buyable
     }
 }
 
-function applysaveboosts() { // Apply save boosts based on what cards you have
-    for (i = 1; i <= 9; i++) { // Hide all cards which the player has and apply card effects
-        if (i === 6 || i === 9) continue // Skip the card 6 & 9 pairs
+function applysaveboosts() {
+    for (i = 1; i <= 9; i++) {
+        if (i === 6 || i === 9) continue
         else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
     }
     if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
