@@ -25,6 +25,7 @@ const default_player = {
         7: {cost: 10_000, has: false},
         8: {cost: 31_415, has: false},
         9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
+        10: {cost: 0, has: false},
     },
     buyables: { // Cost of buyables & how many the player has, and maximum purchases. e308 means no limit.
         1: { amount: 0, cost: 20, maxpurchases: 1e308 },
@@ -33,7 +34,7 @@ const default_player = {
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
-    charge: {amount: 0, potential: 0},
+    charge: {amount: 0, potential: 0, requirement: 1_000_000},
     consoleunlocked: false
 }
 player = default_player
@@ -123,6 +124,10 @@ function buybuyable(buyable) {
         }
         devlog(`Buyable ${buyable} bought succesfully!`)
     }
+}
+
+function chargeprestige() {
+    for (buyable = 1; buyable <= 3; buyable++) {player.buyables[buyable].amount = 0; player.points = 0}
 }
 
 function applysaveboosts() {
