@@ -129,10 +129,10 @@ function buybuyable(buyable) {
 }
 
 function chargeprestige() {
-    if (player.points >= player.charge.requirement) 
-        {for (buyable = 1; buyable <= 3; buyable++) {player.buyables[buyable].amount = 0; player.points = 0}
-        player.charge.times += 1
-        }
+    if (player.points >= player.charge.requirement) {
+        for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
+        player.charge.times ++
+    }
 }
 
 function applysaveboosts() {
@@ -172,8 +172,8 @@ function update() {
             case 7: player.ppc.mult.C9B == 4; break
         }
     } else player.ppc.mult.C9B = 1
-    if (player.charge.times === 0 || player.charge.unlocked === false)
-        {player.charge.persecond = 0} else {player.charge.persecond = (2 ** (player.charge.times - 1))}
+    if (player.charge.times === 0 || player.charge.unlocked === false) player.charge.persecond = 0 
+    else player.charge.persecond = (2 ** (player.charge.times - 1)) 
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     // Visual updates
     document.getElementById("points").textContent = player.points.toFixed(2)
