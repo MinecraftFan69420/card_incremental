@@ -1,6 +1,9 @@
 function log(num)
   {return (Math.log(num)/2.302585092994046)}
 
+function round(num, places)
+  {return ((Math.round((num)/(10 ** places)))*(10 ** places))}
+
 function SLog(num)
 {
   if (num < 1) {return (num - 1)}
@@ -11,16 +14,16 @@ function SLog(num)
 
 function UndoSLog(num)
 {
-  if (num < 0) {return (parseFloat((num + 1).toFixed[4]))}
-  else if (num < 1) {return (parseFloat((10 ** num).toFixed[3]))}
-  else if (num < (1+log(3))) {return (parseFloat((10 ** (10 ** (num % 1))).toFixed[2]))}
-  else if (num < (1+log(6))) {return (parseFloat((10 ** (10 ** (num % 1))).toFixed[0]))}
+  if (num < 0) {return (round((num + 1),-4))}
+  else if (num < 1) {return (round((10 ** num)),-3)}
+  else if (num < (1+log(3))) {return (round((10 ** (10 ** (num % 1))),-2))}
+  else if (num < (1+log(6))) {return (round((10 ** (10 ** (num % 1))),0))}
   else if (num < 2) 
-    {base = (parseFloat((10 ** ((10 ** (num % 1)) % 1)).toFixed[2]))
+    {base = (round((10 ** ((10 ** (num % 1)) % 1)),-2))
     exp = Math.floor(10**(num % 1))
     return (String(base) + "e" + String(exp))}
   else if (num < (2+log(5)))
-    {base = (parseFloat(((10 ** (10 ** ((10 ** (num % 1)) % 1)) % 1)).toFixed[2]))
+    {base = (round(((10 ** (10 ** ((10 ** (num % 1)) % 1)) % 1)),-2))
     exp = Math.floor(10**(10**(num % 1)))
     return (String(base) + "e" + String(exp))}
 }
