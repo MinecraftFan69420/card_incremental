@@ -97,7 +97,7 @@ function cardeffect(card) { // Apply a card's effect
             player.buyables[2].maxpurchases = 7;
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
-        case 10: chargeprestige(); break // Someone else write this
+        case 10: if (player.points >= player.charge.requirement) { chargeprestige() }; break
     }
 }
 
@@ -105,7 +105,8 @@ function buycard(card) {
     const targetcard = player.cards[card]
     if (player.points >= targetcard.cost) {
         player.points -= targetcard.cost; targetcard.has = true 
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
+        if (card !== 10) document.getElementById(`card${card}`).style.display = "none"
+        cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     }
 }

@@ -11,6 +11,8 @@ div#card1 {display: block;}
 button.buyable{display: none}
 .filler{display: none}
 
+button#chargereset{display: none}
+
 .card {
     border-style: solid;
     border-width: medium;
