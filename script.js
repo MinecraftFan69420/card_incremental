@@ -255,7 +255,7 @@ function entercommand() {
     command = prompt("Enter a command")
     const words = command.split(" ")
     if (command.startsWith("card steal")) {
-        const cardtosteal = words[2] // The number after card steal
+        const cardtosteal = Number(words[2]) // The number after card steal
         const targetcard = player.cards[cardtosteal]
         if (targetcard) {
             const cardElement = document.getElementById(`card${cardtosteal}`)
@@ -267,7 +267,6 @@ function entercommand() {
     }
     else if (command.startsWith("point gain")) {
         const pointstogain = Number(words[2]) // The number after point gain
-                player.points += pointstogain
-                devlog(`${pointstogain} point(s) gained`)
+        player.points += pointstogain;  devlog(`${pointstogain} point(s) gained`)
     } else alert("Nonexistent command!")
 }
