@@ -97,8 +97,11 @@ function cardeffect(card) { // Apply a card's effect
             player.buyables[2].maxpurchases = 7;
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
-        case 10: player.charge.unlocked = true; break
+        case 10:
+            player.charge.unlocked = true
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
+            break
+        default: devlog("Card effect failure: such card doesn't exist!")
     }
 }
 
@@ -109,7 +112,7 @@ function buycard(card) {
         if (card !== 10) document.getElementById(`card${card}`).style.display = "none"
         cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
-    }
+    } else devlog(`Card purchase failure: not enough points!`)
 }
 
 function buybuyable(buyable) {
@@ -125,14 +128,15 @@ function buybuyable(buyable) {
             case 3: player.ppc.mult.C5 = 1.2 ** player.buyables[3].amount; break
         }
         devlog(`Buyable ${buyable} bought succesfully!`)
-    }
+    } else devlog(`Buyable purchase failure: not enough points, or hit max purchases`)
 }
 
 function chargeprestige() {
     if (player.points >= player.charge.requirement) {
         for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
-        player.charge.times ++
-    }
+        player.charge.times++
+        devlog("Charge prestige successful")
+    } else devlog("Charge prestige failure: player didn't hit the requirement.")
 }
 
 function applysaveboosts() {
@@ -153,7 +157,7 @@ function load() {
         player = JSON.parse(localStorage.getItem("player"))
         if (player.autoclicker.cooldown == "Infinity") player.autoclicker.cooldown = Infinity
         applysaveboosts()
-    }
+    } else devlog("Save file does not exist")
 }
 function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
 
@@ -267,6 +271,6 @@ function entercommand() {
     }
     else if (command.startsWith("point gain")) {
         const pointstogain = Number(words[2]) // The number after point gain
-        player.points += pointstogain;  devlog(`${pointstogain} point(s) gained`)
+        player.points += pointstogain; devlog(`${pointstogain} point(s) gained`)
     } else alert("Nonexistent command!")
 }
