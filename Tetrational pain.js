@@ -13,7 +13,7 @@ function SLog(num) {
 
 function undoSLog(num){
   if (num < 0) {return (round((num + 1),-4))}
-  else if (num < 1) {return (round((10 ** num)),-3)}
+  else if (num < 1) {return (round((10 ** num),-3))}
   else if (num < (1+log(3))) {return (round((10 ** (10 ** (num % 1))),-2))}
   else if (num < (1+log(6))) {return (round((10 ** (10 ** (num % 1))),0))}
   else if (num < 2) {
@@ -110,10 +110,10 @@ function addSLogs(num1, num2) {
 return returned}
 
 function subtractSLogs(num1,num2) { //make sure that num1 is bigger than num2 because this system doesn't support negatives
-  class1 = Math.max(floor(num1,0),-1)
-  class2 = Math.max(floor(num2,0),-1)
+  class1 = floor(num1,0)
+  class2 = floor(num2,0)
   guess = 0
-  if (num1 > 2.5) {returned = num1} else {
+  if (class1 > 2.5) {returned = num1} else {
     guess = -1
     adder = 4
     for (i=0;i<30;i++) {
@@ -125,19 +125,65 @@ function subtractSLogs(num1,num2) { //make sure that num1 is bigger than num2 be
   return returned}
 
 function multiplySLogs(num1,num2) {
-  if (num2 > num1) {returned = multiplySLogs(num2,num1)} 
-  else {if (floor(num1,1)>3.5) {returned = num1} 
-    else {if (num2 > 0) {returned = addSLogs(num1-1,num2-1)+1}
+  if (num2 > num1) {runingtot = multiplySLogs(num2,num1)} 
+  else {if (floor(num1,0)>3.5) {returned = num1} 
+    else {if (num2 > 0) {runingtot = addSLogs(num1-1,num2-1)+1}
       else {if (num1 > 0) {recip = log(1/(num2+1))
         if (recip > 1) {recip = 1+(log(recip))}
         if (recip > 2) {recip = 2+(log(recip-1))}
-        runingtot = 1+subtractSLogs(recip-1,num1-1)
-        if (runingtot < 1) {returned = (1/(10**(runingtot)))-1}
+        runingtot = 1+subtractSLogs(num1-1,recip-1)
+        console.log(runingtot + "t")
+        if (recip-1 > a-1) {runingtot = 1+subtractSLogs(recip-1,num1-1)
+          console.log(runingtot + "t")
+          if (runingtot < 1) {returned = (1/(10**(runingtot)))-1}
           else {if (runingtot < 2) {returned = (1/(10**(10**(runingtot-1))))-1}
-            else {returned = (1/(10**(10**(10**(runingtot-2)))))-1}
+              else {runingtot = (1/(10**(10**(10**(runingtot-2)))))-1}
+            
+              }
             }
           } else {returned = ((a+1)*(b+1))-1}
         }  
       }
     }
+  return runingtot}
+
+function divideSLogs(num1,num2) {
+  if (floor(num1,1)>3.5) {returned = num1} 
+    else {if (num2 > 0) {returned = subtractSLogs(num1-1,num2-1)+1
+      if (num2>num1) {returned = subtractSLogs(num2-1,num1-1)
+        if (returned < 1) {returned = (1/(10**returned))-1}
+          else{if (returned < 2) {returned = (1/(10**(10**(returned-1))))-1}
+            else{returned = (1/(10**(10**(10**(returned-2)))))-1}
+              }
+            }
+          }
+      else {if (num1 > 0) {recip = log(1/(num2+1))
+        if (recip > 1) {recip = 1+(log(recip))}
+        if (recip > 2) {recip = 2+(log(recip-1))}
+        returned = 1+addSLogs(recip-1,num1-1)
+            } else {recip = ((a+1)/(b+1))-1
+              if (recip > 0) {recip = log(1/(recip+1))}
+              if (recip > 1) {recip = 1+(log(recip))}
+              if (recip > 2) {recip = 2+(log(recip-1))}
+              returned = recip
+              }
+            } 
+          }
+  return returned} 
+
+function expSLogs(num1,num2) {
+  returned = multiplySLogs(num1-1,num2)+1
   return returned}
+
+function tetrateSLogs(num1,num2) {
+  if (num1 === 0) {runingtot = 0} 
+  else {powertowerh = num2
+       if (num2 === 0) {runingtot = 0}
+       else {if (num2 === 1) {runingtot = num1}
+            else {runingtot = 0
+              do {if (runingtot > 10) {runingtot += powertowerh
+                  powertowerh = 0}
+                else {runingtot = expSLogs(num1,runingtot)
+                    powertowerh -= 1}
+              } while (powertowerh >= 1)}}}
+  return runingtot} 
