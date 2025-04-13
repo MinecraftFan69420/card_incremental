@@ -11,7 +11,7 @@ function SLog(num) {
   else if (num >= 1e10) {return (log(log(log(num)))+2)}
 }
 
-function UndoSLog(num){
+function undoSLog(num){
   if (num < 0) {return (round((num + 1),-4))}
   else if (num < 1) {return (round((10 ** num)),-3)}
   else if (num < (1+log(3))) {return (round((10 ** (10 ** (num % 1))),-2))}
@@ -44,68 +44,100 @@ function UndoSLog(num){
   else return ("E#"+floor(num,0))
 }
 
-function addSLogs(num1, num2)
-{
-  if (num2 > num1) {addSLog(num2, num1)}
+function addSLogs(num1, num2) {
+  if (num2 > num1) {returned = addSLogs(num2, num1)}
   else 
   {class1 = Math.max(floor(num1,0),-1)
   class2 = Math.max(floor(num2,0),-1)
   PowDif = (num1-num2)
-  Switch (class2) 
-    {case -1:
-      Switch (class1) {
+  switch (class2) {
+    case -1:
+      switch (class1) {
         case -1:
           output = (num1+num2+1)
-          if (output > 0) {return log(output+1)} else {return output}
+          if (output > 0) {returned = log(output+1)} else {returned = output}
           break;
         case 0:
           output = log((10**num1)+(num2+1))
-          if (output > 1) {return (1+log(output))} else {return output}
+          if (output > 1) {returned = (1+log(output))} else {returned = output}
           break;
         case 1:
           output = 1+log(log((10**(10**(num1-1)))+(num2+1)))
-          if (output > 2) (return 2+log(output-1)) else {return output}
+          if (output > 2) {returned = 2+log(output-1)} else {returned = output}
           break;
         default:
-          return num1
+          returned = num1
           break;}
       break;
      case 0:
-       Switch (class1) {
+       switch (class1) {
          case 0:
            output = log((10**num1)+(10**num2))
-           if (output > 1) {return (1+log(output))} else {return output}
+           if (output > 1) {returned = (1+log(output))} else {returned = output}
            break;
          case 1:
            output = 1+log(log((10**(10**(num1-1)))+(10**num2)))
-           if (output > 2) {return 2+log(output-1)} else {return output}
+           if (output > 2) {returned = 2+log(output-1)} else {returned = output}
            break;
          default:
-           return num1
+           returned = num1
            break;}
         break;
      case 1:
-       Switch (class1) {
+       switch (class1) {
          case 1:
            output = 1+log(log((10**(10**(num1-1)))+(10**(10**(num2-1)))))
-           if (output > 2) {return 2+log(output-1)} else {return output}
+           if (output > 2) {returned = 2+log(output-1)} else {returned = output}
            break;
          case 2:
            output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(num2-1))-(10**(10**(num1-2)))))))))
-           if (output > 3) {return 3+log(output-2)} else {return output}
+           if (output > 3) {returned = 3+log(output-2)} else {returned = output}
            break;
          default:
-           return num1
+           returned = num1
            break;}
        break;
      case 2:
        if (class1 = 2) {
          output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(10**(num2-2)))-(10**(10**(num1-2)))))))))
-         if (output > 3) {return 3+log(output-2)} else {return output}}
-       else {return num1}
+         if (output > 3) {returned = 3+log(output-2)} else {returned = output}}
+       else {returned = num1}
        break;
      default:
-       return num1
+       returned = num1
        break;}
   }
-}
+return returned}
+
+function subtractSLogs(num1,num2) { //make sure that num1 is bigger than num2 because this system doesn't support negatives
+  class1 = Math.max(floor(num1,0),-1)
+  class2 = Math.max(floor(num2,0),-1)
+  guess = 0
+  if (num1 > 2.5) {returned = num1} else {
+    guess = -1
+    adder = 4
+    for (i=0;i<30;i++) {
+      adder /= 2
+      guess += adder
+      if (addSLogs(num2,guess) > num1) {guess -= adder}}
+    if (guess === -1) {guess += adder}
+    returned = guess}
+  return returned}
+
+function multiplySLogs(num1,num2) {
+  if (num2 > num1) {returned = multiplySLogs(num2,num1)} 
+  else {if (floor(num1,1)>3.5) {returned = num1} 
+    else {if (num2 > 0) {returned = addSLogs(num1-1,num2-1)+1}
+      else {if (num1 > 0) {recip = log(1/(num2+1))
+        if (recip > 1) {recip = 1+(log(recip))}
+        if (recip > 2) {recip = 2+(log(recip-1))}
+        runingtot = 1+subtractSLogs(recip-1,num1-1)
+        if (runingtot < 1) {returned = (1/(10**(runingtot)))-1}
+          else {if (runingtot < 2) {returned = (1/(10**(10**(runingtot-1))))-1}
+            else {returned = (1/(10**(10**(10**(runingtot-2)))))-1}
+            }
+          } else {returned = ((a+1)*(b+1))-1}
+        }  
+      }
+    }
+  return returned}
