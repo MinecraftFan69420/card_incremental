@@ -107,7 +107,7 @@ function cardeffect(card) { // Apply a card's effect
 
 function buycard(card) {
     const targetcard = player.cards[card]
-    if (player.points >= targetcard.cost) {
+    if (player.points >= targetcard.cost) & (targetcard.has == false) {
         player.points -= targetcard.cost; targetcard.has = true 
         if (card !== 10) document.getElementById(`card${card}`).style.display = "none"
         cardeffect(card)
@@ -262,8 +262,12 @@ function entercommand() {
         const cardtosteal = Number(words[2]) // The number after card steal
         const targetcard = player.cards[cardtosteal]
         if (targetcard) {
-            player.points += targetcard.cost
-            buycard(cardtosteal)
+            for (const [Key, Value] in Object.entries(player.cards)) {
+                if (Value.has == false) {
+                    player.points += targetcard.cost
+                    buycard(cardtosteal)
+                +
+            }
         } else devlog("Steal unsuccesful: that card does not exist!")
     }
     else if (command.startsWith("point gain")) {
