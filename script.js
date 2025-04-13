@@ -262,11 +262,8 @@ function entercommand() {
         const cardtosteal = Number(words[2]) // The number after card steal
         const targetcard = player.cards[cardtosteal]
         if (targetcard) {
-            const cardElement = document.getElementById(`card${cardtosteal}`)
-            if (cardElement) {
-                targetcard.has = true; cardElement.style.display = "none"; cardeffect(cardtosteal)
-                devlog(`Card ${cardtosteal} stolen and used!`)
-            } else devlog("Steal unsuccesful: that card does not exist!")
+            player.points += targetcard.cost
+            buycard(cardtosteal)
         } else devlog("Steal unsuccesful: that card does not exist!")
     }
     else if (command.startsWith("point gain")) {
