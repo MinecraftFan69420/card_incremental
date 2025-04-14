@@ -107,7 +107,7 @@ function cardeffect(card) { // Apply a card's effect
 
 function buycard(card) {
     const targetcard = player.cards[card]
-    if (player.points >= targetcard.cost && targetcard.has == false) {
+    if (player.points >= targetcard.cost && targetcard.has === false) {
         player.points -= targetcard.cost; targetcard.has = true 
         if (card !== 10) document.getElementById(`card${card}`).style.display = "none"
         cardeffect(card)
