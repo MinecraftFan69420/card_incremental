@@ -73,8 +73,8 @@ function addSLogs(num1, num2) {
             output = 1+log(log((10**(10**(num1-1)))+(10**num2)))
             if (output > 2) {returned = 2+log(output-1)} else {returned = output}
             break;
-          default: returned = num1; break;}
-          break;
+          default: returned = num1; break;
+        }; break;
       case 1:
         switch (class1) {
           case 1:
@@ -89,27 +89,23 @@ function addSLogs(num1, num2) {
         if (class1 = 2) {
           output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(10**(num2-2)))-(10**(10**(num1-2)))))))))
           if (output > 3) {returned = 3+log(output-2)} else {returned = output}}
-        else {returned = num1}
+        else returned = num1
         break;
-      default: returned = num1; break}
-  }
-  return returned
+      default: returned = num1; break
+    }
+  }; return returned
 }
 
 function subtractSLogs(num1,num2) { //make sure that num1 is bigger than num2 because this system doesn't support negatives
-  class1 = floor(num1,0)
-  class2 = floor(num2,0)
-  guess = 0
-  if (class1 > 2.5) {returned = num1} else {
-    guess = -1
-    adder = 4
-    for (i=0;i<30;i++) {
-      adder /= 2
-      guess += adder
-      if (addSLogs(num2,guess) > num1) {guess -= adder}}
+  class1 = floor(num1, 0); class2 = floor(num2, 0); guess = 0
+  if (class1 > 2.5) returned = num1
+  else {
+    guess = -1; adder = 4
+    for (i = 0; i < 30; i++) { adder /= 2; guess += adder; if (addSLogs(num2, guess) > num1) guess -= adder  }
     if (guess === -1) {guess += adder}
-    returned = guess}
-  return returned}
+    returned = guess
+  }; return returned
+}
 
 function multiplySLogs(num1,num2) {
   if (num2 > num1) {runingtot = multiplySLogs(num2,num1)} 
