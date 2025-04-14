@@ -4,10 +4,10 @@ function round(num, places) {return ((Math.round((num)/(10 ** places)))*(10 ** p
 function floor(num, places) {return ((Math.floor((num)/(10 ** places)))*(10 ** places))}
 
 function SLog(num) {
-  if (num < 1) {return (num - 1)}
-  else if (num < 10) {return log(num)}
-  else if (num < 1e10) {return (log(log(num))+1)}
-  else if (num >= 1e10) {return (log(log(log(num)))+2)}
+  if (num < 1) return num - 1
+  else if (num < 10) return log(num)
+  else if (num < 1e10) return log(log(num))+1
+  else if (num >= 1e10) return log(log(log(num)))+2
 }
 
 function undoSLog(num) {
@@ -23,15 +23,14 @@ function undoSLog(num) {
   else if (num < (2 + log(5))) {
     base = (floor((10 ** ((10 ** (10 ** (num % 1))) % 1)), -2)).toFixed(2)
     exp = Math.floor(10**(10**(num % 1)))
-    return (base + "e" + String(exp))
+    return base + "e" + String(exp)
   }
   else if (num < (7 + log(5))) {
     if (num % 1 < log(5)) {
       base = (floor((10 ** ((10 ** (10 ** (num % 1))) % 1)), -2)).toFixed(2)
       exp = Math.floor(10**(10**(num % 1)))
       combined = (base + "e" + String(exp))
-      for (let i = 0; i < ((floor(num,0))-2); i++) {combined = "e"+combined}
-      return combined
+      for (let i = 0; i < ((floor(num, 0)) - 2); i++) { combined = "e" + combined }; return combined
     } else {
       base = (floor((10 ** ((10 ** (num % 1)) % 1)), -2)).toFixed(2)
       exp = Math.floor(10**(num % 1))
@@ -121,12 +120,12 @@ function multiplySLogs(num1,num2) {
           console.log(runingtot + "t")
           if (recip - 1 > a - 1) {
             runingtot = 1 + subtractSLogs(recip - 1, num1 - 1)
-              console.log(runingtot + "t")
-              if (runingtot < 1) {returned = (1/(10**(runingtot)))-1}
-              else {
-                if (runingtot < 2) returned = (1 / (10 ** (10 ** (runingtot - 1)))) - 1
-                else runingtot = (1/(10**(10**(10**(runingtot-2)))))-1
-              }
+            console.log(runingtot + "t")
+            if (runingtot < 1) returned = (1/(10**(runingtot)))-1
+            else {
+              if (runingtot < 2) returned = (1 / (10 ** (10 ** (runingtot - 1)))) - 1
+              else runingtot = (1/(10**(10**(10**(runingtot-2)))))-1
+            }
           }
         } else returned = ((a+1)*(b+1))-1
       }  
@@ -149,14 +148,14 @@ function divideSLogs(num1,num2) {
     }
   else { if (num1 > 0) {
       recip = log(1 / (num2 + 1))
-      if (recip > 1) {recip = 1+(log(recip))}
-      if (recip > 2) {recip = 2+(log(recip-1))}
+      if (recip > 1) recip = 1+(log(recip))
+      if (recip > 2) recip = 2+(log(recip-1))
       returned = 1+addSLogs(recip-1,num1-1)
       } else {
-      recip = ((a + 1) / (b + 1)) - 1
-      if (recip > 0) {recip = log(1/(recip+1))}
-      if (recip > 1) {recip = 1+(log(recip))}
-      if (recip > 2) {recip = 2+(log(recip-1))}
+      recip = ((a + 1) / (b + 1)) - 1 // She didn't define a and b
+      if (recip > 0) recip = log(1/(recip+1))
+      if (recip > 1) recip = 1+(log(recip))
+      if (recip > 2) recip = 2+(log(recip-1))
       returned = recip
       }
     } 
@@ -165,7 +164,8 @@ function divideSLogs(num1,num2) {
 
 function expSLogs(num1, num2) { returned = multiplySLogs(num1 - 1, num2) + 1; return returned}
 
-function tetrateSLogs(num1,num2) {
+function tetrateSLogs(num1, num2) {
+  var runingtot; 
   if (num1 === 0) runingtot = 0 
   else {
     powertowerh = num2
