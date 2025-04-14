@@ -1,7 +1,6 @@
 function log(num){return (Math.log(num)/2.302585092994046)}
 
 function round(num, places) {return ((Math.round((num)/(10 ** places)))*(10 ** places))}
-  
 function floor(num, places) {return ((Math.floor((num)/(10 ** places)))*(10 ** places))}
 
 function SLog(num) {
@@ -115,20 +114,20 @@ function multiplySLogs(num1,num2) {
       if (num2 > 0) runingtot = addSLogs(num1 - 1, num2 - 1) + 1
       else {
         if (num1 > 0) {
-        recip = log(1 / (num2 + 1))
-        if (recip > 1) {recip = 1+(log(recip))}
-        if (recip > 2) {recip = 2+(log(recip-1))}
-        runingtot = 1+subtractSLogs(num1-1,recip-1)
-        console.log(runingtot + "t")
-        if (recip - 1 > a - 1) {
-        runingtot = 1 + subtractSLogs(recip - 1, num1 - 1)
+          recip = log(1 / (num2 + 1))
+          if (recip > 1) {recip = 1+(log(recip))}
+          if (recip > 2) {recip = 2+(log(recip-1))}
+          runingtot = 1+subtractSLogs(num1-1,recip-1)
           console.log(runingtot + "t")
-          if (runingtot < 1) {returned = (1/(10**(runingtot)))-1}
-          else {
-            if (runingtot < 2) returned = (1 / (10 ** (10 ** (runingtot - 1)))) - 1
-            else runingtot = (1/(10**(10**(10**(runingtot-2)))))-1
+          if (recip - 1 > a - 1) {
+            runingtot = 1 + subtractSLogs(recip - 1, num1 - 1)
+              console.log(runingtot + "t")
+              if (runingtot < 1) {returned = (1/(10**(runingtot)))-1}
+              else {
+                if (runingtot < 2) returned = (1 / (10 ** (10 ** (runingtot - 1)))) - 1
+                else runingtot = (1/(10**(10**(10**(runingtot-2)))))-1
+              }
           }
-        }
         } else returned = ((a+1)*(b+1))-1
       }  
     }
@@ -137,27 +136,32 @@ function multiplySLogs(num1,num2) {
 
 function divideSLogs(num1,num2) {
   if (floor(num1,1)>3.5) returned = num1 
-  else {if (num2 > 0) {returned = subtractSLogs(num1-1,num2-1)+1
-    if (num2>num1) {returned = subtractSLogs(num2-1,num1-1)
-      if (returned < 1) {returned = (1/(10**returned))-1}
-        else{if (returned < 2) {returned = (1/(10**(10**(returned-1))))-1}
-          else{returned = (1/(10**(10**(10**(returned-2)))))-1}
-            }
-          }
+  else {
+    if (num2 > 0) {
+      returned = subtractSLogs(num1 - 1, num2 - 1) + 1
+      if (num2>num1) {returned = subtractSLogs(num2-1,num1-1)
+        if (returned < 1) returned = (1/(10**returned))-1
+        else {
+          if (returned < 2) returned = (1 / (10 ** (10 ** (returned - 1)))) - 1 
+          else returned = (1/(10**(10**(10**(returned-2)))))-1
         }
-    else {if (num1 > 0) {recip = log(1/(num2+1))
+      }
+    }
+  else { if (num1 > 0) {
+      recip = log(1 / (num2 + 1))
       if (recip > 1) {recip = 1+(log(recip))}
       if (recip > 2) {recip = 2+(log(recip-1))}
       returned = 1+addSLogs(recip-1,num1-1)
-          } else {recip = ((a+1)/(b+1))-1
-            if (recip > 0) {recip = log(1/(recip+1))}
-            if (recip > 1) {recip = 1+(log(recip))}
-            if (recip > 2) {recip = 2+(log(recip-1))}
-            returned = recip
-            }
-          } 
-        }
-  return returned} 
+      } else {
+      recip = ((a + 1) / (b + 1)) - 1
+      if (recip > 0) {recip = log(1/(recip+1))}
+      if (recip > 1) {recip = 1+(log(recip))}
+      if (recip > 2) {recip = 2+(log(recip-1))}
+      returned = recip
+      }
+    } 
+  }; return returned
+} 
 
 function expSLogs(num1, num2) { returned = multiplySLogs(num1 - 1, num2) + 1; return returned}
 
