@@ -263,8 +263,10 @@ function entercommand() {
         const targetcard = player.cards[cardtosteal]
         if (targetcard) {
             for (const [Key, Value] in Object.entries(player.cards)) {
+                if (targetcard.has == false) {
                     player.points += targetcard.cost
                     buycard(cardtosteal)
+                }
             }
         } else devlog("Steal unsuccesful: that card does not exist!")
     }
