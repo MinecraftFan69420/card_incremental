@@ -11,7 +11,7 @@ function SLog(num) {
   else if (num >= 1e10) {return (log(log(log(num)))+2)}
 }
 
-function undoSLog(num){
+function undoSLog(num) {
   if (num < 0) {return (round((num + 1),-4))}
   else if (num < 1) {return (round((10 ** num),-3))}
   else if (num < (1+log(3))) {return (round((10 ** (10 ** (num % 1))),-2))}
@@ -46,68 +46,55 @@ function undoSLog(num){
 
 function addSLogs(num1, num2) {
   if (num2 > num1) {returned = addSLogs(num2, num1)}
-  else 
-  {class1 = Math.max(floor(num1,0),-1)
-  class2 = Math.max(floor(num2,0),-1)
-  PowDif = (num1-num2)
-  switch (class2) {
-    case -1:
-      switch (class1) {
-        case -1:
-          output = (num1+num2+1)
-          if (output > 0) {returned = log(output+1)} else {returned = output}
-          break;
-        case 0:
-          output = log((10**num1)+(num2+1))
-          if (output > 1) {returned = (1+log(output))} else {returned = output}
-          break;
-        case 1:
-          output = 1+log(log((10**(10**(num1-1)))+(num2+1)))
-          if (output > 2) {returned = 2+log(output-1)} else {returned = output}
-          break;
-        default:
-          returned = num1
-          break;}
-      break;
-     case 0:
-       switch (class1) {
-         case 0:
-           output = log((10**num1)+(10**num2))
-           if (output > 1) {returned = (1+log(output))} else {returned = output}
-           break;
-         case 1:
-           output = 1+log(log((10**(10**(num1-1)))+(10**num2)))
-           if (output > 2) {returned = 2+log(output-1)} else {returned = output}
-           break;
-         default:
-           returned = num1
-           break;}
+  else {
+    class1 = Math.max(floor(num1, 0), -1); class2 = Math.max(floor(num2, 0),-1)
+    PowDif = (num1-num2)
+    switch (class2) {
+      case -1:
+        switch (class1) {
+          case -1:
+            output = (num1+num2+1)
+            if (output > 0) { returned = log(output + 1) } else { returned = output }; break;
+          case 0:
+            output = log((10**num1)+(num2+1))
+            if (output > 1) {returned = (1+log(output))} else {returned = output}; break;
+          case 1:
+            output = 1+log(log((10**(10**(num1-1)))+(num2+1)))
+            if (output > 2) { returned = 2 + log(output - 1) } else { returned = output }; break;
+          default: returned = num1; break;}
         break;
-     case 1:
-       switch (class1) {
-         case 1:
-           output = 1+log(log((10**(10**(num1-1)))+(10**(10**(num2-1)))))
-           if (output > 2) {returned = 2+log(output-1)} else {returned = output}
-           break;
-         case 2:
-           output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(num2-1))-(10**(10**(num1-2)))))))))
-           if (output > 3) {returned = 3+log(output-2)} else {returned = output}
-           break;
-         default:
-           returned = num1
-           break;}
-       break;
-     case 2:
-       if (class1 = 2) {
-         output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(10**(num2-2)))-(10**(10**(num1-2)))))))))
-         if (output > 3) {returned = 3+log(output-2)} else {returned = output}}
-       else {returned = num1}
-       break;
-     default:
-       returned = num1
-       break;}
+      case 0:
+        switch (class1) {
+          case 0:
+            output = log((10**num1)+(10**num2))
+            if (output > 1) {returned = (1+log(output))} else {returned = output}
+            break;
+          case 1:
+            output = 1+log(log((10**(10**(num1-1)))+(10**num2)))
+            if (output > 2) {returned = 2+log(output-1)} else {returned = output}
+            break;
+          default: returned = num1; break;}
+          break;
+      case 1:
+        switch (class1) {
+          case 1:
+            output = 1+log(log((10**(10**(num1-1)))+(10**(10**(num2-1)))))
+            if (output > 2) { returned = 2 + log(output - 1) } else { returned = output }; break;
+          case 2:
+            output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(num2-1))-(10**(10**(num1-2)))))))))
+            if (output > 3) { returned = 3 + log(output - 2) } else { returned = output };  break;
+          default: returned = num1; break;
+        };  break;
+      case 2:
+        if (class1 = 2) {
+          output = 2+log(log((10**(10**(num1-2)))+(log(1+(10**((10**(10**(num2-2)))-(10**(10**(num1-2)))))))))
+          if (output > 3) {returned = 3+log(output-2)} else {returned = output}}
+        else {returned = num1}
+        break;
+      default: returned = num1; break}
   }
-return returned}
+  return returned
+}
 
 function subtractSLogs(num1,num2) { //make sure that num1 is bigger than num2 because this system doesn't support negatives
   class1 = floor(num1,0)
@@ -171,19 +158,22 @@ function divideSLogs(num1,num2) {
           }
   return returned} 
 
-function expSLogs(num1,num2) {
-  returned = multiplySLogs(num1-1,num2)+1
-  return returned}
+function expSLogs(num1, num2) { returned = multiplySLogs(num1 - 1, num2) + 1; return returned}
 
 function tetrateSLogs(num1,num2) {
-  if (num1 === 0) {runingtot = 0} 
-  else {powertowerh = num2
-       if (num2 === 0) {runingtot = 0}
-       else {if (num2 === 1) {runingtot = num1}
-            else {runingtot = 0
-              do {if (runingtot > 10) {runingtot += powertowerh
-                  powertowerh = 0}
-                else {runingtot = expSLogs(num1,runingtot)
-                    powertowerh -= 1}
-              } while (powertowerh >= 1)}}}
-  return runingtot} 
+  if (num1 === 0) runingtot = 0 
+  else {
+    powertowerh = num2
+    if (num2 === 0) runingtot = 0
+    else {
+      if (num2 === 1) runingtot = num1 
+      else {
+        runingtot = 0
+        do {
+          if (runingtot > 10) { runingtot += powertowerh; powertowerh = 0}
+          else { runingtot = expSLogs(num1, runingtot); powertowerh -= 1}
+        } while (powertowerh >= 1)
+      }
+    }
+  }; return runingtot
+} 
