@@ -166,19 +166,17 @@ function expSLogs(num1, num2) { returned = multiplySLogs(num1 - 1, num2) + 1; re
 
 function tetrateSLogs(num1, num2) {
   var runingtot; 
-  if (num1 === 0) runingtot = 0 
+  if (num1 === 0) runingtot = 0
   else {
     powertowerh = num2
     if (num2 === 0) runingtot = 0
+    else if (num2 === 1) runingtot = num1
     else {
-      if (num2 === 1) runingtot = num1 
-      else {
-        runingtot = 0
-        do {
-          if (runingtot > 10) { runingtot += powertowerh; powertowerh = 0}
-          else { runingtot = expSLogs(num1, runingtot); powertowerh -= 1}
-        } while (powertowerh >= 1)
-      }
+      runingtot = 0
+      do {
+        if (runingtot > 10) { runingtot += powertowerh; powertowerh = 0 }
+        else { runingtot = expSLogs(num1, runingtot); powertowerh -= 1 }
+      } while (powertowerh >= 1)
     }
   }; return runingtot
-} 
+}
