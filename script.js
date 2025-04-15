@@ -259,14 +259,20 @@ function entercommand() {
     command = prompt("Enter a command")
     const words = command.split(" ")
     if (command.startsWith("card steal")) {
-        const cardtosteal = Number(words[2]) // The number after card steal
+        const cardtosteal = words[2] // The number after card steal
         const targetcard = player.cards[cardtosteal]
-        if (targetcard) {
-                if (targetcard.has == false) {
-                    player.points += targetcard.cost
-                    buycard(cardtosteal)
-            }
-        } else devlog("Steal unsuccesful: that card does not exist!")
+        if (typeof cardtosteal === "number" && targetsteal) {
+            const cardelement = document.getElementById(`card${cardtosteal}`)
+            if (cardelement) {
+                if (targetcard.has === false) {
+                    if (targetcard !== player.cards[10]) document.getElementById(`card${card}`).style.display = "none"
+                    cardeffect(cardtosteal); targetcard.has === true; devlog(`Card ${card} stolen...`)
+                }
+            } else devlog("Steal unsuccesful: no element corresponding to target card.")
+        } else if (cardtosteal === "all") {
+            for (i = 1; i <= 10; i++) {entercommand(`card steal ${i}`)}
+        }
+        else devlog("Steal unsuccesful: that card does not exist!")
     }
     else if (command.startsWith("point gain")) {
         const pointstogain = Number(words[2]) // The number after point gain
