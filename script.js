@@ -259,20 +259,39 @@ function entercommand() {
     command = prompt("Enter a command")
     const words = command.split(" ")
     if (command.startsWith("card steal")) {
-        const cardtosteal = words[2] // The number after card steal
-        const targetcard = player.cards[cardtosteal]
-        if (typeof cardtosteal === "number" && targetsteal) {
-            const cardelement = document.getElementById(`card${cardtosteal}`)
-            if (cardelement) {
-                if (targetcard.has === false) {
-                    if (targetcard !== player.cards[10]) document.getElementById(`card${card}`).style.display = "none"
-                    cardeffect(cardtosteal); targetcard.has === true; devlog(`Card ${card} stolen...`)
+        const cardtosteal = words[2]; // The number after "card steal"
+        if (cardtosteal === "all") {
+            // Handle "all" case
+            for (const card in player.cards) {
+                const targetcard = player.cards[card];
+                if (!targetcard.has) {
+                    const cardelement = document.getElementById(`card${card}`);
+                    if (cardelement) {
+                        targetcard.has = true;
+                        cardelement.style.display = "none";
+                        cardeffect(Number(card)); // Apply the card's effect
+                        devlog(`Card ${card} stolen and used!`);
+                    } else devlog(`Steal unsuccessful: Card ${card} does not exist!`);
                 }
-            } else devlog("Steal unsuccesful: no element corresponding to target card.")
-        } else if (cardtosteal === "all") {
-            for (i = 1; i <= 10; i++) {entercommand(`card steal ${i}`)}
+            }
+        } else {
+            // Convert to number and validate
+            const cardNumber = Number(cardtosteal);
+            if (!isNaN(cardNumber)) {
+                const targetcard = player.cards[cardNumber];
+                if (targetcard) {
+                    const cardelement = document.getElementById(`card${cardNumber}`);
+                    if (cardelement) {
+                        if (!targetcard.has) {
+                            targetcard.has = true;
+                            cardelement.style.display = "none";
+                            cardeffect(cardNumber); // Apply the card's effect
+                            devlog(`Card ${cardNumber} stolen and used!`);
+                        } else devlog(`Steal unsuccessful: Card ${cardNumber} is already owned!`);
+                    } else devlog(`Steal unsuccessful: No element corresponding to card ${cardNumber}.`);
+                } else devlog("Steal unsuccessful: That card does not exist!");
+            } else devlog("Steal unsuccessful: Invalid card number!");
         }
-        else devlog("Steal unsuccesful: that card does not exist!")
     }
     else if (command.startsWith("point gain")) {
         const pointstogain = Number(words[2]) // The number after point gain
