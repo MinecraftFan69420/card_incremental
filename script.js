@@ -99,6 +99,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card10").style.display = "block"; break
         case 10:
             player.charge.unlocked = true
+            document.getElementById("chargedisp").style.display = 'block'// Shows the charge resource
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
             break
         default: devlog("Card effect failure: such card doesn't exist!")
@@ -134,8 +135,7 @@ function buybuyable(buyable) {
 function chargeprestige() {
     if (player.points >= player.charge.requirement) {
         for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
-        player.charge.times++
-        devlog("Charge prestige successful")
+        player.charge.times++; devlog("Charge prestige successful")
     } else devlog("Charge prestige failure: player didn't hit the requirement.")
 }
 
@@ -159,7 +159,9 @@ function load() {
         applysaveboosts()
     } else devlog("Save file does not exist")
 }
-function reset() { if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player") } }
+function reset() { 
+    if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player"); devlog("Save reset") } 
+}
 
 function update() {
     player.ppc.mult.pre6total = player.ppc.mult.C3 * player.ppc.mult.C5
@@ -267,8 +269,7 @@ function entercommand() {
                 if (!targetcard.has) {
                     const cardelement = document.getElementById(`card${card}`);
                     if (cardelement) {
-                        targetcard.has = true;
-                        cardelement.style.display = "none";
+                        targetcard.has = true; cardelement.style.display = "none";
                         cardeffect(Number(card)); // Apply the card's effect
                         devlog(`Card ${card} stolen and used!`);
                     } else devlog(`Steal unsuccessful: Card ${card} does not exist!`);
