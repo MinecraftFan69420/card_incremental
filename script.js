@@ -284,9 +284,7 @@ function entercommand() {
                     const cardelement = document.getElementById(`card${cardNumber}`);
                     if (cardelement) {
                         if (!targetcard.has) {
-                            targetcard.has = true;
-                            cardelement.style.display = "none";
-                            cardeffect(cardNumber); // Apply the card's effect
+                            player.points += targetcard.cost; buycard(cardNumber)
                             devlog(`Card ${cardNumber} stolen and used!`);
                         } else devlog(`Steal unsuccessful: Card ${cardNumber} is already owned!`);
                     } else devlog(`Steal unsuccessful: No element corresponding to card ${cardNumber}.`);
