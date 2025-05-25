@@ -287,8 +287,8 @@ function entercommand() {
                             player.points += targetcard.cost; buycard(cardNumber)
                             devlog(`Card ${cardNumber} stolen and used!`);
                         } else devlog(`Steal unsuccessful: Card ${cardNumber} is already owned!`);
-                    } else devlog(`Steal unsuccessful: No element corresponding to card ${cardNumber}.`);
-                } else devlog("Steal unsuccessful: That card does not exist!");
+                    } else devlog(`Steal unsuccessful: No HTML for card ${cardNumber}`);
+                } else devlog("Steal unsuccessful: That card was not put in Javascript!");
             } else devlog("Steal unsuccessful: Invalid card number!");
         }
     }
