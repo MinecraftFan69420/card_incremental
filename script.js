@@ -37,6 +37,7 @@ const default_player = {
     charge: {amount: 0, requirement: 1_000_000, unlocked: false, times: 0, persecond: 0},
     consoleunlocked: false
 }
+const cardnos = [1, 2, 3, 4, 5, 6.1, 6.2, 7, 8, 9.1, 9.2, 10]
 player = default_player
 function resetplayer() {player = default_player}
 
@@ -140,14 +141,11 @@ function chargeprestige() {
 }
 
 function applysaveboosts() {
-    for (i = 1; i <= 9; i++) {
-        if (i === 6 || i === 9) continue
-        else if (player.cards[i].has) {document.getElementById(`card${i}`).style.display = 'none'; cardeffect(i)}
-    }
-    if (player.cards[6.1].has) {document.getElementById('card6.1').style.display = 'none'; cardeffect(6.1)}
-    if (player.cards[6.2].has) {document.getElementById('card6.2').style.display = 'none'; cardeffect(6.2)}
-    if (player.cards[9.1].has) {document.getElementById('card9.1').style.display = 'none'; cardeffect(9.1)}
-    if (player.cards[9.2].has) {document.getElementById('card9.2').style.display = 'none'; cardeffect(9.2)}
+    cardnos.forEach(cardNo => {
+        if (player.cards[cardNo].has) {
+            document.getElementById(`card${cardNo}`).style.display = 'none'; cardeffect(cardNo)
+        }
+    })
 }
 
 // Save menu
