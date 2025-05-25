@@ -34,7 +34,7 @@ const default_player = {
     },
     autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
-    charge: {amount: 0, requirement: 1_000_000, unlocked: false, times: 0, persecond: 0},
+    charge: {amount: 0, req: 1_000_000, unlocked: false, times: 0, persecond: 0, chargegaincooldown: 20}, // Charge resource, requirement to prestige, and how many times the player has prestiged
     consoleunlocked: false
 }
 const cardnos = [1, 2, 3, 4, 5, 6.1, 6.2, 7, 8, 9.1, 9.2, 10]
@@ -134,7 +134,7 @@ function buybuyable(buyable) {
 }
 
 function chargeprestige() {
-    if (player.points >= player.charge.requirement) {
+    if (player.points >= player.charge.req) {
         for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
         player.charge.times++; devlog("Charge prestige successful")
     } else devlog("Charge prestige failure: player didn't hit the requirement.")
@@ -214,6 +214,7 @@ function update() {
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
+    document.getElementById('charge').textContent = player.charge
     document.getElementById('chargereq').textContent = player.charge.requirement
     // autoclicker
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
