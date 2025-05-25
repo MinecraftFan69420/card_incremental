@@ -143,7 +143,8 @@ function chargeprestige() {
 function applysaveboosts() {
     cardnos.forEach(cardNo => {
         if (player.cards[cardNo].has) {
-            document.getElementById(`card${cardNo}`).style.display = 'none'; cardeffect(cardNo)
+            if (cardNo !== 10) document.getElementById(`card${cardNo}`).style.display = 'none';
+            cardeffect(cardNo)
         }
     })
 }
