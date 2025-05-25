@@ -234,7 +234,7 @@ function devauthenticate() {
         password_input = prompt("Enter Dev Console password:")
         if (password_input === correct_password) { alert("Correct!"); swaptab(6); player.consoleunlocked = true }
         else alert("INCORRECT! Only a developer would know the password!")
-    } else swaptab(6)
+    }
 }
 
 let lastLog = { message: "", count: 0 }; // Track the last log message and its count
