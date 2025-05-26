@@ -12,7 +12,7 @@ button.buyable{display: none}
 button.reset{display: none}
 .filler{display: none}
 
-button#chargereset{display: none; background-color: #ffff00}
+button#chargereset{display: none; background-color: #ffff40}
 
 #chargedisp {display: none}
 
