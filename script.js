@@ -263,18 +263,15 @@ function entercommand() {
     if (command.startsWith("card steal")) {
         const cardtosteal = words[2]; // The number after "card steal"
         if (cardtosteal === "all") {
-            // Handle "all" case
-            for (const card in player.cards) {
-                const targetcard = player.cards[card];
-                if (!targetcard.has) {
-                    const cardelement = document.getElementById(`card${card}`);
-                    if (cardelement) {
-                        targetcard.has = true; cardelement.style.display = "none";
-                        cardeffect(Number(card)); // Apply the card's effect
-                        devlog(`Card ${card} stolen and used!`);
-                    } else devlog(`Steal unsuccessful: Card ${card} does not exist!`);
-                }
-            }
+            let chosencards = cardnos
+            let card6choice = prompt("Which card from the card  pair will you buy? (6A/6B) You can't take both!")
+            if (card6choice === "6A") { delete chosencards[6] } // Note: traces of "undefined" will be left 
+            else if (card6choice === "6B") { delete chosencards[5] } // in the deleted things' remains.
+            let card9choice = prompt("Which card from the card 9 pair will you buy? (9A/9B) You can't take both!")
+            if (card9choice === "9A") {delete chosencards[10]} 
+            else if (card9choice === "9B") { delete chosencards[9] }
+            chosencards = chosencards.filter(card => card !== undefined) // Remove the undefined.
+            chosencards.forEach(card => entercommand(`card steal ${card}`))
         } else {
             // Convert to number and validate
             const cardNumber = Number(cardtosteal);
