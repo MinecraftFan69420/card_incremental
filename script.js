@@ -214,7 +214,7 @@ function update() {
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
-    document.getElementById('charge').textContent = player.charge
+    document.getElementById('charge').textContent = player.charge.amount
     document.getElementById('chargereq').textContent = player.charge.requirement
     // autoclicker
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
