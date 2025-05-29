@@ -173,8 +173,8 @@ function update() {
     else player.ppc.mult.C9A = 1
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
-            case 6: player.ppc.mult.C9B == 2; break
-            case 7: player.ppc.mult.C9B == 4; break
+            case 6: player.ppc.mult.C9B = 2; break
+            case 7: player.ppc.mult.C9B = 4; break
         }
     } else player.ppc.mult.C9B = 1
     if (player.charge.times === 0 || player.charge.unlocked === false) player.charge.persecond = 0 
