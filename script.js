@@ -32,9 +32,9 @@ const default_player = {
         2: { amount: 0, cost: 100, maxpurchases: 5 },
         3: { amount: 0, cost: 1000, maxpurchases: 1e308 }
     },
-    autoclicker: { strength: 0, cooldown: Infinity, cps: 0 }, // Stats, cooldown in ticks. 
+    autoclicker: { strength: 0, cooldown:  Infinity, cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
-    charge: {amount: 0, req: 1_000_000, unlocked: false, times: 0, persecond: 0, chargegaincooldown: 20}, // Charge resource, requirement to prestige, and how many times the player has prestiged
+    charge: {amount: 0, req: 1_000_000, unlocked: false, times: 0, persecond: 0}, // Charge resource, requirement to prestige, and how many times the player has prestiged
     consoleunlocked: false
 }
 const cardnos = [1, 2, 3, 4, 5, 6.1, 6.2, 7, 8, 9.1, 9.2, 10]
@@ -227,6 +227,9 @@ function update() {
     devlog("Update function success")
 }
 setInterval(update, 50) // A tick is 50 ms
+setInterval(() => {
+    if (player.charge.unlocked) player.charge.amount += player.charge.persecond
+}, 1000) // Get charge
 
 // Dev Authentication
 function devauthenticate() {
