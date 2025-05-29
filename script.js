@@ -227,9 +227,7 @@ function update() {
     devlog("Update function success")
 }
 setInterval(update, 50) // A tick is 50 ms
-setInterval(() => {
-    if (player.charge.unlocked) player.charge.amount += player.charge.persecond
-}, 1000) // Get charge
+setInterval(() => {if (player.charge.unlocked) player.charge.amount += player.charge.persecond}, 1000) // Get charge
 
 // Dev Authentication
 function devauthenticate() {
