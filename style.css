@@ -16,6 +16,16 @@ button#chargereset{display: none; background-color: #ffff40; border-color: black
 
 #chargedisp {display: none}
 
+#tabnav {
+    display: flex;
+    justify-content: center;
+}
+
+.tabnavbutton {
+    width: calc(1/6 * 100%); /* we want all the tabs covering the line */
+    display: inline-block; /* make them in line */
+}
+
 .card {
     border-style: solid;
     border-width: medium;
