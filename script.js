@@ -11,6 +11,7 @@ const default_player = {
             C8: 1,
             post6constantstotal: 1, //this is the total of all constant multipliers after card 6
             C9A: 1, C9B: 1,
+            C11: 1, // Card 11 multiplier, not implemented yet
             totalmanual: 1, // Total of manual bonuses
             totalauto: 1, // Total of autoclicker multipliers
         }
@@ -103,6 +104,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("chargedisp").style.display = 'block'// Shows the charge resource
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
             break
+        case 11: player.ppc.mult.C11 = Math.log10(69) // Card 11 multiplier, not implemented yet
         default: devlog("Card effect failure: such card doesn't exist!")
     }
 }
@@ -111,7 +113,7 @@ function buycard(card) {
     const targetcard = player.cards[card]
     if (player.points >= targetcard.cost && targetcard.has === false) {
         player.points -= targetcard.cost; targetcard.has = true 
-        if (card !== 10) document.getElementById(`card${card}`).style.display = "none"
+        document.getElementById(`card${card}`).style.display = "none"
         cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure: not enough points!`)
@@ -138,6 +140,7 @@ function chargeprestige() {
         for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
         player.charge.times++; devlog("Charge prestige successful")
     } else devlog("Charge prestige failure: player didn't hit the requirement.")
+    document.getElementById("card11").style.display = "block"
 }
 
 function applysaveboosts() {
@@ -209,6 +212,7 @@ function update() {
     document.getElementById("ppcmult5").textContent = player.ppc.mult.C8
     document.getElementById("ppcmult6a").textContent = player.ppc.mult.C9A
     document.getElementById("ppcmult6b").textContent = player.ppc.mult.C9B
+    document.getElementById("ppcmult7").textContent = player.ppc.mult.C11
     document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
