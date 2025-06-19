@@ -3,15 +3,10 @@ const default_player = {
     ppc: {
         base: 1,
         mult: { // A list of multipliers to the point gain.
-            C3: 1,
-            C5: 1,
-            pre6total: 1, // The total of all multiplies before card 6
+            C5: 1, // Buyable 3 multiplier
             C6A: 1, C6B: 1,
-            C7: 1,
-            C8: 1,
-            post6constantstotal: 1, //this is the total of all constant multipliers after card 6
             C9A: 1, C9B: 1,
-            C11: 1, // Card 11 multiplier, not implemented yet
+            constants: 1, 
             totalmanual: 1, // Total of manual bonuses
             totalauto: 1, // Total of autoclicker multipliers
         }
@@ -70,7 +65,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("ppsdisp").style.display = 'block'
             document.getElementById("card3").style.display = 'block'; break
         case 3: 
-            player.ppc.mult.C3 = 2
+            player.ppc.mult.constants *= 2
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
@@ -88,10 +83,10 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card6.1").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 7: 
-            player.ppc.mult.C7 = 3
+            player.ppc.mult.constants *= 3
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
         case 8: 
-            player.ppc.mult.C8 = Math.E - 1
+            player.ppc.mult.constants *= Math.E - 1
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: 
@@ -106,7 +101,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("chargedisp").style.display = 'block'// Shows the charge resource
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
             break
-        case 11: player.ppc.mult.C11 = Math.log10(69) // Card 11 multiplier, not implemented yet
+        case 11: player.ppc.mult.constants *= Math.log10(69) // Card 11 multiplier, not implemented yet
         default: devlog("Card effect failure: such card doesn't exist!")
     }
 }
@@ -168,10 +163,8 @@ function reset() {
 }
 
 function update() {
-    player.ppc.mult.pre6total = player.ppc.mult.C3 * player.ppc.mult.C5
-    player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8)
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult.C6A * player.ppc.mult.post6constantstotal * player.ppc.mult.C9A).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult.C6B * player.ppc.mult.post6constantstotal * player.ppc.mult.C9B).toFixed(2)
+    player.ppc.mult.totalmanual = (player.ppc.mult.constants * player.ppc.mult.C6A * player.ppc.mult.C9A).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.constants * player.ppc.mult.C6B * player.ppc.mult.C9B).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
     if (player.cards[9.1].has) player.ppc.mult.C9A = Math.sqrt(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B)
@@ -200,22 +193,21 @@ function update() {
     document.getElementById("buyable3eff").textContent = player.ppc.mult.C5.toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
-    document.getElementById("ppcmultpost6constantstotal").textContent = player.ppc.mult.post6constantstotal.toFixed(2)
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
     document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
     document.getElementById("ppcbase").textContent = player.ppc.base
     document.getElementById('ppcautobase').textContent = player.ppc.base
     document.getElementById('ppcmultstat').textContent = player.ppc.mult.totalmanual
     document.getElementById('ppcmultautostat').textContent = player.ppc.mult.totalauto
-    document.getElementById('ppcmult').textContent = player.ppc.mult.C3
+    document.getElementById('ppcmult').textContent = player.cards[3].has ? 2 : 1
     document.getElementById('ppcmult3a').textContent = player.ppc.mult.C6A
     document.getElementById('ppcmult3b').textContent = player.ppc.mult.C6B
-    document.getElementById('ppcmult4').textContent = player.ppc.mult.C7
-    document.getElementById("ppcmult5").textContent = player.ppc.mult.C8
+    document.getElementById('ppcmult4').textContent = player.cards[7].has ? 3 : 1
+    document.getElementById("ppcmult5").textContent = player.cards[8].has ? (Math.E - 1) : 1
     document.getElementById("ppcmult6a").textContent = player.ppc.mult.C9A
     document.getElementById("ppcmult6b").textContent = player.ppc.mult.C9B
-    document.getElementById("ppcmult7").textContent = player.ppc.mult.C11
-    document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
+    document.getElementById("ppcmult7").textContent = player.cards[11].has ? Math.log10(69) : 1
+    document.getElementById('ppcmultconstants').textContent = player.ppc.mult.constants
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
