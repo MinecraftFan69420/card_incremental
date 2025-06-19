@@ -40,7 +40,7 @@ const default_player = {
     charge: {amount: 0, req: 1_000_000, unlocked: false, times: 0, persecond: 0}, // Charge resource, requirement to prestige, and how many times the player has prestiged
     consoleunlocked: false
 }
-const cardnos = [1, 2, 3, 4, 5, 6.1, 6.2, 7, 8, 9.1, 9.2, 10]
+const cardnos = [1, 2, 3, 4, 5, 6.1, 6.2, 7, 8, 9.1, 9.2, 10, 11, 12]
 player = default_player
 function resetplayer() {player = default_player}
 
