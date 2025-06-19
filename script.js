@@ -27,6 +27,8 @@ const default_player = {
         8: {cost: 31_415, has: false},
         9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
         10: {cost: 500_000, has: false},
+        11: {cost: 694_200, has: false},
+        12: {cost: 1_500_000, has: false}
     },
     buyables: { // Cost of buyables & how many the player has, and maximum purchases. e308 means no limit.
         1: { amount: 0, cost: 20, maxpurchases: 1e308 },
