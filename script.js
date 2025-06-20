@@ -74,6 +74,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
+            document.getElementById("card6pairwarning").style.display = 'block'
             document.getElementById("buyable3").style.display = 'block' // Show buyable 3
             document.getElementById("card6.1").style.display = 'block';
             document.getElementById("card6.2").style.display = 'block';break
@@ -92,13 +93,16 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
         case 8: 
             player.ppc.mult.C8 = Math.E - 1
+            document.getElementById("card9pairwarning").style.display = 'block'
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: 
+            document.getElementById("card9pairwarning").style.display = 'none'
             document.getElementById("card9.2").style.display = "none"; 
             document.getElementById("card10").style.display = "block"; break
         case 9.2:
             player.buyables[2].maxpurchases = 7;
+            document.getElementById("card9pairwarning").style.display = 'none'
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
         case 10:
