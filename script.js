@@ -92,6 +92,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
         case 8: 
             player.ppc.mult.C8 = Math.E - 1
+            document.getElementById("card9pairwarning").style.display = "block"
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
         case 9.1: 
