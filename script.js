@@ -45,7 +45,7 @@ player = default_player
 function resetplayer() {player = default_player}
 
 function swaptab(tab) { // Switch tabs!
-    const tabnames = ["pointsnstuff", "cards", "stats", "story", "save", "devconsole"]
+    const tabnames = ["pointsnstuff", "cards", "chargetab", "stats", "story", "save", "devconsole"]
     const tabtoswapto = tabnames[tab - 1]
     tabnames.forEach(t => document.getElementById(t).style.display = "none")
     document.getElementById(tabtoswapto).style.display = "block"
@@ -246,7 +246,7 @@ function devauthenticate() {
         password_input = prompt("Enter Dev Console password:")
         if (password_input === correct_password) { alert("Correct!"); swaptab(6); player.consoleunlocked = true }
         else alert("INCORRECT! Only a developer would know the password!")
-    } else swaptab(6)
+    } else swaptab(7)
 }
 
 let lastLog = { message: "", count: 0 }; // Track the last log message and its count
