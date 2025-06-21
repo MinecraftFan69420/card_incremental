@@ -24,7 +24,7 @@ button#chargereset{display: none; background-color: #ffff40; border-color: black
 }
 
 .tabnavbutton {
-    width: calc(1/6 * 100%); /* we want all the tabs covering the line */
+    width: 100%; /* we want all the tabs covering the line */
     display: inline-block; /* make them in line */
 }
 
