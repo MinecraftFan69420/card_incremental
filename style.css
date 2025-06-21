@@ -18,6 +18,8 @@ button#chargereset{display: none; background-color: #ffff40; border-color: black
 
 #chargedisp {display: none}
 
+#gocharge {display: none;}
+
 #tabnav {
     display: flex;
     justify-content: center;

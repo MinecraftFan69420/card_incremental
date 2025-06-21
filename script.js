@@ -144,7 +144,8 @@ function buybuyable(buyable) {
 function chargeprestige() {
     if (player.points >= player.charge.req) {
         for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
-        player.charge.times++; devlog("Charge prestige successful")
+        player.charge.times++; document.getElementById("gocharge").style.display = "block"
+        devlog("Charge prestige successful")
     } else devlog("Charge prestige failure: player didn't hit the requirement.")
     document.getElementById("card11").style.display = "block"
 }
