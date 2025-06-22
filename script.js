@@ -45,11 +45,21 @@ player = default_player
 function resetplayer() {player = default_player}
 
 function swaptab(tab) { // Switch tabs!
-    const tabnames = ["pointsnstuff", "cards", "chargetab", "stats", "story", "save", "devconsole"]
-    const tabtoswapto = tabnames[tab - 1]
-    tabnames.forEach(t => document.getElementById(t).style.display = "none")
-    document.getElementById(tabtoswapto).style.display = "block"
-    devlog(`Tab switch to ${tabtoswapto} succesful`)
+    const tabnames = ["pointsnstuff", "cards", "stats", "story", "save", "devconsole"]
+    if ((tab - 1) % 1 === 0) {
+        const tabtoswapto = tabnames[tab - 1]
+        tabnames.forEach(t => document.getElementById(t).style.display = "none")
+        document.getElementById(tabtoswapto).style.display = "block"
+        devlog(`Tab switch to ${tabtoswapto} succesful`)
+    } else {
+        switch (Math.floor(tab)) {
+            case 3:
+                subtabtoshow = tab === 3.1 ? "regular" : tab === 3.2 ? "charge" : null
+                // we need an ":" no matter what, it'd be syntax incorrect with just the "?" expression
+                ["regular", "charge"].forEach(s => document.getElementById(`cardsubtab-${s}`).style.display = "none")
+                document.getElementById(`cardsubtab-${subtabtoshow}`).style.display = "block"; break
+        }
+    }
 }
 
 function getpoints() {
@@ -247,7 +257,7 @@ function devauthenticate() {
         password_input = prompt("Enter Dev Console password:")
         if (password_input === correct_password) { alert("Correct!"); swaptab(6); player.consoleunlocked = true }
         else alert("INCORRECT! Only a developer would know the password!")
-    } else swaptab(7)
+    } else swaptab(6)
 }
 
 let lastLog = { message: "", count: 0 }; // Track the last log message and its count

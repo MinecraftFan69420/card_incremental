@@ -16,6 +16,8 @@ button.reset{display: none}
 button#chargereset{display: none; background-color: #ffff40; border-color: black}
 #gocharge {background-color: #ffff40;}
 
+.cardsubtab {display: none;}
+
 #chargedisp {display: none}
 
 #gocharge {display: none;}
