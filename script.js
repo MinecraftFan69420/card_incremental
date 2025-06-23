@@ -55,10 +55,12 @@ function swaptab(tab) { // Switch tabs!
         switch (Math.floor(tab)) {
             case 3:
                 let subtabtoshow;
-                if (tab === 3.1) subtabtoshow = "regular"
-                else if (tab === 3.2) subtabtoshow = "charge"
+                if (tab === 3.1) {subtabtoshow = "regular"}
+                else if (tab === 3.2) {subtabtoshow = "charge"}
                 // we need an ":" no matter what, it'd be syntax incorrect with just the "?" expression
-                ["regular", "charge"].forEach(s => document.getElementById(`cardsubtab-${s}`).style.display = "none")
+                Array.from(document.getElementsByClassName("cardsubtab")).forEach(element => {
+                    element.style.display = "none"
+                })
                 document.getElementById(`cardsubtab-${subtabtoshow}`).style.display = "block"; break
         }
     }
