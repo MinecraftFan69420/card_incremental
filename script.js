@@ -17,18 +17,23 @@ const default_player = {
         }
     },
     cards: { // Costs of cards & if the player has them.
-        1: { cost: 20, has: false },
-        2: { cost: 200, has: false },
-        3: { cost: 500, has: false },
-        4: { cost: 2000, has: false },
-        5: { cost: 2000, has: false },
-        6.1: { cost: 5000, has: false }, 6.2: { cost: 5000, has: false }, 
-        7: {cost: 10_000, has: false},
-        8: {cost: 31_415, has: false},
-        9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
-        10: {cost: 500_000, has: false},
-        11: {cost: 694_200, has: false},
-        12: {cost: 1_500_000, has: false}
+        regular: {
+            1: { cost: 20, has: false },
+            2: { cost: 200, has: false },
+            3: { cost: 500, has: false },
+            4: { cost: 2000, has: false },
+            5: { cost: 2000, has: false },
+            6.1: { cost: 5000, has: false }, 6.2: { cost: 5000, has: false }, 
+            7: {cost: 10_000, has: false},
+            8: {cost: 31_415, has: false},
+            9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
+            10: {cost: 500_000, has: false},
+            11: {cost: 694_200, has: false},
+            12: {cost: 1_500_000, has: false,}
+        },
+        charge: {
+            1: { cost: [500_000, 200], has: false } // about cost: first element is points, second one is charge
+        }
     },
     buyables: { // Cost of buyables & how many the player has, and maximum purchases. e308 means no limit.
         1: { amount: 0, cost: 20, maxpurchases: 1e308 },
@@ -126,14 +131,30 @@ function cardeffect(card) { // Apply a card's effect
     }
 }
 
+function chargecardeffect(card) {
+    switch (card) {
+        case 1: player.ppc.mult.C3 = player.ppc.mult.C3 ** 2 // "**=" doesn't exist as far as i'm concerned
+    }   
+}
+
 function buycard(card) {
-    const targetcard = player.cards[card]
-    if (player.points >= targetcard.cost && targetcard.has === false) {
+    const targetcard = player.cards.regular[card]
+    let hassufficientpoints = player.points >= targetcard.cost
+    if (hassufficientpoints && targetcard.has === false) {
         player.points -= targetcard.cost; targetcard.has = true 
-        document.getElementById(`card${card}`).style.display = "none"
-        cardeffect(card)
+        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure: not enough points!`)
+}
+
+function buychargecard(card) {
+    const targetcard = player.cards.charge[card]
+    hassufficientresources = player.points >= targetcard.cost[0] && player.charge.amount >= targetcard.cost[1]
+    if (hassufficientresources && targetcard.has === false) {
+        player.points -= targetcard.cost[0]; player.charge.amount -= targetcard.cost[1]; targetcard.has = true 
+        document.getElementById(`chargecard${card}`).style.display = "none"; cardeffect(card)
+        devlog(`Charge card ${card} bought succesfully!`)
+    } else devlog(`Charge card purchase failure: not enough resources (missing points / charge)`)
 }
 
 function buybuyable(buyable) {
@@ -163,7 +184,7 @@ function chargeprestige() {
 
 function applysaveboosts() {
     cardnos.forEach(cardNo => {
-        if (player.cards[cardNo].has) {
+        if (player.cards.regular[cardNo].has) {
             if (cardNo !== 10) document.getElementById(`card${cardNo}`).style.display = 'none';
             cardeffect(cardNo)
         }
@@ -190,7 +211,7 @@ function update() {
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult.C6B * player.ppc.mult.post6constantstotal * player.ppc.mult.C9B).toFixed(2)
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
-    if (player.cards[9.1].has) player.ppc.mult.C9A = Math.sqrt(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B)
+    if (player.cards.regular[9.1].has) player.ppc.mult.C9A = Math.sqrt(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B)
     else player.ppc.mult.C9A = 1
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
@@ -242,7 +263,7 @@ function update() {
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
     // Scaling
-    if (!player.cards[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
+    if (!player.cards.regular[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
     else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
     player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
@@ -299,7 +320,7 @@ function entercommand() {
             // Convert to number and validate
             const cardNumber = Number(cardtosteal);
             if (!isNaN(cardNumber)) {
-                const targetcard = player.cards[cardNumber];
+                const targetcard = player.cards.regular[cardNumber];
                 if (targetcard) {
                     const cardelement = document.getElementById(`card${cardNumber}`);
                     if (cardelement) {
