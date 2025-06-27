@@ -126,7 +126,10 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("chargedisp").style.display = 'block'// Shows the charge resource
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
             break
-        case 11: player.ppc.mult.C11 = Math.log10(69) // Card 11 multiplier, not implemented yet
+        case 11:
+            player.ppc.mult.C11 = Math.log10(69)
+            document.getElementById("card12").style.display = "block"; break
+        case 12: document.getElementById("gochargecards").style.display = "block"; break
         default: devlog("Card effect failure: such card doesn't exist!")
     }
 }
@@ -142,7 +145,7 @@ function buycard(card) {
     let hassufficientpoints = player.points >= targetcard.cost
     if (hassufficientpoints && targetcard.has === false) {
         player.points -= targetcard.cost; targetcard.has = true 
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
+        document.getElementById(`cardc${card}`).style.display = "none"; cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure: not enough points!`)
 }
