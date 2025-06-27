@@ -13,7 +13,7 @@ button.buyable{display: none}
 button.reset{display: none}
 .filler{display: none}
 
-button#chargereset{display: none; background-color: #ffff40; border-color: black}
+button#chargereset{display: none; background-color: #ffff80; border-color: black}
 
 .cardsubtab {display: none;}
 
@@ -29,7 +29,7 @@ button#chargereset{display: none; background-color: #ffff40; border-color: black
     display: inline-block; /* make them in line */
 }
 
-.card {
+.card, .card-charge{
     border-style: solid;
     border-width: medium;
     padding: 3px;
@@ -37,3 +37,5 @@ button#chargereset{display: none; background-color: #ffff40; border-color: black
     height: 300px;
     text-align: center;
 }
+
+.card-charge {background-color: #ffff80}
