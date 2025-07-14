@@ -163,6 +163,14 @@ function update() {
     player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8)
     player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult.C6A * player.ppc.mult.post6constantstotal * player.ppc.mult.C9A).toFixed(2)
     player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult.C6B * player.ppc.mult.post6constantstotal * player.ppc.mult.C9B).toFixed(2)
+    // autoclicker
+    if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
+    if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
+    // Scaling
+    if (!player.cards.regular[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
+    else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
+    player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
+    player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
     if (player.cards.regular[9.1].has) player.ppc.mult.C9A = Math.sqrt(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B)
@@ -213,14 +221,6 @@ function update() {
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
     document.getElementById('charge').textContent = player.charge.amount
     document.getElementById('chargereq').textContent = player.charge.req
-    // autoclicker
-    if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
-    if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
-    // Scaling
-    if (!player.cards.regular[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
-    else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
-    player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
-    player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
     devlog("Update function success")
 }
 setInterval(update, 50) // A tick is 50 ms
