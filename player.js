@@ -11,7 +11,7 @@ const default_player = {
             C8: 1,
             post6constantstotal: 1, //this is the total of all constant multipliers after card 6
             C9A: 1, C9B: 1,
-            C11: 1, // Card 11 multiplier, not implemented yet
+            C11: 1,
             totalmanual: 1, // Total of manual bonuses
             totalauto: 1, // Total of autoclicker multipliers
         }
