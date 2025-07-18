@@ -1,3 +1,5 @@
+burritos = 0
+
 const default_player = {
     points: 0,
     ppc: {
