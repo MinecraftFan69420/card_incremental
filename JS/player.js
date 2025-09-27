@@ -4,9 +4,7 @@ const default_player = {
         base: 1,
         mult: { // A list of multipliers to the point gain.
             C5: 1,
-            pre6total: 1, // The total of all multiplies before card 6
             C6A: 1, C6B: 1,
-            post6constantstotal: 1, //this is the total of all constant multipliers after card 6
             C9A: 1, C9B: 1,
             constants: 1, // The constant multipliers
             totalmanual: 1, // Total of manual bonuses
