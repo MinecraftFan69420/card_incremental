@@ -11,23 +11,23 @@ const default_player = {
             totalauto: 1, // Total of autoclicker multipliers
         }
     },
-    cards: { // Costs of cards & if the player has them.
+    card_possession: { // Costs of cards & if the player has them.
         regular: {
-            1: { cost: 20, has: false },
-            2: { cost: 200, has: false },
-            3: { cost: 500, has: false },
-            4: { cost: 2000, has: false },
-            5: { cost: 2000, has: false },
-            6.1: { cost: 5000, has: false }, 6.2: { cost: 5000, has: false }, 
-            7: {cost: 10_000, has: false},
-            8: {cost: 31_415, has: false},
-            9.1: { cost: 100_000, has: false }, 9.2: { cost: 100_000, has: false },
-            10: {cost: 500_000, has: false},
-            11: {cost: 694_200, has: false},
-            12: {cost: 1_500_000, has: false,}
+            1: false,
+            2: false,
+            3: false,
+            4: false,
+            5: false,
+            6.1: false, 6.2: false,
+            7: false,
+            8: false,
+            9.1: false, 9.2: false,
+            10: false,
+            11: false,
+            12: false
         },
         charge: {
-            1: { cost: [500_000, 200], has: false } // about cost: first element is points, second one is charge
+            1: false // about cost: first element is points, second one is charge
         }
     },
     buyables: { // Cost of buyables & how many the player has, and maximum purchases. e308 means no limit.

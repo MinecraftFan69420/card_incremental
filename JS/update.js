@@ -5,13 +5,13 @@ function gamecalculations() {
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
     // Scaling
-    if (!player.cards.regular[4].has) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
+    if (!player.card_possession[4]) { player.buyables[1].cost = Math.floor(20 * (1.5 ** player.buyables[1].amount)) }
     else { player.buyables[1].cost = Math.floor(20 * (1.3 ** player.buyables[1].amount)) }
     player.buyables[2].cost = Math.floor(100 * (3 ** player.buyables[2].amount))
     player.buyables[3].cost = Math.floor(1000 * (1.5 ** player.buyables[3].amount))
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Math.min(player.autoclicker.strength,5)]
-    if (player.cards.regular[9.1].has) player.ppc.mult.C9A = Math.sqrt(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B)
+    if (player.card_possession[9.1]) player.ppc.mult.C9A = Math.sqrt(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B)
     else player.ppc.mult.C9A = 1
     if (player.autoclicker.strength > 5) {
         switch (player.autoclicker.strength) {
@@ -46,14 +46,14 @@ function updateHTML() {
     document.getElementById('ppcautobase').textContent = player.ppc.base
     document.getElementById('ppcmultstat').textContent = player.ppc.mult.totalmanual
     document.getElementById('ppcmultautostat').textContent = player.ppc.mult.totalauto
-    document.getElementById('ppcmult').textContent = player.cards.C3.has ? 2 : 1
+    document.getElementById('ppcmult').textContent = player.card_possession[3] ? 2 : 1
     document.getElementById('ppcmult3a').textContent = player.ppc.mult.C6A
     document.getElementById('ppcmult3b').textContent = player.ppc.mult.C6B
-    document.getElementById('ppcmult4').textContent = player.cards.C7.has ? 3 : 1
-    document.getElementById("ppcmult5").textContent = player.cards.C8.has ? (Math.E - 1).toFixed(2) : 1
+    document.getElementById('ppcmult4').textContent = player.card_possession[7] ? 3 : 1
+    document.getElementById("ppcmult5").textContent = player.card_possession[8] ? (Math.E - 1).toFixed(2) : 1
     document.getElementById("ppcmult6a").textContent = player.ppc.mult.C9A
     document.getElementById("ppcmult6b").textContent = player.ppc.mult.C9B
-    document.getElementById("ppcmult7").textContent = player.cards.C11.has ? Math.log10(69).toFixed(2) : 1
+    document.getElementById("ppcmult7").textContent = player.card_possession[11] ? Math.log10(69).toFixed(2) : 1
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps

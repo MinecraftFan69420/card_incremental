@@ -92,20 +92,22 @@ function chargecardeffect(card) {
 }
 
 function buycard(card) {
-    const targetcard = player.cards.regular[card]
+    const targetcard = cards.regular[card]
     let hassufficientpoints = player.points >= targetcard.cost
     if (hassufficientpoints && targetcard.has === false) {
-        player.points -= targetcard.cost; targetcard.has = true 
+        player.points -= targetcard.cost; player.card_posession.regular[card] = true 
         document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure: not enough points!`)
 }
 
 function buychargecard(card) {
-    const targetcard = player.cards.charge[card]
+    const targetcard = cards.charge[card]
     hassufficientresources = player.points >= targetcard.cost[0] && player.charge.amount >= targetcard.cost[1]
     if (hassufficientresources && targetcard.has === false) {
-        player.points -= targetcard.cost[0]; player.charge.amount -= targetcard.cost[1]; targetcard.has = true 
+        player.points -= targetcard.cost[0]; 
+        player.charge.amount -= targetcard.cost[1]; 
+        player.card_possession.charge[card] = true 
         document.getElementById(`chargecard${card}`).style.display = "none"; cardeffect(card)
         devlog(`Charge card ${card} bought succesfully!`)
     } else devlog(`Charge card purchase failure: not enough resources (missing points / charge)`)

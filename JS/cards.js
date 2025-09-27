@@ -1,4 +1,4 @@
-const CARD_INFO = {
+const cards = {
     regular: {
         1: {cost: 20},
         2: {cost: 200},
