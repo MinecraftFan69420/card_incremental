@@ -37,7 +37,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("ppsdisp").style.display = 'block'
             document.getElementById("card3").style.display = 'block'; break
         case 3: 
-            player.ppc.mult.C3 = 2
+            player.ppc.mult.constants *= 2
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
@@ -56,10 +56,10 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card6.1").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 7: 
-            player.ppc.mult.C7 = 3
+            player.ppc.mult.constants *= 3
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
         case 8: 
-            player.ppc.mult.C8 = Math.E - 1
+            player.ppc.mult.constants *= Math.E - 1
             document.getElementById("card9pairwarning").style.display = 'block'
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
@@ -78,7 +78,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
             break
         case 11:
-            player.ppc.mult.C11 = Math.log10(69)
+            player.ppc.mult.constants *= Math.log10(69)
             document.getElementById("card12").style.display = "block"; break
         case 12: document.getElementById("gochargecards").style.display = "block"; break
         default: devlog("Card effect failure: such card doesn't exist!")

@@ -1,8 +1,6 @@
 function gamecalculations() {
-    player.ppc.mult.pre6total = player.ppc.mult.C3 * player.ppc.mult.C5
-    player.ppc.mult.post6constantstotal = (player.ppc.mult.C7 * player.ppc.mult.C8 * player.ppc.mult.C11)
-    player.ppc.mult.totalmanual = (player.ppc.mult.pre6total * player.ppc.mult.C6A * player.ppc.mult.post6constantstotal * player.ppc.mult.C9A).toFixed(2)
-    player.ppc.mult.totalauto = (player.ppc.mult.pre6total * player.ppc.mult.C6B * player.ppc.mult.post6constantstotal * player.ppc.mult.C9B).toFixed(2)
+    player.ppc.mult.totalmanual = (player.ppc.mult.C5 * player.ppc.mult.C6A * player.ppc.mult.constants * player.ppc.mult.C9A).toFixed(2)
+    player.ppc.mult.totalauto = (player.ppc.mult.C5 * player.ppc.mult.C6B * player.ppc.mult.constants * player.ppc.mult.C9B).toFixed(2)
     // autoclicker
     if (player.autoclicker.strength !== 0) player.autoclicker.cooldown--
     if (player.autoclicker.cooldown <= 0) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
@@ -41,22 +39,21 @@ function updateHTML() {
     document.getElementById("buyable3eff").textContent = player.ppc.mult.C5.toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyables[1].amount
     document.getElementById("ppcbasetotal").textContent = player.ppc.base
-    document.getElementById("ppcmultpost6constantstotal").textContent = player.ppc.mult.post6constantstotal.toFixed(2)
+    document.getElementById("ppcmultconstantstotal").textContent = player.ppc.mult.constants.toFixed(2)
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual
     document.getElementById("ppcmulttotalauto").textContent = player.ppc.mult.totalauto
     document.getElementById("ppcbase").textContent = player.ppc.base
     document.getElementById('ppcautobase').textContent = player.ppc.base
     document.getElementById('ppcmultstat').textContent = player.ppc.mult.totalmanual
     document.getElementById('ppcmultautostat').textContent = player.ppc.mult.totalauto
-    document.getElementById('ppcmult').textContent = player.ppc.mult.C3
+    document.getElementById('ppcmult').textContent = player.cards.C3.has ? 2 : 1
     document.getElementById('ppcmult3a').textContent = player.ppc.mult.C6A
     document.getElementById('ppcmult3b').textContent = player.ppc.mult.C6B
-    document.getElementById('ppcmult4').textContent = player.ppc.mult.C7
-    document.getElementById("ppcmult5").textContent = player.ppc.mult.C8
+    document.getElementById('ppcmult4').textContent = player.cards.C7.has ? 3 : 1
+    document.getElementById("ppcmult5").textContent = player.cards.C8.has ? (Math.E - 1).toFixed(2) : 1
     document.getElementById("ppcmult6a").textContent = player.ppc.mult.C9A
     document.getElementById("ppcmult6b").textContent = player.ppc.mult.C9B
-    document.getElementById("ppcmult7").textContent = player.ppc.mult.C11
-    document.getElementById('ppcmultpre6total').textContent = player.ppc.mult.pre6total.toFixed(2)
+    document.getElementById("ppcmult7").textContent = player.cards.C11.has ? Math.log10(69).toFixed(2) : 1
     document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual
     document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps
