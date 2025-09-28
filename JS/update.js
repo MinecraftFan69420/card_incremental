@@ -60,6 +60,9 @@ function updateHTML() {
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps
     document.getElementById('charge').textContent = player.charge.amount
     document.getElementById('chargereq').textContent = player.charge.req
+    document.getElementById('chargetimesstat').textContent = player.charge.times
+    document.getElementById('chargemultstat').textContent = player.charge.persecond
+    document.getElementById('chargepersecondtotalstat').textContent = player.charge.persecond
 }
 
 function update() {
