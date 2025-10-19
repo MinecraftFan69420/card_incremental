@@ -14,6 +14,7 @@ const cards = {
         12: {cost: 1_500_000,}
     },
     charge: {
-        1: {cost: [500_000, 200]} // about cost: first element is points, second one is charge
+        1: {cost: [500_000, 200]}, // about cost: first element is points, second one is charge
+        2: {cost: [1_000_000, 500]}
     }
 }

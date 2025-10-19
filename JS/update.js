@@ -19,9 +19,11 @@ function gamecalculations() {
             case 7: player.ppc.mult.C9B = 4; break
         }
     } else player.ppc.mult.C9B = 1
-    if (player.charge.times === 0 || player.charge.unlocked === false) player.charge.persecond = 0 
-    else player.charge.persecond = (2 ** (player.charge.times - 1)) 
+    if (player.charge.times === 0 || player.charge.unlocked === false) player.charge.persecond = 0
+    else if (player.card_possession.charge[2]) player.charge.persecond = (2.1 ** (player.charge.times - 1))
+    else player.charge.persecond = (2 ** (player.charge.times - 1))
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
+    player.charge.req = 1_000_000 * (10 ** player.charge.times)
 }
 
 function updateHTML() {

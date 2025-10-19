@@ -87,15 +87,18 @@ function cardeffect(card) { // Apply a card's effect
 
 function chargecardeffect(card) {
     switch (card) {
-        case 1: player.ppc.mult.C3 = player.ppc.mult.C3 ** 2 // "**=" doesn't exist as far as i'm concerned
+        case 1: 
+            player.ppc.mult.C3 = player.ppc.mult.C3 ** 2
+            document.getElementById("cardc2").style.display = "block"; break
     }   
 }
 
 function buycard(card) {
     const targetcard = cards.regular[card]
+    const hascard = player.card_possession.regular[card]
     let hassufficientpoints = player.points >= targetcard.cost
-    if (hassufficientpoints && targetcard.has === false) {
-        player.points -= targetcard.cost; player.card_posession.regular[card] = true 
+    if (hassufficientpoints && !hascard) {
+        player.points -= targetcard.cost; player.card_possession.regular[card] = true 
         document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure: not enough points!`)
@@ -140,7 +143,7 @@ function chargeprestige() {
 
 function applysaveboosts() {
     cardnos.forEach(cardNo => {
-        if (player.cards.regular[cardNo].has) {
+        if (player.card_possession.regular[cardNo]) {
             if (cardNo !== 10) document.getElementById(`card${cardNo}`).style.display = 'none';
             cardeffect(cardNo)
         }
