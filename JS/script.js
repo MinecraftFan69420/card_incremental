@@ -20,10 +20,10 @@ function swaptab(tab) { // Switch tabs!
 }
 
 function getpoints() {
-    player.points += (player.ppc.base * player.ppc.mult.totalmanual); devlog("Manual click success")
+    player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalmanual)); devlog("Manual click success")
 }
 function autoclick() {
-    player.points += (player.ppc.base * player.ppc.mult.totalauto); devlog("Autoclicker click success")
+    player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalauto)); devlog("Autoclicker click success")
 }
 
 function cardeffect(card) { // Apply a card's effect
@@ -37,7 +37,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("ppsdisp").style.display = 'block'
             document.getElementById("card3").style.display = 'block'; break
         case 3: 
-            player.ppc.mult.constants *= 2
+            player.ppc.mult.constants = player.ppc.mult.constants.times(2)
             document.getElementById("card4").style.display = 'block'; break // Double ppc
         case 4: document.getElementById("card5").style.display = 'block'; break
         case 5:
@@ -46,20 +46,20 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card6.1").style.display = 'block';
             document.getElementById("card6.2").style.display = 'block';break
         case 6.1:
-            player.ppc.mult.C6A = 3 // Triple manual click multiplier
+            player.ppc.mult.C6A = new Decimal(3) // Triple manual click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.2").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 6.2:
-            player.ppc.mult.C6B = 2 // Double autoclicker click multiplier
+            player.ppc.mult.C6B = new Decimal(3) // Double autoclicker click multiplier
             document.getElementById("card6pairwarning").style.display = 'none'
             document.getElementById("card6.1").style.display = 'none'
             document.getElementById("card7").style.display = 'block'; break
         case 7: 
-            player.ppc.mult.constants *= 3
+            player.ppc.mult.constants = player.ppc.mult.constants.times(3)
             document.getElementById("card8").style.display = "block"; break // Triple the point gain
         case 8: 
-            player.ppc.mult.constants *= Math.E - 1
+            player.ppc.mult.constants = player.ppc.mult.constants.times(Math.E - 1)
             document.getElementById("card9pairwarning").style.display = 'block'
             document.getElementById("card9.1").style.display = "block"
             document.getElementById("card9.2").style.display = "block"; break
@@ -68,7 +68,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("card9.2").style.display = "none"; 
             document.getElementById("card10").style.display = "block"; break
         case 9.2:
-            player.buyables[2].maxpurchases = 7;
+            player.buyables[2].maxpurchases = new Decimal(7);
             document.getElementById("card9pairwarning").style.display = 'none'
             document.getElementById("card9.1").style.display = "none"
             document.getElementById("card10").style.display = "block"; break
@@ -78,7 +78,7 @@ function cardeffect(card) { // Apply a card's effect
             document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
             break
         case 11:
-            player.ppc.mult.constants *= Math.log10(69)
+            player.ppc.mult.constants = player.ppc.mult.constants(Math.log10(69))
             document.getElementById("card12").style.display = "block"; break
         case 12: document.getElementById("gochargecards").style.display = "block"; break
         default: devlog("Card effect failure: such card doesn't exist!")
@@ -88,7 +88,7 @@ function cardeffect(card) { // Apply a card's effect
 function chargecardeffect(card) {
     switch (card) {
         case 1: 
-            player.ppc.mult.C3 = player.ppc.mult.C3 ** 2
+            player.ppc.mult.C3 = player.ppc.mult.C3.pow(2)
             document.getElementById("cardc2").style.display = "block"; break
     }   
 }
@@ -96,9 +96,9 @@ function chargecardeffect(card) {
 function buycard(card) {
     const targetcard = cards.regular[card]
     const hascard = player.card_possession.regular[card]
-    let hassufficientpoints = player.points >= targetcard.cost
+    let hassufficientpoints = player.points.gte(targetcard.cost)
     if (hassufficientpoints && !hascard) {
-        player.points -= targetcard.cost; player.card_possession.regular[card] = true 
+        player.points = player.points.sub(targetcard.cost); player.card_possession.regular[card] = true 
         document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
         devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure: not enough points!`)
@@ -106,10 +106,10 @@ function buycard(card) {
 
 function buychargecard(card) {
     const targetcard = cards.charge[card]
-    hassufficientresources = player.points >= targetcard.cost[0] && player.charge.amount >= targetcard.cost[1]
+    hassufficientresources = player.points.gte(targetcard.cost[0]) && player.charge.amount.gte(targetcard.cost[1])
     if (hassufficientresources && targetcard.has === false) {
-        player.points -= targetcard.cost[0]; 
-        player.charge.amount -= targetcard.cost[1]; 
+        player.points = player.points.sub(targetcard.cost[0]); 
+        player.charge.amount = player.points.sub(targetcard.cost[1]); 
         player.card_possession.charge[card] = true 
         document.getElementById(`chargecard${card}`).style.display = "none"; cardeffect(card)
         devlog(`Charge card ${card} bought succesfully!`)
@@ -118,24 +118,24 @@ function buychargecard(card) {
 
 function buybuyable(buyable) {
     const targetbuyable = player.buyables[buyable]
-    if (player.points >= targetbuyable.cost && targetbuyable.amount <= targetbuyable.maxpurchases) {
-        player.points -= targetbuyable.cost; targetbuyable.amount++ 
+    if (player.points.gte(targetbuyable.cost) && targetbuyable.amount.lte(targetbuyable.maxpurchases)) {
+        player.points = player.points.sub(targetbuyable.cost); targetbuyable.amount = targetbuyable.amount.plus(1) 
         switch (buyable) {
-            case 1: player.ppc.base = 1 + player.buyables[1].amount; break
+            case 1: player.ppc.base = player.buyables[1].amount.plus(1); break
             case 2:
-                player.autoclicker.strength++
+                player.autoclicker.strength = player.autoclicker.strength.plus(1)
                 player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
                 player.autoclicker.cooldown = player.defaultcooldowns.current; break
-            case 3: player.ppc.mult.C5 = 1.2 ** player.buyables[3].amount; break
+            case 3: player.ppc.mult.C5 = (new Decimal(1.2)).pow(player.buyables[3].amount); break
         }
         devlog(`Buyable ${buyable} bought succesfully!`)
     } else devlog(`Buyable purchase failure: not enough points, or hit max purchases`)
 }
 
 function chargeprestige() {
-    if (player.points >= player.charge.req) {
-        for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = 0; player.points = 0 }
-        player.charge.times++; document.getElementById("gocharge").style.display = "block"
+    if (player.points.gte(player.charge.req)) {
+        for (buyable = 1; buyable <= 3; buyable++) { player.buyables[buyable].amount = new Decimal(0); player.points = new Decimal(0) }
+        player.charge.times = player.charge.times.plus(1); document.getElementById("gocharge").style.display = "block"
         devlog("Charge prestige successful")
     } else devlog("Charge prestige failure: player didn't hit the requirement.")
     document.getElementById("card11").style.display = "block"
@@ -144,7 +144,7 @@ function chargeprestige() {
 function applysaveboosts() {
     cardnos.forEach(cardNo => {
         if (player.card_possession.regular[cardNo]) {
-            if (cardNo !== 10) document.getElementById(`card${cardNo}`).style.display = 'none';
+            if (cardNo.neq(10)) document.getElementById(`card${cardNo}`).style.display = 'none';
             cardeffect(cardNo)
         }
     })
