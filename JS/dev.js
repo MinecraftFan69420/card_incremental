@@ -34,10 +34,10 @@ function entercommand() {
         const cardtosteal = words[2]; // The number after "card steal"
         if (cardtosteal === "all") {
             let chosencards = cardnos
-            let card6choice = prompt("Which card from the card  pair will you buy? (6A/6B) You can't take both!")
+            let card6choice = prompt("Which card from the card  pair will you steal? (6A/6B) You can't take both!")
             if (card6choice === "6A") { delete chosencards[6] } // Note: traces of "undefined" will be left 
             else if (card6choice === "6B") { delete chosencards[5] } // in the deleted things' remains.
-            let card9choice = prompt("Which card from the card 9 pair will you buy? (9A/9B) You can't take both!")
+            let card9choice = prompt("Which card from the card 9 pair will you steal? (9A/9B) You can't take both!")
             if (card9choice === "9A") {delete chosencards[10]} 
             else if (card9choice === "9B") { delete chosencards[9] }
             chosencards = chosencards.filter(card => card !== undefined) // Remove the undefined.
@@ -60,7 +60,7 @@ function entercommand() {
         }
     }
     else if (command.startsWith("point gain")) {
-        const pointstogain = Number(words[2]) // The number after point gain
-        player.points += pointstogain; devlog(`${pointstogain} point(s) gained`)
+        const pointstogain = new Decimal(words[2]) // The number after point gain
+        player.points = player.points.plus(pointstogain); devlog(`${pointstogain.toString()} point(s) gained`)
     } else alert("Nonexistent command!")
 }
