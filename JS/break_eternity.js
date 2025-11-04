@@ -57,9 +57,7 @@
 
     _createClass(LRUCache, [{
       key: "size",
-      get: function get() {
-        return this.map.size;
-      }
+      get: function get() {return this.map.size;}
       /**
        * Gets the specified key from the cache, or undefined if it is not in the
        * cache.
@@ -72,9 +70,8 @@
       value: function get(key) {
         var node = this.map.get(key);
 
-        if (node === undefined) {
-          return undefined;
-        } // It is guaranteed that there is at least one item in the cache.
+        if (node === undefined) return undefined;
+        // It is guaranteed that there is at least one item in the cache.
         // Therefore, first and last are guaranteed to be a ListNode...
         // but if there is only one item, they might be the same.
         // Update the order of the list to make this node the first node in the
@@ -127,13 +124,8 @@
       key: "set",
       value: function set(key, value) {
         // Ensure that this.maxSize >= 1.
-        if (this.maxSize < 1) {
-          return;
-        }
-
-        if (this.map.has(key)) {
-          throw new Error("Cannot update existing keys in the cache");
-        }
+        if (this.maxSize < 1) return;
+        if (this.map.has(key)) throw new Error("Cannot update existing keys in the cache");
 
         var node = new ListNode(key, value); // Move node to the front of the list.
 
@@ -208,9 +200,7 @@
     }
 
     var indexOf0InPowersOf10 = 323;
-    return function (power) {
-      return powersOf10[power + indexOf0InPowersOf10];
-    };
+    return function (power) {return powersOf10[power + indexOf0InPowersOf10];};
   }(); //tetration/slog to real height stuff
   //background info and tables of values for critical functions taken here: https://github.com/Patashu/break_eternity.js/issues/22
 
@@ -241,13 +231,8 @@
   -1, -0.8670016295947213, -0.7373984232432306, -0.6143173985094293, -0.49973884395492807, -0.394584953527678, -0.2989649949848695, -0.21245647317021688, -0.13434688362382652, -0.0638072667348083, 0], [// Base 10
   -1, -0.8641642839543857, -0.732534623168535, -0.6083127477059322, -0.4934049257184696, -0.3885773075899922, -0.29376029055315767, -0.2083678561173622, -0.13155653399373268, -0.062401588652553186, 0]];
 
-  var D = function D(value) {
-    return Decimal.fromValue_noAlloc(value);
-  };
-
-  var FC = function FC(sign, layer, mag) {
-    return Decimal.fromComponents(sign, layer, mag);
-  };
+  var D = function D(value) {return Decimal.fromValue_noAlloc(value);};
+  var FC = function FC(sign, layer, mag) {return Decimal.fromComponents(sign, layer, mag);};
 
   var FC_NN = function FC_NN(sign, layer, mag) {
     return Decimal.fromComponents_noNormalize(sign, layer, mag);
@@ -266,25 +251,16 @@
 
 
   var f_gamma = function f_gamma(n) {
-    if (!isFinite(n)) {
-      return n;
-    }
+    if (!isFinite(n)) return n;
 
     if (n < -50) {
-      if (n === Math.trunc(n)) {
-        return Number.NEGATIVE_INFINITY;
-      }
-
+      if (n === Math.trunc(n)) return Number.NEGATIVE_INFINITY;
       return 0;
     }
 
     var scal1 = 1;
 
-    while (n < 10) {
-      scal1 = scal1 * n;
-      ++n;
-    }
-
+    while (n < 10) {scal1 = scal1 * n; ++n;}
     n -= 1;
     var l = 0.9189385332046727; //0.5*Math.log(2*Math.PI)
 
@@ -323,42 +299,23 @@
     var w;
     var wn;
 
-    if (!Number.isFinite(z)) {
-      return z;
-    }
-
+    if (!Number.isFinite(z)) return z;
     if (principal) {
-      if (z === 0) {
-        return z;
-      }
-
-      if (z === 1) {
-        return OMEGA;
-      }
-
-      if (z < 10) {
-        w = 0;
-      } else {
-        w = Math.log(z) - Math.log(Math.log(z));
-      }
+      if (z === 0) return z;
+      if (z === 1) return OMEGA;
+      if (z < 10) {w = 0;}
+      else {w = Math.log(z) - Math.log(Math.log(z));}
     } else {
       if (z === 0) return -Infinity;
-
-      if (z <= -0.1) {
-        w = -2;
-      } else {
-        w = Math.log(-z) - Math.log(-Math.log(-z));
-      }
+      if (z <= -0.1) {w = -2;} 
+      else {w = Math.log(-z) - Math.log(-Math.log(-z));}
     }
 
     for (var i = 0; i < 100; ++i) {
       wn = (z * Math.exp(-w) + w * w) / (w + 1);
 
-      if (Math.abs(wn - w) < tol * Math.abs(wn)) {
-        return wn;
-      } else {
-        w = wn;
-      }
+      if (Math.abs(wn - w) < tol * Math.abs(wn)) return wn;
+      else w = wn;
     }
 
     throw Error("Iteration failed to converge: ".concat(z.toString())); //return Number.NaN;
@@ -375,28 +332,18 @@
     var w;
     var ew, wewz, wn;
 
-    if (!Number.isFinite(z.mag)) {
-      return new Decimal(z);
-    }
+    if (!Number.isFinite(z.mag)) return new Decimal(z);
 
     if (principal) {
-      if (z.eq(Decimal.dZero)) {
-        return FC_NN(0, 0, 0);
-      }
+      if (z.eq(Decimal.dZero)) return FC_NN(0, 0, 0);
 
-      if (z.eq(Decimal.dOne)) {
-        //Split out this case because the asymptotic series blows up
-        return Decimal.fromNumber(OMEGA);
-      } //Get an initial guess for Halley's method
-
+      if (z.eq(Decimal.dOne)) return Decimal.fromNumber(OMEGA); 
+      //Get an initial guess for Halley's method
 
       w = Decimal.ln(z);
     } else {
-      if (z.eq(Decimal.dZero)) {
-        return new Decimal(Decimal.dNegInf);
-      } //Get an initial guess for Halley's method
-
-
+      if (z.eq(Decimal.dZero)) return new Decimal(Decimal.dNegInf);
+      //Get an initial guess for Halley's method
       w = Decimal.ln(z.neg());
     } //Halley's method; see 5.9 in [1]
 
@@ -406,11 +353,8 @@
       wewz = w.sub(z.mul(ew));
       wn = w.sub(wewz.div(w.add(1).sub(w.add(2).mul(wewz).div(Decimal.mul(2, w).add(2)))));
 
-      if (Decimal.abs(wn.sub(w)).lt(Decimal.abs(wn).mul(tol))) {
-        return wn;
-      } else {
-        w = wn;
-      }
+      if (Decimal.abs(wn.sub(w)).lt(Decimal.abs(wn).mul(tol))) return wn;
+      else w = wn;
     }
 
     throw Error("Iteration failed to converge: ".concat(z.toString())); //return Decimal.dNaN;
@@ -428,44 +372,30 @@
       this.mag = 0;
       this.layer = 0;
 
-      if (value instanceof Decimal) {
-        this.fromDecimal(value);
-      } else if (typeof value === "number") {
-        this.fromNumber(value);
-      } else if (typeof value === "string") {
-        this.fromString(value);
-      }
+      if (value instanceof Decimal) this.fromDecimal(value);
+      else if (typeof value === "number") this.fromNumber(value);
+      else if (typeof value === "string") this.fromString(value);
     }
 
     _createClass(Decimal, [{
       key: "m",
       get: function get() {
-        if (this.sign === 0) {
-          return 0;
-        } else if (this.layer === 0) {
+        if (this.sign === 0) return 0;
+        else if (this.layer === 0) {
           var exp = Math.floor(Math.log10(this.mag)); //handle special case 5e-324
-
           var man;
-
-          if (this.mag === 5e-324) {
-            man = 5;
-          } else {
-            man = this.mag / powerOf10(exp);
-          }
-
+          if (this.mag === 5e-324) man = 5;
+          else man = this.mag / powerOf10(exp);
           return this.sign * man;
         } else if (this.layer === 1) {
           var residue = this.mag - Math.floor(this.mag);
           return this.sign * Math.pow(10, residue);
-        } else {
-          //mantissa stops being relevant past 1e9e15 / ee15.954
-          return this.sign;
-        }
+        } else return this.sign;
+        //mantissa stops being relevant past 1e9e15 / ee15.954
       },
       set: function set(value) {
-        if (this.layer <= 2) {
-          this.fromMantissaExponent(value, this.e);
-        } else {
+        if (this.layer <= 2) this.fromMantissaExponent(value, this.e);
+        else {
           //don't even pretend mantissa is meaningful
           this.sign = Math.sign(value);
 
@@ -478,52 +408,34 @@
     }, {
       key: "e",
       get: function get() {
-        if (this.sign === 0) {
-          return 0;
-        } else if (this.layer === 0) {
-          return Math.floor(Math.log10(this.mag));
-        } else if (this.layer === 1) {
-          return Math.floor(this.mag);
-        } else if (this.layer === 2) {
+        if (this.sign === 0) return 0;
+        else if (this.layer === 0) return Math.floor(Math.log10(this.mag));
+        else if (this.layer === 1) return Math.floor(this.mag);
+        else if (this.layer === 2) {
           return Math.floor(Math.sign(this.mag) * Math.pow(10, Math.abs(this.mag)));
-        } else {
-          return this.mag * Number.POSITIVE_INFINITY;
-        }
+        } // put in braces cuz too long
+        else return this.mag * Number.POSITIVE_INFINITY;
       },
-      set: function set(value) {
-        this.fromMantissaExponent(this.m, value);
-      }
+      set: function set(value) {this.fromMantissaExponent(this.m, value);}
     }, {
       key: "s",
-      get: function get() {
-        return this.sign;
-      },
+      get: function get() {return this.sign;},
       set: function set(value) {
         if (value === 0) {
           this.sign = 0;
           this.layer = 0;
           this.mag = 0;
-        } else {
-          this.sign = value;
-        }
+        } else this.sign = value;
       } // Object.defineProperty(Decimal.prototype, "mantissa", {
 
     }, {
       key: "mantissa",
-      get: function get() {
-        return this.m;
-      },
-      set: function set(value) {
-        this.m = value;
-      }
+      get: function get() {return this.m;},
+      set: function set(value) {this.m = value;}
     }, {
       key: "exponent",
-      get: function get() {
-        return this.e;
-      },
-      set: function set(value) {
-        this.e = value;
-      }
+      get: function get() {return this.e;},
+      set: function set(value) {this.e = value;}
       /**
        * Turns the given components into a valid Decimal.
        */
@@ -590,9 +502,8 @@
           while (absmag < LAYER_DOWN && this.layer > 0) {
             this.layer -= 1;
 
-            if (this.layer === 0) {
-              this.mag = Math.pow(10, this.mag);
-            } else {
+            if (this.layer === 0) this.mag = Math.pow(10, this.mag);
+            else {
               this.mag = signmag * Math.pow(10, absmag);
               absmag = Math.abs(this.mag);
               signmag = Math.sign(this.mag);
@@ -604,10 +515,7 @@
               //extract sign from negative mag at layer 0
               this.mag = -this.mag;
               this.sign = -this.sign;
-            } else if (this.mag === 0) {
-              //excessive rounding can give us all zeroes
-              this.sign = 0;
-            }
+            } else if (this.mag === 0) this.sign = 0; //excessive rounding can give us all 0s
           }
         }
 
@@ -616,7 +524,6 @@
           this.layer = Number.NaN;
           this.mag = Number.NaN;
         }
-
         return this;
       }
       /**
@@ -742,10 +649,7 @@
 
           if (heightparts.length === 2) {
             payload = parseFloat(heightparts[1]);
-
-            if (!isFinite(payload)) {
-              payload = 1;
-            }
+            if (!isFinite(payload)) payload = 1;
           }
 
           if (isFinite(_base) && isFinite(_height)) {
@@ -757,7 +661,6 @@
             if (Decimal.fromStringCache.maxSize >= 1) {
               Decimal.fromStringCache.set(originalValue, Decimal.fromDecimal(this));
             }
-
             return this;
           }
         } //Handle x^^y format.
@@ -776,10 +679,7 @@
 
           if (_heightparts.length === 2) {
             _payload = parseFloat(_heightparts[1]);
-
-            if (!isFinite(_payload)) {
-              _payload = 1;
-            }
+            if (!isFinite(_payload)) _payload = 1;
           }
 
           if (isFinite(_base2) && isFinite(_height2)) {
@@ -842,10 +742,7 @@
 
           var _payload2 = parseFloat(ptparts[1]);
 
-          if (!isFinite(_payload2)) {
-            _payload2 = 1;
-          }
-
+          if (!isFinite(_payload2)) _payload2 = 1;
           if (isFinite(base) && isFinite(height)) {
             var _result3 = Decimal.tetrate(base, height, _payload2, linearhyper4);
 
@@ -856,7 +753,6 @@
             if (Decimal.fromStringCache.maxSize >= 1) {
               Decimal.fromStringCache.set(originalValue, Decimal.fromDecimal(this));
             }
-
             if (negative) this.sign *= -1;
             return this;
           }
@@ -880,9 +776,7 @@
 
           var _payload3 = parseFloat(ptparts[1]);
 
-          if (!isFinite(_payload3)) {
-            _payload3 = 1;
-          }
+          if (!isFinite(_payload3)) _payload3 = 1;
 
           if (isFinite(base) && isFinite(height)) {
             var _result4 = Decimal.tetrate(base, height, _payload3, linearhyper4);
@@ -921,10 +815,7 @@
           ptparts[1] = ptparts[1].replace(")", "");
           height = parseFloat(ptparts[1]);
 
-          if (!isFinite(_payload4)) {
-            _payload4 = 1;
-          }
-
+          if (!isFinite(_payload4)) _payload4 = 1;
           if (isFinite(base) && isFinite(height)) {
             var _result5 = Decimal.tetrate(base, height, _payload4, linearhyper4);
 
@@ -978,10 +869,7 @@
         if (newparts.length === 2) {
           this.sign = 1;
 
-          if (newparts[0].charAt(0) == "-") {
-            this.sign = -1;
-          }
-
+          if (newparts[0].charAt(0) == "-") this.sign = -1;
           var layerstring = "";
 
           for (var i = 0; i < newparts[1].length; ++i) {
@@ -1022,7 +910,6 @@
           if (Decimal.fromStringCache.maxSize >= 1) {
             Decimal.fromStringCache.set(originalValue, Decimal.fromDecimal(this));
           }
-
           return this;
         }
 
@@ -1060,7 +947,6 @@
         else if (ecount === 1) {
           this.sign = Math.sign(mantissa);
           this.layer = 1; //Example: 2e10 is equal to 10^log10(2e10) which is equal to 10^(10+log10(2))
-
           this.mag = exponent + Math.log10(Math.abs(mantissa));
         } //Handle numbers written like Xeee... (N es) Y
         else {
@@ -1079,10 +965,7 @@
             }
 
             return this;
-          } else {
-            //at eee and above, mantissa is too small to be recognizable!
-            this.mag = exponent;
-          }
+          } else this.mag = exponent;  //at 3es or more, mantissa is too small to be recognizable!
         }
 
         this.normalize();
@@ -1102,17 +985,9 @@
     }, {
       key: "fromValue",
       value: function fromValue(value) {
-        if (value instanceof Decimal) {
-          return this.fromDecimal(value);
-        }
-
-        if (typeof value === "number") {
-          return this.fromNumber(value);
-        }
-
-        if (typeof value === "string") {
-          return this.fromString(value);
-        }
+        if (value instanceof Decimal) return this.fromDecimal(value);
+        if (typeof value === "number") return this.fromNumber(value);
+        if (typeof value === "string") return this.fromString(value);
 
         this.sign = 0;
         this.layer = 0;
@@ -1120,29 +995,28 @@
         return this;
       }
       /**
-       * Returns the numeric value of the Decimal it's called on. Will return Infinity (or -Infinity for negatives) for Decimals that are larger than Number.MAX_VALUE.
+       * Returns the numeric value of the Decimal it's called on. Return Infinity 
+       * (or -Infinity for negatives) for Decimals that are larger than Number.MAX_VALUE.
        */
 
     }, {
       key: "toNumber",
       value: function toNumber() {
-        if (this.mag === Number.POSITIVE_INFINITY && this.layer === Number.POSITIVE_INFINITY && this.sign === 1) {
+        if (this.mag === Number.POSITIVE_INFINITY 
+          && this.layer === Number.POSITIVE_INFINITY && this.sign === 1) {
           return Number.POSITIVE_INFINITY;
         }
 
-        if (this.mag === Number.POSITIVE_INFINITY && this.layer === Number.POSITIVE_INFINITY && this.sign === -1) {
+        if (this.mag === Number.POSITIVE_INFINITY 
+          && this.layer === Number.POSITIVE_INFINITY && this.sign === -1) {
           return Number.NEGATIVE_INFINITY;
         }
 
-        if (!Number.isFinite(this.layer)) {
-          return Number.NaN;
-        }
+        if (!Number.isFinite(this.layer)) return Number.NaN;
 
-        if (this.layer === 0) {
-          return this.sign * this.mag;
-        } else if (this.layer === 1) {
-          return this.sign * Math.pow(10, this.mag);
-        } //overflow for any normalized Decimal
+        if (this.layer === 0) return this.sign * this.mag;
+        else if (this.layer === 1) return this.sign * Math.pow(10, this.mag);
+        //overflow for any normalized Decimal
         else {
           return this.mag > 0 ? this.sign > 0 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY : 0;
         }
@@ -1151,13 +1025,8 @@
       key: "mantissaWithDecimalPlaces",
       value: function mantissaWithDecimalPlaces(places) {
         // https://stackoverflow.com/a/37425022
-        if (isNaN(this.m)) {
-          return Number.NaN;
-        }
-
-        if (this.m === 0) {
-          return 0;
-        }
+        if (isNaN(this.m)) return Number.NaN;
+        if (this.m === 0) return 0;
 
         return decimalPlaces(this.m, places);
       }
@@ -1165,14 +1034,8 @@
       key: "magnitudeWithDecimalPlaces",
       value: function magnitudeWithDecimalPlaces(places) {
         // https://stackoverflow.com/a/37425022
-        if (isNaN(this.mag)) {
-          return Number.NaN;
-        }
-
-        if (this.mag === 0) {
-          return 0;
-        }
-
+        if (isNaN(this.mag)) return Number.NaN;
+        if (this.mag === 0) return 0;
         return decimalPlaces(this.mag, places);
       }
       /**
@@ -1184,10 +1047,7 @@
     }, {
       key: "toString",
       value: function toString() {
-        if (isNaN(this.layer) || isNaN(this.sign) || isNaN(this.mag)) {
-          return "NaN";
-        }
-
+        if (isNaN(this.layer) || isNaN(this.sign) || isNaN(this.mag)) return "NaN";
         if (this.mag === Number.POSITIVE_INFINITY || this.layer === Number.POSITIVE_INFINITY) {
           return this.sign === 1 ? "Infinity" : "-Infinity";
         }
@@ -1196,60 +1056,40 @@
           if (this.mag < 1e21 && this.mag > 1e-7 || this.mag === 0) {
             return (this.sign * this.mag).toString();
           }
-
           return this.m + "e" + this.e;
-        } else if (this.layer === 1) {
-          return this.m + "e" + this.e;
-        } else {
+        } else if (this.layer === 1) return this.m + "e" + this.e;
+        else {
           //layer 2+
           if (this.layer <= MAX_ES_IN_A_ROW) {
             return (this.sign === -1 ? "-" : "") + "e".repeat(this.layer) + this.mag;
-          } else {
-            return (this.sign === -1 ? "-" : "") + "(e^" + this.layer + ")" + this.mag;
-          }
+          } else return (this.sign === -1 ? "-" : "") + "(e^" + this.layer + ")" + this.mag;
         }
       }
     }, {
       key: "toExponential",
       value: function toExponential(places) {
-        if (this.layer === 0) {
-          return (this.sign * this.mag).toExponential(places);
-        }
-
+        if (this.layer === 0) return (this.sign * this.mag).toExponential(places);
         return this.toStringWithDecimalPlaces(places);
       }
     }, {
       key: "toFixed",
       value: function toFixed(places) {
-        if (this.layer === 0) {
-          return (this.sign * this.mag).toFixed(places);
-        }
-
+        if (this.layer === 0) return (this.sign * this.mag).toFixed(places);
         return this.toStringWithDecimalPlaces(places);
       }
     }, {
       key: "toPrecision",
       value: function toPrecision(places) {
-        if (this.e <= -7) {
-          return this.toExponential(places - 1);
-        }
-
-        if (places > this.e) {
-          return this.toFixed(places - this.exponent - 1);
-        }
-
+        if (this.e <= -7) return this.toExponential(places - 1);
+        if (places > this.e) return this.toFixed(places - this.exponent - 1);
         return this.toExponential(places - 1);
       }
     }, {
       key: "valueOf",
-      value: function valueOf() {
-        return this.toString();
-      }
+      value: function valueOf() {return this.toString();}
     }, {
       key: "toJSON",
-      value: function toJSON() {
-        return this.toString();
-      }
+      value: function toJSON() {return this.toString();}
     }, {
       key: "toStringWithDecimalPlaces",
       value: function toStringWithDecimalPlaces(places) {
@@ -1276,22 +1116,11 @@
 
     }, {
       key: "abs",
-      value: function abs() {
-        return FC_NN(this.sign === 0 ? 0 : 1, this.layer, this.mag);
-      }
-      /**
-       * Negates the Decimal it's called on: in other words, when given X, returns -X.
-       */
-
+      value: function abs() {return FC_NN(this.sign === 0 ? 0 : 1, this.layer, this.mag);}
+      
     }, {
-      key: "neg",
-      value: function neg() {
-        return FC_NN(-this.sign, this.layer, this.mag);
-      }
-      /**
-       * Negates the Decimal it's called on: in other words, when given X, returns -X.
-       */
-
+      key: "neg", // negate the decimal, same for negate()
+      value: function neg() {return FC_NN(-this.sign, this.layer, this.mag);}
     }, {
       key: "negate",
       value: function negate() {
@@ -1303,63 +1132,32 @@
 
     }, {
       key: "negated",
-      value: function negated() {
-        return this.neg();
-      } // public sign () {
-      //     return this.sign;
-      //   }
-
-      /**
-       * Returns the sign of the Decimal it's called on. (Though, since sign is a public data member of Decimal, you might as well just call .sign instead of .sgn())
-       */
-
+      value: function negated() {return this.neg();} 
     }, {
-      key: "sgn",
-      value: function sgn() {
-        return this.sign;
-      }
-      /**
-       * Rounds the Decimal it's called on to the nearest integer.
-       */
-
+      key: "sgn", // return the sign
+      value: function sgn() {return this.sign;}
     }, {
-      key: "round",
+      key: "round", // round to nearest integer
       value: function round() {
-        if (this.mag < 0) {
-          return FC_NN(0, 0, 0);
-        }
-
-        if (this.layer === 0) {
-          return FC(this.sign, 0, Math.round(this.mag));
-        }
-
+        if (this.mag < 0) {return FC_NN(0, 0, 0);}
+        if (this.layer === 0) {return FC(this.sign, 0, Math.round(this.mag));}
         return new Decimal(this);
       }
-      /**
-       * "Rounds" the Decimal it's called on to the nearest integer that's less than or equal to it.
-       */
-
     }, {
-      key: "floor",
+      key: "floor", // round down
       value: function floor() {
         if (this.mag < 0) {
-          if (this.sign === -1) return FC_NN(-1, 0, 1);else return FC_NN(0, 0, 0);
+          if (this.sign === -1) return FC_NN(-1, 0, 1);
+          else return FC_NN(0, 0, 0);
         }
-
         if (this.sign === -1) return this.neg().ceil().neg();
-
         if (this.layer === 0) {
           return FC(this.sign, 0, Math.floor(this.mag));
         }
-
         return new Decimal(this);
       }
-      /**
-       * "Rounds" the Decimal it's called on to the nearest integer that's greater than or equal to it.
-       */
-
     }, {
-      key: "ceil",
+      key: "ceil", // round up
       value: function ceil() {
         if (this.mag < 0) {
           if (this.sign === 1) return FC_NN(1, 0, 1); //The ceiling function called on something tiny like 10^10^-100 should return 1, since 10^10^-100 is still greater than 0
@@ -1381,59 +1179,36 @@
     }, {
       key: "trunc",
       value: function trunc() {
-        if (this.mag < 0) {
-          return FC_NN(0, 0, 0);
-        }
-
-        if (this.layer === 0) {
-          return FC(this.sign, 0, Math.trunc(this.mag));
-        }
-
+        if (this.mag < 0) return FC_NN(0, 0, 0);
+        if (this.layer === 0) return FC(this.sign, 0, Math.trunc(this.mag));
         return new Decimal(this);
       }
-      /**
-       * Addition: returns the sum of 'this' and 'value'.
-       */
-
     }, {
-      key: "add",
+      key: "add", // add this + value
       value: function add(value) {
         var decimal = D(value); //Infinity + -Infinity = NaN
 
-        if (this.eq(Decimal.dInf) && decimal.eq(Decimal.dNegInf) || this.eq(Decimal.dNegInf) && decimal.eq(Decimal.dInf)) {
+        if (this.eq(Decimal.dInf) && decimal.eq(Decimal.dNegInf) 
+        || this.eq(Decimal.dNegInf) && decimal.eq(Decimal.dInf)) {
           return new Decimal(Decimal.dNaN);
         } //inf/nan check
 
-
-        if (!Number.isFinite(this.layer)) {
-          return new Decimal(this);
-        }
-
-        if (!Number.isFinite(decimal.layer)) {
-          return new Decimal(decimal);
-        } //Special case - if one of the numbers is 0, return the other number.
-
-
-        if (this.sign === 0) {
-          return new Decimal(decimal);
-        }
-
-        if (decimal.sign === 0) {
-          return new Decimal(this);
-        } //Special case - Adding a number to its negation produces 0, no matter how large.
-
-
-        if (this.sign === -decimal.sign && this.layer === decimal.layer && this.mag === decimal.mag) {
+        if (!Number.isFinite(this.layer)) return new Decimal(this);
+        if (!Number.isFinite(decimal.layer)) {return new Decimal(decimal);} 
+        //Special case - if one of the numbers is 0, return the other number.
+        if (this.sign === 0) return new Decimal(decimal);
+        if (decimal.sign === 0) return new Decimal(this);
+        //Special case - Adding a number to its negation produces 0, no matter how large.
+        if (this.sign === -decimal.sign 
+          && this.layer === decimal.layer 
+          && this.mag === decimal.mag) {
           return FC_NN(0, 0, 0);
         }
 
         var a;
         var b; //Special case: If one of the numbers is layer 2 or higher, just take the bigger number.
 
-        if (this.layer >= 2 || decimal.layer >= 2) {
-          return this.maxabs(decimal);
-        }
-
+        if (this.layer >= 2 || decimal.layer >= 2) return this.maxabs(decimal);
         if (Decimal.cmpabs(this, decimal) > 0) {
           a = new Decimal(this);
           b = new Decimal(decimal);
@@ -1447,16 +1222,14 @@
         }
 
         var layera = a.layer * Math.sign(a.mag);
-        var layerb = b.layer * Math.sign(b.mag); //If one of the numbers is 2+ layers higher than the other, just take the bigger number.
+        var layerb = b.layer * Math.sign(b.mag); 
+        //If one of the numbers is 2+ layers higher than the other, just take the bigger number.
 
-        if (layera - layerb >= 2) {
-          return a;
-        }
+        if (layera - layerb >= 2) return a;
 
         if (layera === 0 && layerb === -1) {
-          if (Math.abs(b.mag - Math.log10(a.mag)) > MAX_SIGNIFICANT_DIGITS) {
-            return a;
-          } else {
+          if (Math.abs(b.mag - Math.log10(a.mag)) > MAX_SIGNIFICANT_DIGITS) return a;
+          else {
             var magdiff = Math.pow(10, Math.log10(a.mag) - b.mag);
             var mantissa = b.sign + a.sign * magdiff;
             return FC(Math.sign(mantissa), 1, b.mag + Math.log10(Math.abs(mantissa)));
@@ -1464,78 +1237,46 @@
         }
 
         if (layera === 1 && layerb === 0) {
-          if (Math.abs(a.mag - Math.log10(b.mag)) > MAX_SIGNIFICANT_DIGITS) {
-            return a;
-          } else {
+          if (Math.abs(a.mag - Math.log10(b.mag)) > MAX_SIGNIFICANT_DIGITS) return a;
+          else {
             var _magdiff = Math.pow(10, a.mag - Math.log10(b.mag));
-
             var _mantissa = b.sign + a.sign * _magdiff;
-
             return FC(Math.sign(_mantissa), 1, Math.log10(b.mag) + Math.log10(Math.abs(_mantissa)));
           }
         }
 
-        if (Math.abs(a.mag - b.mag) > MAX_SIGNIFICANT_DIGITS) {
-          return a;
-        } else {
+        if (Math.abs(a.mag - b.mag) > MAX_SIGNIFICANT_DIGITS) return a;
+        else {
           var _magdiff2 = Math.pow(10, a.mag - b.mag);
-
           var _mantissa2 = b.sign + a.sign * _magdiff2;
-
           return FC(Math.sign(_mantissa2), 1, b.mag + Math.log10(Math.abs(_mantissa2)));
         }
       }
-      /**
-       * Addition: returns the sum of 'this' and 'value'.
-       */
-
     }, {
-      key: "plus",
-      value: function plus(value) {
-        return this.add(value);
-      }
-      /**
-       * Subtraction: returns the difference between 'this' and 'value'.
-       */
-
+      key: "plus", // same as .add(value)
+      value: function plus(value) {return this.add(value);}
     }, {
-      key: "sub",
-      value: function sub(value) {
-        return this.add(D(value).neg());
-      }
-      /**
-       * Subtraction: returns the difference between 'this' and 'value'.
-       */
-
+      key: "sub", // subtracts by value
+      value: function sub(value) {return this.add(D(value).neg());}
     }, {
-      key: "subtract",
-      value: function subtract(value) {
-        return this.sub(value);
-      }
-      /**
-       * Subtraction: returns the difference between 'this' and 'value'.
-       */
-
+      key: "subtract", // same as sub(value)
+      value: function subtract(value) {return this.sub(value);}
     }, {
-      key: "minus",
-      value: function minus(value) {
-        return this.sub(value);
-      }
-      /**
-       * Multiplication: returns the product of 'this' and 'value'.
-       */
-
+      key: "minus", // same as sub(value)
+      value: function minus(value) {return this.sub(value);}
     }, {
       key: "mul",
-      value: function mul(value) {
+      value: function mul(value) { // multiply by value
         var decimal = D(value); // Infinity * -Infinity = -Infinity
 
-        if (this.eq(Decimal.dInf) && decimal.eq(Decimal.dNegInf) || this.eq(Decimal.dNegInf) && decimal.eq(Decimal.dInf)) {
+        if (this.eq(Decimal.dInf) && decimal.eq(Decimal.dNegInf) 
+          || this.eq(Decimal.dNegInf) && decimal.eq(Decimal.dInf)) {
           return new Decimal(Decimal.dNegInf);
         } //Infinity * 0 = NaN
 
 
-        if (this.mag == Number.POSITIVE_INFINITY && decimal.eq(Decimal.dZero) || this.eq(Decimal.dZero) && this.mag == Number.POSITIVE_INFINITY) {
+        if (this.mag == Number.POSITIVE_INFINITY && decimal.eq(Decimal.dZero) 
+          || this.eq(Decimal.dZero) && this.mag == Number.POSITIVE_INFINITY) {
           return new Decimal(Decimal.dNaN);
         } // -Infinity * -Infinity = Infinity
 
@@ -1545,52 +1286,37 @@
         } //inf/nan check
 
 
-        if (!Number.isFinite(this.layer)) {
-          return new Decimal(this);
-        }
+        if (!Number.isFinite(this.layer)) return new Decimal(this);
 
-        if (!Number.isFinite(decimal.layer)) {
-          return new Decimal(decimal);
-        } //Special case - if one of the numbers is 0, return 0.
-
+        if (!Number.isFinite(decimal.layer)) return new Decimal(decimal);
+        //Special case - if one of the numbers is 0, return 0.
 
         if (this.sign === 0 || decimal.sign === 0) {
           return FC_NN(0, 0, 0);
-        } //Special case - Multiplying a number by its own reciprocal yields +/- 1, no matter how large.
+        } 
+        //Special case - Multiplying a number by its own 
+        // reciprocal yields +/- 1, no matter how large.
 
 
         if (this.layer === decimal.layer && this.mag === -decimal.mag) {
           return FC_NN(this.sign * decimal.sign, 0, 1);
         }
 
-        var a;
-        var b; //Which number is bigger in terms of its multiplicative distance from 1?
+        var a, b; //Which number is bigger in terms of its multiplicative distance from 1?
 
         if (this.layer > decimal.layer || this.layer == decimal.layer && Math.abs(this.mag) > Math.abs(decimal.mag)) {
           a = new Decimal(this);
           b = new Decimal(decimal);
-        } else {
-          a = new Decimal(decimal);
-          b = new Decimal(this);
-        }
+        } else {a = new Decimal(decimal); b = new Decimal(this);}
 
         if (a.layer === 0 && b.layer === 0) {
           return Decimal.fromNumber(a.sign * b.sign * a.mag * b.mag);
         } //Special case: If one of the numbers is layer 3 or higher or one of the numbers is 2+ layers bigger than the other, just take the bigger number.
 
 
-        if (a.layer >= 3 || a.layer - b.layer >= 2) {
-          return FC(a.sign * b.sign, a.layer, a.mag);
-        }
-
-        if (a.layer === 1 && b.layer === 0) {
-          return FC(a.sign * b.sign, 1, a.mag + Math.log10(b.mag));
-        }
-
-        if (a.layer === 1 && b.layer === 1) {
-          return FC(a.sign * b.sign, 1, a.mag + b.mag);
-        }
-
+        if (a.layer >= 3 || a.layer - b.layer >= 2) return FC(a.sign * b.sign, a.layer, a.mag);
+        if (a.layer === 1 && b.layer === 0) return FC(a.sign * b.sign, 1, a.mag + Math.log10(b.mag));
+        if (a.layer === 1 && b.layer === 1) return FC(a.sign * b.sign, 1, a.mag + b.mag);
         if (a.layer === 2 && b.layer === 1) {
           var newmag = FC(Math.sign(a.mag), a.layer - 1, Math.abs(a.mag)).add(FC(Math.sign(b.mag), b.layer - 1, Math.abs(b.mag)));
           return FC(a.sign * b.sign, newmag.layer + 1, newmag.sign * newmag.mag);
@@ -1598,99 +1324,48 @@
 
         if (a.layer === 2 && b.layer === 2) {
           var _newmag = FC(Math.sign(a.mag), a.layer - 1, Math.abs(a.mag)).add(FC(Math.sign(b.mag), b.layer - 1, Math.abs(b.mag)));
-
           return FC(a.sign * b.sign, _newmag.layer + 1, _newmag.sign * _newmag.mag);
         }
-
         throw Error("Bad arguments to mul: " + this + ", " + value);
       }
-      /**
-       * Multiplication: returns the product of 'this' and 'value'.
-       */
-
     }, {
-      key: "multiply",
-      value: function multiply(value) {
-        return this.mul(value);
-      }
-      /**
-       * Multiplication: returns the product of 'this' and 'value'.
-       */
-
+      key: "multiply", // same as mul(value)
+      value: function multiply(value) {return this.mul(value);}
     }, {
-      key: "times",
-      value: function times(value) {
-        return this.mul(value);
-      }
-      /**
-       * Division: returns the quotient of 'this' and 'value'.
-       */
-
+      key: "times", // same as mul(value)
+      value: function times(value) {return this.mul(value);}
     }, {
-      key: "div",
+      key: "div", // divide by value
       value: function div(value) {
         var decimal = D(value);
         return this.mul(decimal.recip());
       }
-      /**
-       * Division: returns the quotient of 'this' and 'value'.
-       */
-
     }, {
-      key: "divide",
-      value: function divide(value) {
-        return this.div(value);
-      }
-      /**
-       * Division: returns the quotient of 'this' and 'value'.
-       */
-
+      key: "divide", // same as div(value)
+      value: function divide(value) {return this.div(value);}
     }, {
-      key: "divideBy",
-      value: function divideBy(value) {
-        return this.div(value);
-      }
-      /**
-       * Division: returns the quotient of 'this' and 'value'.
-       */
-
+      key: "divideBy", // same as div(value)
+      value: function divideBy(value) {return this.div(value);}
     }, {
-      key: "dividedBy",
+      key: "dividedBy", // same as div(value)
       value: function dividedBy(value) {
         return this.div(value);
       }
-      /**
-       * Returns the reciprocal (1 / X) of the Decimal it's called on.
-       */
-
     }, {
-      key: "recip",
+      key: "recip", // reciprocal
       value: function recip() {
-        if (this.mag === 0) {
-          return new Decimal(Decimal.dNaN);
-        } else if (this.mag === Number.POSITIVE_INFINITY) {
-          return FC_NN(0, 0, 0);
-        } else if (this.layer === 0) {
-          return FC(this.sign, 0, 1 / this.mag);
-        } else {
-          return FC(this.sign, this.layer, -this.mag);
-        }
+        if (this.mag === 0) return new Decimal(Decimal.dNaN);
+        else if (this.mag === Number.POSITIVE_INFINITY) return FC_NN(0, 0, 0);
+        else if (this.layer === 0) return FC(this.sign, 0, 1 / this.mag);
+        else return FC(this.sign, this.layer, -this.mag);
       }
-      /**
-       * Returns the reciprocal (1 / X) of the Decimal it's called on.
-       */
-
     }, {
-      key: "reciprocal",
+      key: "reciprocal", // same as recip()
       value: function reciprocal() {
         return this.recip();
       }
-      /**
-       * Returns the reciprocal (1 / X) of the Decimal it's called on.
-       */
-
     }, {
-      key: "reciprocate",
+      key: "reciprocate", // same as recip()
       value: function reciprocate() {
         return this.recip();
       }
@@ -1703,7 +1378,7 @@
       //Taken from OmegaNum.js, with a couple touch-ups
 
     }, {
-      key: "mod",
+      key: "mod", // remainder of this number / value
       value: function mod(value) {
         var floored = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
         var vd = D(value);
@@ -1723,41 +1398,22 @@
           return new Decimal(num_this % num_decimal);
         }
 
-        if (this.sub(decimal).eq(this)) {
-          //decimal is too small to register to this
-          return FC_NN(0, 0, 0);
-        }
-
-        if (decimal.sub(this).eq(decimal)) {
-          //this is too small to register to decimal
-          return new Decimal(this);
-        }
+        if (this.sub(decimal).eq(this)) return FC_NN(0, 0, 0); 
+        //decimal is too small to register to this
+        if (decimal.sub(this).eq(decimal)) return new Decimal(this);
+        //this is too small to register to decimal
 
         if (this.sign == -1) return this.abs().mod(decimal).neg();
         return this.sub(this.div(decimal).floor().mul(decimal));
       }
-      /**
-       * Returns the remainder of 'this' divided by 'value': for example, 5 mod 2 = 1, because the remainder of 5 / 2 is 1.
-       * Uses the "truncated division" modulo, which is the same as JavaScript's native modulo operator (%)...
-       * unless 'floored' is true, in which case it uses the "floored" modulo, which is closer to how modulo works in number theory.
-       * These two forms of modulo are the same when only positive numbers are involved, but differ in how they work with negative numbers.
-       */
-
     }, {
-      key: "modulo",
+      key: "modulo", // same as mod(value)
       value: function modulo(value) {
         var floored = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
         return this.mod(value, floored);
       }
-      /**
-       * Returns the remainder of 'this' divided by 'value': for example, 5 mod 2 = 1, because the remainder of 5 / 2 is 1.
-       * Uses the "truncated division" modulo, which is the same as JavaScript's native modulo operator (%)...
-       * unless 'floored' is true, in which case it uses the "floored" modulo, which is closer to how modulo works in number theory.
-       * These two forms of modulo are the same when only positive numbers are involved, but differ in how they work with negative numbers.
-       */
-
     }, {
-      key: "modular",
+      key: "modular", // same as mod(value)
       value: function modular(value) {
         var floored = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
         return this.mod(value, floored);
@@ -1767,216 +1423,114 @@
        */
 
     }, {
-      key: "cmp",
+      key: "cmp", // compare to value. returns -1 if less, 0 if equal, 1 if greater
       value: function cmp(value) {
         var decimal = D(value);
 
-        if (this.sign > decimal.sign) {
-          return 1;
-        }
-
-        if (this.sign < decimal.sign) {
-          return -1;
-        }
-
+        if (this.sign > decimal.sign) return 1;
+        if (this.sign < decimal.sign) return -1;
         return this.sign * this.cmpabs(value);
       }
-      /**
-       * Compares the absolute values of this and value.
-       * Returns 1 if |'this'| > |'value'|, returns -1 if |'this'| < |'value'|, returns 0 if |'this'| == |'value'|.
-       */
-
     }, {
-      key: "cmpabs",
+      key: "cmpabs", // compare absolute values. return -1 if less, 0 if equal, 1 if greater.
       value: function cmpabs(value) {
         var decimal = D(value);
         var layera = this.mag > 0 ? this.layer : -this.layer;
         var layerb = decimal.mag > 0 ? decimal.layer : -decimal.layer;
 
-        if (layera > layerb) {
-          return 1;
-        }
-
-        if (layera < layerb) {
-          return -1;
-        }
-
-        if (this.mag > decimal.mag) {
-          return 1;
-        }
-
-        if (this.mag < decimal.mag) {
-          return -1;
-        }
+        if (layera > layerb) return 1;
+        if (layera < layerb) return -1;
+        if (this.mag > decimal.mag) return 1;
+        if (this.mag < decimal.mag) return -1;
 
         return 0;
       }
-      /**
-       * Returns 1 if 'this' > 'value', returns -1 if 'this' < 'value', returns 0 if 'this' == 'value'.
-       */
-
     }, {
-      key: "compare",
-      value: function compare(value) {
-        return this.cmp(value);
-      }
-      /**
-       * Returns true if the Decimal is an NaN value.
-       */
-
+      key: "compare", // same as cmp(value)
+      value: function compare(value) {return this.cmp(value);}
     }, {
-      key: "isNan",
-      value: function isNan() {
-        return isNaN(this.sign) || isNaN(this.layer) || isNaN(this.mag);
-      }
-      /**
-       * Returns true if the Decimal is finite (by Decimal standards, not by floating point standards - a humongous Decimal like 10^^10^100 is still finite!)
-       */
-
+      key: "isNan", // check if NaN, return boolean.
+      value: function isNan() {return isNaN(this.sign) || isNaN(this.layer) || isNaN(this.mag);}
     }, {
-      key: "isFinite",
+      key: "isFinite", // check if a finite number by Decimal standards.
       value: function (_isFinite2) {
-        function isFinite() {
-          return _isFinite2.apply(this, arguments);
-        }
-
-        isFinite.toString = function () {
-          return _isFinite2.toString();
-        };
-
+        function isFinite() {return _isFinite2.apply(this, arguments);}
+        isFinite.toString = function () {return _isFinite2.toString();};
         return isFinite;
       }(function () {
         return isFinite(this.sign) && isFinite(this.layer) && isFinite(this.mag);
       }
-      /**
-       * The Decimal equivalent of ==. Returns true if 'this' and 'value' have equal values.
-       */
       )
     }, {
-      key: "eq",
+      key: "eq", // check if equal, return boolean.
       value: function eq(value) {
         var decimal = D(value);
-        return this.sign === decimal.sign && this.layer === decimal.layer && this.mag === decimal.mag;
+        return this.sign === decimal.sign 
+        && this.layer === decimal.layer 
+        && this.mag === decimal.mag;
       }
-      /**
-       * Returns true if 'this' and 'value' have equal values.
-       */
-
     }, {
-      key: "equals",
-      value: function equals(value) {
-        return this.eq(value);
-      }
-      /**
-       * The Decimal equivalent of !=. Returns true if 'this' and 'value' do not have equal values.
-       */
-
+      key: "equals", // same as eq(value)
+      value: function equals(value) {return this.eq(value);}
     }, {
-      key: "neq",
-      value: function neq(value) {
-        return !this.eq(value);
-      }
-      /**
-       * Returns true if 'this' and 'value' do not have equal values.
-       */
-
+      key: "neq", // check if not equal, return boolean.
+      value: function neq(value) {return !this.eq(value);}
     }, {
-      key: "notEquals",
+      key: "notEquals", // same as neq(value)
       value: function notEquals(value) {
         return this.neq(value);
       }
-      /**
-       * The Decimal equivalent of <. Returns true if 'this' is less than 'value'.
-       */
-
     }, {
-      key: "lt",
+      key: "lt", // check if less than value, return boolean.
       value: function lt(value) {
         return this.cmp(value) === -1;
       }
-      /**
-       * The Decimal equivalent of <=. Returns true if 'this' is less than or equal to 'value'.
-       */
-
     }, {
-      key: "lte",
+      key: "lte", // check if less than or equal, return bool.
       value: function lte(value) {
         return !this.gt(value);
       }
-      /**
-       * The Decimal equivalent of >. Returns true if 'this' is greater than 'value'.
-       */
-
     }, {
-      key: "gt",
+      key: "gt", // check if greater, return bool.
       value: function gt(value) {
         return this.cmp(value) === 1;
       }
-      /**
-       * The Decimal equivalent of >=. Returns true if 'this' is greater than or equal to 'value'.
-       */
-
     }, {
-      key: "gte",
+      key: "gte", // check if greater than or equal
       value: function gte(value) {
         return !this.lt(value);
       }
-      /**
-       * Returns whichever of 'this' and 'value' is higher.
-       */
-
     }, {
-      key: "max",
+      key: "max", // get higher number
       value: function max(value) {
         var decimal = D(value);
         return this.lt(decimal) ? new Decimal(decimal) : new Decimal(this);
       }
-      /**
-       * Returns whichever of 'this' and 'value' is lower.
-       */
-
     }, {
-      key: "min",
+      key: "min", // get lower number
       value: function min(value) {
         var decimal = D(value);
         return this.gt(decimal) ? new Decimal(decimal) : new Decimal(this);
       }
-      /**
-       * Returns whichever of 'this' and 'value' has a larger absolute value.
-       */
-
     }, {
-      key: "maxabs",
+      key: "maxabs", // get higher absolute value
       value: function maxabs(value) {
         var decimal = D(value);
         return this.cmpabs(decimal) < 0 ? new Decimal(decimal) : new Decimal(this);
       }
-      /**
-       * Returns whichever of 'this' and 'value' has a smaller absolute value.
-       */
-
     }, {
-      key: "minabs",
+      key: "minabs", // get lower absolute value
       value: function minabs(value) {
         var decimal = D(value);
         return this.cmpabs(decimal) > 0 ? new Decimal(decimal) : new Decimal(this);
       }
-      /**
-       * A combination of minimum and maximum: the value returned by clamp is normally 'this', but it won't go below 'min' and it won't go above 'max'.
-       * Therefore, if 'this' < 'min', then 'min' is returned, and if 'this' > 'max', then 'max' is returned.
-       */
-
     }, {
-      key: "clamp",
+      key: "clamp", // if less than min, return min. if greater than max return max
       value: function clamp(min, max) {
         return this.max(min).min(max);
       }
-      /**
-       * Returns 'this', unless 'this' is less than 'min', in which case 'min' is returned.
-       */
-
     }, {
-      key: "clampMin",
+      key: "clampMin", // returns the same value unless less than min, in which case return min
       value: function clampMin(min) {
         return this.max(min);
       }
@@ -1985,7 +1539,7 @@
        */
 
     }, {
-      key: "clampMax",
+      key: "clampMax", // return the same value  unless less than max, in which case return max
       value: function clampMax(max) {
         return this.min(max);
       }
@@ -1998,198 +1552,96 @@
        */
 
     }, {
-      key: "cmp_tolerance",
+      key: "cmp_tolerance", /* return 1 if greater, -1 if less, 0 if equal. comparisons are
+      rounded to the nearest (larger number * tolerance.) */
       value: function cmp_tolerance(value, tolerance) {
         var decimal = D(value);
         return this.eq_tolerance(decimal, tolerance) ? 0 : this.cmp(decimal);
       }
-      /**
-       * Returns 1 if 'this' is greater than 'value', returns -1 if 'this' is less than 'value', returns 0 if 'this' is equal to 'value'.
-       * However, the two Decimals are considered equal if they're approximately equal up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "compare_tolerance",
+      key: "compare_tolerance", // same as cmp_tolerance(value, tolerance)
       value: function compare_tolerance(value, tolerance) {
         return this.cmp_tolerance(value, tolerance);
       }
-      /**
-       * Tests whether two Decimals are approximately equal, up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "eq_tolerance",
+      key: "eq_tolerance", // check for equivalency. tolerance rule from cmp_tolerance applies.
       value: function eq_tolerance(value, tolerance) {
         var decimal = D(value); // https://stackoverflow.com/a/33024979
 
-        if (tolerance == null) {
-          tolerance = 1e-7;
-        } //Numbers that are too far away are never close.
+        if (tolerance == null) tolerance = 1e-7;
+        //Numbers that are too far away are never close.
+        if (this.sign !== decimal.sign) return false;
 
-
-        if (this.sign !== decimal.sign) {
-          return false;
-        }
-
-        if (Math.abs(this.layer - decimal.layer) > 1) {
-          return false;
-        } // return abs(a-b) <= tolerance * max(abs(a), abs(b))
+        if (Math.abs(this.layer - decimal.layer) > 1) return false;
+        // return abs(a-b) <= tolerance * max(abs(a), abs(b))
 
 
         var magA = this.mag;
         var magB = decimal.mag;
 
-        if (this.layer > decimal.layer) {
-          magB = f_maglog10(magB);
-        }
-
-        if (this.layer < decimal.layer) {
-          magA = f_maglog10(magA);
-        }
+        if (this.layer > decimal.layer) magB = f_maglog10(magB);
+        if (this.layer < decimal.layer) magA = f_maglog10(magA);
 
         return Math.abs(magA - magB) <= tolerance * Math.max(Math.abs(magA), Math.abs(magB));
       }
-      /**
-       * Tests whether two Decimals are approximately equal, up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "equals_tolerance",
+      key: "equals_tolerance", // same as eq_tolerance(value, tolerance)
       value: function equals_tolerance(value, tolerance) {
         return this.eq_tolerance(value, tolerance);
       }
-      /**
-       * Tests whether two Decimals are not approximately equal, up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "neq_tolerance",
+      key: "neq_tolerance", // check if not equal, according to tolerance rules.
       value: function neq_tolerance(value, tolerance) {
         return !this.eq_tolerance(value, tolerance);
       }
-      /**
-       * Tests whether two Decimals are not approximately equal, up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "notEquals_tolerance",
+      key: "notEquals_tolerance", // same as neq_tolerance(value, tolerance)
       value: function notEquals_tolerance(value, tolerance) {
         return this.neq_tolerance(value, tolerance);
       }
-      /**
-       * Returns true if 'this' is less than 'value'.
-       * However, the two Decimals are considered equal if they're approximately equal up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "lt_tolerance",
+      key: "lt_tolerance", // check if less than value, according to tolerance rule
       value: function lt_tolerance(value, tolerance) {
         var decimal = D(value);
         return !this.eq_tolerance(decimal, tolerance) && this.lt(decimal);
       }
-      /**
-       * Returns true if 'this' is less than or equal to 'value'.
-       * However, the two Decimals are considered equal if they're approximately equal up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "lte_tolerance",
+      key: "lte_tolerance", // check if less than or equal, according to tolerance rule
       value: function lte_tolerance(value, tolerance) {
         var decimal = D(value);
         return this.eq_tolerance(decimal, tolerance) || this.lt(decimal);
       }
-      /**
-       * Returns true if 'this' is greater than 'value'.
-       * However, the two Decimals are considered equal if they're approximately equal up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "gt_tolerance",
+      key: "gt_tolerance",// check if greater, according to tolerance rule
       value: function gt_tolerance(value, tolerance) {
         var decimal = D(value);
         return !this.eq_tolerance(decimal, tolerance) && this.gt(decimal);
       }
-      /**
-       * Returns true if 'this' is greater than or equal to 'value'.
-       * However, the two Decimals are considered equal if they're approximately equal up to a certain tolerance.
-       * Tolerance is a relative tolerance, multiplied by the greater of the magnitudes of the two arguments.
-       * For example, if you put in 1e-9, then any number closer to the
-       * larger number than (larger number)*1e-9 will be considered equal.
-       */
-
     }, {
-      key: "gte_tolerance",
+      key: "gte_tolerance", // check if greater than or equal, according to tolerance rule
       value: function gte_tolerance(value, tolerance) {
         var decimal = D(value);
         return this.eq_tolerance(decimal, tolerance) || this.gt(decimal);
       }
-      /**
-       * "Positive log10": Returns the base-10 logarithm of nonnegative Decimals, but returns 0 for negative Decimals.
-       */
-
     }, {
-      key: "pLog10",
+      key: "pLog10", // return base 10 log of non-negative decimals, return 0 if 0.
       value: function pLog10() {
-        if (this.lt(Decimal.dZero)) {
-          return FC_NN(0, 0, 0);
-        }
-
+        if (this.lt(Decimal.dZero)) return FC_NN(0, 0, 0);
         return this.log10();
       }
-      /**
-       * Returns the base-10 logarithm of abs('this').
-       */
-
     }, {
-      key: "absLog10",
+      key: "absLog10", // return base 10 log of absolute value of number
       value: function absLog10() {
-        if (this.sign === 0) {
-          return new Decimal(Decimal.dNaN);
-        } else if (this.layer > 0) {
-          return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag));
-        } else {
-          return FC(1, 0, Math.log10(this.mag));
-        }
+        if (this.sign === 0) return new Decimal(Decimal.dNaN);
+        else if (this.layer > 0) return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag))
+        else return FC(1, 0, Math.log10(this.mag));
       }
-      /**
-       * Base-10 logarithm: returns the Decimal X such that 10^X = 'this'.
-       * For numbers above layer 0, this is equivalent to subtracting 1 from layer and normalizing.
-       */
-
     }, {
-      key: "log10",
+      key: "log10", // return log10
       value: function log10() {
-        if (this.sign <= 0) {
-          return new Decimal(Decimal.dNaN);
-        } else if (this.layer > 0) {
-          return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag));
-        } else {
-          return FC(this.sign, 0, Math.log10(this.mag));
-        }
+        if (this.sign <= 0) return new Decimal(Decimal.dNaN);
+        else if (this.layer > 0) return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag))
+        else return FC(this.sign, 0, Math.log10(this.mag));
       }
       /**
        * Logarithms are one of the inverses of exponentiation: this function finds the Decimal X such that base^X = 'this'.
@@ -2197,20 +1649,13 @@
 
     }, {
       key: "log",
-      value: function log(base) {
+      value: function log(base) { // calculate logarithm of base @param base.
         base = D(base);
 
-        if (this.sign <= 0) {
-          return new Decimal(Decimal.dNaN);
-        }
+        if (this.sign <= 0 || base.sign <= 0) return new Decimal(Decimal.dNaN);
 
-        if (base.sign <= 0) {
-          return new Decimal(Decimal.dNaN);
-        }
-
-        if (base.sign === 1 && base.layer === 0 && base.mag === 1) {
-          return new Decimal(Decimal.dNaN);
-        } else if (this.layer === 0 && base.layer === 0) {
+        if (base.sign === 1 && base.layer === 0 && base.mag === 1) return new Decimal(Decimal.dNaN);
+        else if (this.layer === 0 && base.layer === 0) {
           return FC(this.sign, 0, Math.log(this.mag) / Math.log(base.mag));
         }
 
@@ -2221,87 +1666,52 @@
        */
 
     }, {
-      key: "log2",
+      key: "log2", // return base 2 log
       value: function log2() {
-        if (this.sign <= 0) {
-          return new Decimal(Decimal.dNaN);
-        } else if (this.layer === 0) {
-          return FC(this.sign, 0, Math.log2(this.mag));
-        } else if (this.layer === 1) {
+        if (this.sign <= 0) return new Decimal(Decimal.dNaN);
+        else if (this.layer === 0) return FC(this.sign, 0, Math.log2(this.mag));
+        else if (this.layer === 1) {
           return FC(Math.sign(this.mag), 0, Math.abs(this.mag) * 3.321928094887362); //log2(10)
         } else if (this.layer === 2) {
           return FC(Math.sign(this.mag), 1, Math.abs(this.mag) + 0.5213902276543247); //-log10(log10(2))
-        } else {
-          return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag));
-        }
+        } else return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag));
       }
-      /**
-       * Base-e logarithm, also known as the "natural" logarithm: returns the Decimal X such that e^X = 'this'.
-       */
-
     }, {
-      key: "ln",
+      key: "ln", // return natural log
       value: function ln() {
-        if (this.sign <= 0) {
-          return new Decimal(Decimal.dNaN);
-        } else if (this.layer === 0) {
-          return FC(this.sign, 0, Math.log(this.mag));
-        } else if (this.layer === 1) {
+        if (this.sign <= 0) return new Decimal(Decimal.dNaN);
+        else if (this.layer === 0) return FC(this.sign, 0, Math.log(this.mag));
+        else if (this.layer === 1) {
           return FC(Math.sign(this.mag), 0, Math.abs(this.mag) * 2.302585092994046); //ln(10)
         } else if (this.layer === 2) {
           return FC(Math.sign(this.mag), 1, Math.abs(this.mag) + 0.36221568869946325); //log10(log10(e))
-        } else {
-          return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag));
-        }
+        } else return FC(Math.sign(this.mag), this.layer - 1, Math.abs(this.mag));
       }
-      /**
-       * Logarithms are one of the inverses of exponentiation: this function finds the Decimal X such that base^X = 'this'.
-       */
-
     }, {
-      key: "logarithm",
+      key: "logarithm", // same as log(base)
       value: function logarithm(base) {
         return this.log(base);
       }
-      /**
-       * Exponentiation: Returns the result of 'this' ^ 'value' (often written as 'this' ** 'value' in programming languages).
-       */
-
     }, {
-      key: "pow",
+      key: "pow", // exponentiate number called on by value
       value: function pow(value) {
         var decimal = D(value);
         var a = new Decimal(this);
         var b = new Decimal(decimal); //special case: if a is 0, then return 0 (UNLESS b is 0, then return 1)
 
-        if (a.sign === 0) {
-          return b.eq(0) ? FC_NN(1, 0, 1) : a;
-        } //special case: if a is 1, then return 1
+        if (a.sign === 0) return b.eq(0) ? FC_NN(1, 0, 1) : a;
+        //special case: if a is 1, then return 1
+        if (a.sign === 1 && a.layer === 0 && a.mag === 1) return a;
+        //special case: if b is 0, then return 1
 
 
-        if (a.sign === 1 && a.layer === 0 && a.mag === 1) {
-          return a;
-        } //special case: if b is 0, then return 1
-
-
-        if (b.sign === 0) {
-          return FC_NN(1, 0, 1);
-        } //special case: if b is 1, then return a
-
-
-        if (b.sign === 1 && b.layer === 0 && b.mag === 1) {
-          return a;
-        }
-
+        if (b.sign === 0) return FC_NN(1, 0, 1); //special case: if b is 1, then return a
+        if (b.sign === 1 && b.layer === 0 && b.mag === 1) return a;
         var result = a.absLog10().mul(b).pow10();
 
         if (this.sign === -1) {
-          if (Math.abs(b.toNumber() % 2) % 2 === 1) {
-            return result.neg();
-          } else if (Math.abs(b.toNumber() % 2) % 2 === 0) {
-            return result;
-          }
-
+          if (Math.abs(b.toNumber() % 2) % 2 === 1) return result.neg();
+          else if (Math.abs(b.toNumber() % 2) % 2 === 0) return result;
           return new Decimal(Decimal.dNaN);
         }
 
@@ -2312,7 +1722,7 @@
        */
 
     }, {
-      key: "pow10",
+      key: "pow10", // 10^number called on
       value: function pow10() {
         /*
         There are four cases we need to consider:
@@ -2321,13 +1731,8 @@
         3) positive sign, negative mag (e-15, ee-15): layer 0 case would have been handled in the Math.pow check, so just return 1
         4) negative sign, negative mag (-e-15, -ee-15): layer 0 case would have been handled in the Math.pow check, so just return 1
         */
-        if (this.eq(Decimal.dInf)) {
-          return new Decimal(Decimal.dInf);
-        }
-
-        if (this.eq(Decimal.dNegInf)) {
-          return FC_NN(0, 0, 0);
-        }
+        if (this.eq(Decimal.dInf)) return new Decimal(Decimal.dInf);
+        if (this.eq(Decimal.dNegInf)) return FC_NN(0, 0, 0);
 
         if (!Number.isFinite(this.layer) || !Number.isFinite(this.mag)) {
           return new Decimal(Decimal.dNaN);
@@ -2338,27 +1743,17 @@
         if (a.layer === 0) {
           var newmag = Math.pow(10, a.sign * a.mag);
 
-          if (Number.isFinite(newmag) && Math.abs(newmag) >= 0.1) {
-            return FC(1, 0, newmag);
-          } else {
-            if (a.sign === 0) {
-              return FC_NN(1, 0, 1);
-            } else {
-              a = FC_NN(a.sign, a.layer + 1, Math.log10(a.mag));
-            }
+          if (Number.isFinite(newmag) && Math.abs(newmag) >= 0.1) return FC(1, 0, newmag);
+          else {
+            if (a.sign === 0) return FC_NN(1, 0, 1);
+            else a = FC_NN(a.sign, a.layer + 1, Math.log10(a.mag));
           }
         } //handle all 4 layer 1+ cases individually
 
 
-        if (a.sign > 0 && a.mag >= 0) {
-          return FC(a.sign, a.layer + 1, a.mag);
-        }
-
-        if (a.sign < 0 && a.mag >= 0) {
-          return FC(-a.sign, a.layer + 1, -a.mag);
-        } //both the negative mag cases are identical: one +/- rounding error
-
-
+        if (a.sign > 0 && a.mag >= 0) return FC(a.sign, a.layer + 1, a.mag);
+        if (a.sign < 0 && a.mag >= 0) {return FC(-a.sign, a.layer + 1, -a.mag);} 
+        //both the negative mag cases are identical: one +/- rounding error
         return FC_NN(1, 0, 1);
       }
       /**
@@ -2366,39 +1761,24 @@
        */
 
     }, {
-      key: "pow_base",
+      key: "pow_base", // same as pow(value)
       value: function pow_base(value) {
         return D(value).pow(this);
       }
-      /**
-       * Roots are one of the inverses of exponentiation: this function finds the Decimal X such that X ^ 'value' = 'this'.
-       * Equivalent to 'this' ^ (1 / 'value'), which is written here as this.pow(value.recip()).
-       */
-
     }, {
-      key: "root",
+      key: "root", // this number ^ (1 / value)
       value: function root(value) {
         var decimal = D(value);
         if (this.lt(0) && decimal.mod(2, true).eq(1)) return this.neg().root(decimal).neg();
         return this.pow(decimal.recip());
       }
-      /**
-       * For positive integers, X factorial (written as X!) equals X * (X - 1) * (X - 2) *... * 3 * 2 * 1. 0! equals 1.
-       * This can be extended to real numbers (except for negative integers) via the gamma function, which is what this function does.
-       */
-
     }, {
-      key: "factorial",
+      key: "factorial", // factorial or gamma
       value: function factorial() {
-        if (this.mag < 0) {
-          return this.add(1).gamma();
-        } else if (this.layer === 0) {
-          return this.add(1).gamma();
-        } else if (this.layer === 1) {
-          return Decimal.exp(Decimal.mul(this, Decimal.ln(this).sub(1)));
-        } else {
-          return Decimal.exp(this);
-        }
+        if (this.mag < 0) return this.add(1).gamma();
+        else if (this.layer === 0) return this.add(1).gamma();
+        else if (this.layer === 1) return Decimal.exp(Decimal.mul(this, Decimal.ln(this).sub(1)));
+        else return Decimal.exp(this);
       }
       /**
        * The gamma function extends the idea of factorials to non-whole numbers using some calculus.
@@ -2408,15 +1788,11 @@
       //from HyperCalc source code
 
     }, {
-      key: "gamma",
+      key: "gamma", // gamma function: integral of t^(x-1) * e^-t from t = 0 to infinity
       value: function gamma() {
-        if (this.mag < 0) {
-          return this.recip();
-        } else if (this.layer === 0) {
-          if (this.lt(FC_NN(1, 0, 24))) {
-            return Decimal.fromNumber(f_gamma(this.sign * this.mag));
-          }
-
+        if (this.mag < 0) return this.recip();
+        else if (this.layer === 0) {
+          if (this.lt(FC_NN(1, 0, 24))) return Decimal.fromNumber(f_gamma(this.sign * this.mag));
           var t = this.mag - 1;
           var l = 0.9189385332046727; //0.5*Math.log(2*Math.PI)
 
@@ -2428,19 +1804,14 @@
           var adj = 1 / lm;
           var l2 = l + adj;
 
-          if (l2 === l) {
-            return Decimal.exp(l);
-          }
-
+          if (l2 === l) return Decimal.exp(l);
           l = l2;
           np = np * n2;
           lm = 360 * np;
           adj = 1 / lm;
           l2 = l - adj;
 
-          if (l2 === l) {
-            return Decimal.exp(l);
-          }
+          if (l2 === l) return Decimal.exp(l);
 
           l = l2;
           np = np * n2;
@@ -2452,31 +1823,18 @@
           lt = 1 / lm;
           l = l - lt;
           return Decimal.exp(l);
-        } else if (this.layer === 1) {
-          return Decimal.exp(Decimal.mul(this, Decimal.ln(this).sub(1)));
-        } else {
-          return Decimal.exp(this);
-        }
+        } else if (this.layer === 1) return Decimal.exp(Decimal.mul(this, Decimal.ln(this).sub(1)))
+        else return Decimal.exp(this);
       }
-      /**
-       * Returns the natural logarithm of Gamma('this').
-       */
-
     }, {
-      key: "lngamma",
+      key: "lngamma", // ln of gamma of called number
       value: function lngamma() {
         return this.gamma().ln();
       }
-      /**
-       * Base-e exponentiation: returns e^'this'.
-       */
-
     }, {
-      key: "exp",
+      key: "exp", // e ^ this number
       value: function exp() {
-        if (this.mag < 0) {
-          return FC_NN(1, 0, 1);
-        }
+        if (this.mag < 0) return FC_NN(1, 0, 1);
 
         if (this.layer === 0 && this.mag <= 709.7) {
           return Decimal.fromNumber(Math.exp(this.sign * this.mag));
@@ -2484,25 +1842,15 @@
           return FC(1, 1, this.sign * Math.log10(Math.E) * this.mag);
         } else if (this.layer === 1) {
           return FC(1, 2, this.sign * (Math.log10(0.4342944819032518) + this.mag));
-        } else {
-          return FC(1, this.layer + 1, this.sign * this.mag);
-        }
+        } else return FC(1, this.layer + 1, this.sign * this.mag);
       }
-      /**
-       * Squaring a number means multiplying it by itself, a.k.a. raising it to the second power.
-       */
-
     }, {
-      key: "sqr",
+      key: "sqr", // square a number
       value: function sqr() {
         return this.pow(2);
       }
-      /**
-       * Square root: finds the Decimal X such that X * X, a.k.a X^2, equals 'this'. Equivalent to X^(1/2).
-       */
-
     }, {
-      key: "sqrt",
+      key: "sqrt", // square root
       value: function sqrt() {
         if (this.layer === 0) {
           return Decimal.fromNumber(Math.sqrt(this.sign * this.mag));
@@ -2515,21 +1863,13 @@
           return result;
         }
       }
-      /**
-       * Cubing a number means raising it to the third power.
-       */
-
     }, {
-      key: "cube",
+      key: "cube", // cube
       value: function cube() {
         return this.pow(3);
       }
-      /**
-       * Cube root: finds the Decimal X such that X^3 equals 'this'. Equivalent to X^(1/3).
-       */
-
     }, {
-      key: "cbrt",
+      key: "cbrt", // cube root
       value: function cbrt() {
         if (this.lt(0)) return this.neg().pow(1 / 3).neg();
         return this.pow(1 / 3);
@@ -4237,13 +3577,9 @@
     }, {
       key: "isFinite",
       value: function (_isFinite) {
-        function isFinite(_x2) {
-          return _isFinite.apply(this, arguments);
-        }
+        function isFinite(_x2) {return _isFinite.apply(this, arguments);}
 
-        isFinite.toString = function () {
-          return _isFinite.toString();
-        };
+        isFinite.toString = function () { return _isFinite.toString();};
 
         return isFinite;
       }(function (value) {
@@ -5532,34 +4868,26 @@
 
             var new_decimal = func(appliedResult);
 
-            if (new_decimal.eq(value) && !critical) {
-              break;
-            }
+            if (new_decimal.eq(value) && !critical) break;
 
             var currently_rose = comparative(new_decimal, value);
 
             if (i > 1) {
-              if (previously_rose != currently_rose) {
-                has_changed_directions_once = true;
-              }
+              if (previously_rose != currently_rose) has_changed_directions_once = true;
             }
 
             previously_rose = currently_rose;
 
-            if (has_changed_directions_once) {
-              step_size /= 2;
-            } else {
-              step_size *= 2;
-            } // If the inverse is trying to increase when it's already at maxX, or it's trying to decrease when it's already at minX, it's going outside the domain, so return NaN.
+            if (has_changed_directions_once) step_size /= 2;
+            else step_size *= 2;
+            // If the inverse is trying to increase when it's already at maxX, or it's trying to decrease when it's already at minX, it's going outside the domain, so return NaN.
 
 
             if (currently_rose != searchIncreasing && appliedResult.eq(maxX) || currently_rose == searchIncreasing && appliedResult.eq(minX)) return new Decimal(Decimal.dNaN);
             step_size = Math.abs(step_size) * (currently_rose ? -1 : 1);
             result += step_size;
 
-            if (step_size === 0 || oldresult == result) {
-              break;
-            }
+            if (step_size === 0 || oldresult == result) break;
           }
 
           return rangeApply(result);
@@ -5569,52 +4897,16 @@
 
     return Decimal;
   }();
-  Decimal.dZero = FC_NN(0, 0, 0);
-  /**
-   * Represents the number 1.
-   */
-
-  Decimal.dOne = FC_NN(1, 0, 1);
-  /**
-   * Represents the number -1.
-   */
-
-  Decimal.dNegOne = FC_NN(-1, 0, 1);
-  /**
-   * Represents the number 2.
-   */
-
-  Decimal.dTwo = FC_NN(1, 0, 2);
-  /**
-   * Represents the number 10.
-   */
-
-  Decimal.dTen = FC_NN(1, 0, 10);
-  /**
-   * Represents a NaN (Not A Number) value.
-   */
-
-  Decimal.dNaN = FC_NN(Number.NaN, Number.NaN, Number.NaN);
-  /**
-   * Represents positive infinity.
-   */
-
-  Decimal.dInf = FC_NN(1, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
-  /**
-   * Represents negative infinity.
-   */
-
-  Decimal.dNegInf = FC_NN(-1, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
-  /**
-   * Represents the largest value a JavaScript number can have, which is approximately 1.79 * 10^308.
-   */
-
-  Decimal.dNumberMax = FC(1, 0, Number.MAX_VALUE);
-  /**
-   * Represents the smallest value a JavaScript number can have, which is approximately 5 * 10^-324.
-   */
-
-  Decimal.dNumberMin = FC(1, 0, Number.MIN_VALUE);
+  Decimal.dZero = FC_NN(0, 0, 0); // zero
+  Decimal.dOne = FC_NN(1, 0, 1); // 1
+  Decimal.dNegOne = FC_NN(-1, 0, 1); // -1
+  Decimal.dTwo = FC_NN(1, 0, 2); // 2
+  Decimal.dTen = FC_NN(1, 0, 10); // 10
+  Decimal.dNaN = FC_NN(Number.NaN, Number.NaN, Number.NaN); // NaN
+  Decimal.dInf = FC_NN(1, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY); // Infinity
+  Decimal.dNegInf = FC_NN(-1, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY); // -Infinity
+  Decimal.dNumberMax = FC(1, 0, Number.MAX_VALUE);  // max JS normal number limit: 1.79*10^308
+  Decimal.dNumberMin = FC(1, 0, Number.MIN_VALUE); // min JS normal number limit: 5*10^-324
   /**
    * Represents the largest Decimal where adding 1 to the layer is a safe operation
    * (Decimals larger than this are too big for pow/exp/log to affect, but tetrate/iteratedlog/slog can still affect them).
@@ -5623,17 +4915,14 @@
 
   Decimal.dLayerSafeMax = FC(1, Number.MAX_SAFE_INTEGER, EXP_LIMIT - 1);
   /**
-   * Represents the smallest Decimal where adding 1 to the layer is a safe operation. Approximately 1 / (10^^(9.007 * 10^15)).
+   * min Decimal where adding 1 to the layer is a safe operation. Approximately 1 / (10^^(9.007 * 10^15)).
    */
-
-  Decimal.dLayerSafeMin = FC(1, Number.MAX_SAFE_INTEGER, -(EXP_LIMIT - 1));
-  /**
-   * Represents the largest finite value a Decimal can represent. Approximately 10^^(1.79 * 10^308).
-   */
+  Decimal.dLayerSafeMin = FC(1, Number.MAX_SAFE_INTEGER, -(EXP_LIMIT - 1)); 
+  // max value of a Decimal: 10^^(1.79 * 10^308). 
 
   Decimal.dLayerMax = FC(1, Number.MAX_VALUE, EXP_LIMIT - 1);
   /**
-   * Represents the smallest non-zero value a Decimal can represent. Approximately 1 / (10^^(1.79 * 10^308)).
+   * min non-zero value a Decimal can represent. Approximately 1 / (10^^(1.79 * 10^308)).
    */
 
   Decimal.dLayerMin = FC(1, Number.MAX_VALUE, -(EXP_LIMIT - 1));
@@ -5646,9 +4935,7 @@
   FC_NN = Decimal.fromComponents_noNormalize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   Decimal.fromMantissaExponent; // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
   Decimal.fromMantissaExponent_noNormalize;
-
   return Decimal;
 
 }));

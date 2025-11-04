@@ -2,13 +2,13 @@ function gamecalculations() {
     player.ppc.mult.totalmanual = new Decimal((player.ppc.mult.C5 * player.ppc.mult.C6A * player.ppc.mult.constants * player.ppc.mult.C9A).toFixed(2))
     player.ppc.mult.totalauto = new Decimal((player.ppc.mult.C5 * player.ppc.mult.C6B * player.ppc.mult.constants * player.ppc.mult.C9B).toFixed(2))
     // autoclicker
-    if (player.autoclicker.strength.neq(0)) player.autoclicker.cooldown = player.autoclicker.cooldown.sub(1)
+    if (player.autoclicker.strength != 0) player.autoclicker.cooldown = player.autoclicker.cooldown.sub(1)
     if (player.autoclicker.cooldown.lte(0)) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
     // Scaling
     if (!player.card_possession[4]) { player.buyables[1].cost = new Decimal(20 * (1.5 ** player.buyables[1].amount)).floor() }
     else { player.buyables[1].cost = new Decimal(20 * (1.3 ** player.buyables[1].amount)).floor() }
-    player.buyables[2].cost = new Decimal(100 * (3 ** player.buyables[2].amount)).floor())
-    player.buyables[3].cost = new Decimal(1000 * (1.5 ** player.buyables[3].amount)).floor())
+    player.buyables[2].cost = new Decimal(100 * (3 ** player.buyables[2].amount)).floor()
+    player.buyables[3].cost = new Decimal(1000 * (1.5 ** player.buyables[3].amount)).floor()
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Decimal.min(player.autoclicker.strength,new Decimal(5))]
     if (player.card_possession[9.1]) player.ppc.mult.C9A = new Decimal(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B).sqrt()
@@ -21,8 +21,8 @@ function gamecalculations() {
         }
     } else player.ppc.mult.C9B = new Decimal(1)
     if (player.charge.times === new Decimal(0) || player.charge.unlocked === false) player.charge.persecond = new Decimal(0)
-    else if (player.card_possession.charge[2]) player.charge.persecond = new Decimal(2.1).pow(player.charge.times - 1))
-    else player.charge.persecond = new Decimal(2).pow(player.charge.times - 1))
+    else if (player.card_possession.charge[2]) player.charge.persecond = new Decimal(2.1).pow(player.charge.times - 1)
+    else player.charge.persecond = new Decimal(2).pow(player.charge.times - 1)
     player.autoclicker.cps = 20 / player.defaultcooldowns.current
     player.charge.req = new Decimal(1_000_000).times(new Decimal(10).pow(player.charge.times))
 }
