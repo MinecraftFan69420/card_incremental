@@ -3456,64 +3456,40 @@
       }
     }, {
       key: "sin", // sine
-      value: function sin(value) {
-        return D(value).sin();
-      }
+      value: function sin(value) {return D(value).sin();}
     }, {
       key: "cos", //cosine
-      value: function cos(value) {
-        return D(value).cos();
-      }
+      value: function cos(value) {return D(value).cos();}
     }, {
       key: "tan", // tangent
-      value: function tan(value) {
-        return D(value).tan();
-      }
+      value: function tan(value) {return D(value).tan();}
     }, {
       key: "asin", // sin^-1
-      value: function asin(value) {
-        return D(value).asin();
-      }
+      value: function asin(value) {return D(value).asin();}
     }, {
       key: "acos", // cos^-1
-      value: function acos(value) {
-        return D(value).acos();
-      }
+      value: function acos(value) {return D(value).acos();}
     }, {
       key: "atan", // tan^-1
-      value: function atan(value) {
-        return D(value).atan();
-      }
+      value: function atan(value) {return D(value).atan();}
     }, {
       key: "sinh", // hyperbolic sin
-      value: function sinh(value) {
-        return D(value).sinh();
-      }
+      value: function sinh(value) {return D(value).sinh();}
     }, {
       key: "cosh", // hyperbolic cos
-      value: function cosh(value) {
-        return D(value).cosh();
-      }
+      value: function cosh(value) {return D(value).cosh();}
     }, {
       key: "tanh", // hyperbolic tan
-      value: function tanh(value) {
-        return D(value).tanh();
-      }
+      value: function tanh(value) {return D(value).tanh();}
     }, {
       key: "asinh", // sinh^-1
-      value: function asinh(value) {
-        return D(value).asinh();
-      }
+      value: function asinh(value) {return D(value).asinh();}
     }, {
       key: "acosh", // cosh^-1
-      value: function acosh(value) {
-        return D(value).acosh();
-      }
+      value: function acosh(value) {return D(value).acosh();}
     }, {
       key: "atanh", // tanh^-1
-      value: function atanh(value) {
-        return D(value).atanh();
-      }
+      value: function atanh(value) {return D(value).atanh();}
     /** INCREMENTAL GAME FUNCTIONS */
       /**
        * If you're willing to spend 'resourcesAvailable' and want to buy something
