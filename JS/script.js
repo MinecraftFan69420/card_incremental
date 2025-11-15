@@ -26,65 +26,6 @@ function autoclick() {
     player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalauto)); devlog("Autoclicker click success")
 }
 
-function cardeffect(card) { // Apply a card's effect
-    switch (card) { // Which card is it?
-        case 1: 
-            document.getElementById("buyable1").style.display = "block"
-            document.getElementById("card2").style.display = "block"; break // Show buyable 1
-        case 2:
-            document.getElementById("buyable2").style.display = 'block' // show buyable 2
-            document.getElementById("autoclickers").style.display = 'block'
-            document.getElementById("ppsdisp").style.display = 'block'
-            document.getElementById("card3").style.display = 'block'; break
-        case 3: 
-            player.ppc.mult.constants = player.ppc.mult.constants.times(2)
-            document.getElementById("card4").style.display = 'block'; break // Double ppc
-        case 4: document.getElementById("card5").style.display = 'block'; break
-        case 5:
-            document.getElementById("card6pairwarning").style.display = 'block'
-            document.getElementById("buyable3").style.display = 'block' // Show buyable 3
-            document.getElementById("card6.1").style.display = 'block';
-            document.getElementById("card6.2").style.display = 'block';break
-        case 6.1:
-            player.ppc.mult.C6A = new Decimal(3) // Triple manual click multiplier
-            document.getElementById("card6pairwarning").style.display = 'none'
-            document.getElementById("card6.2").style.display = 'none'
-            document.getElementById("card7").style.display = 'block'; break
-        case 6.2:
-            player.ppc.mult.C6B = new Decimal(3) // Double autoclicker click multiplier
-            document.getElementById("card6pairwarning").style.display = 'none'
-            document.getElementById("card6.1").style.display = 'none'
-            document.getElementById("card7").style.display = 'block'; break
-        case 7: 
-            player.ppc.mult.constants = player.ppc.mult.constants.times(3)
-            document.getElementById("card8").style.display = "block"; break // Triple the point gain
-        case 8: 
-            player.ppc.mult.constants = player.ppc.mult.constants.times(Math.E - 1)
-            document.getElementById("card9pairwarning").style.display = 'block'
-            document.getElementById("card9.1").style.display = "block"
-            document.getElementById("card9.2").style.display = "block"; break
-        case 9.1: 
-            document.getElementById("card9pairwarning").style.display = 'none'
-            document.getElementById("card9.2").style.display = "none"; 
-            document.getElementById("card10").style.display = "block"; break
-        case 9.2:
-            player.buyables[2].maxpurchases = new Decimal(7);
-            document.getElementById("card9pairwarning").style.display = 'none'
-            document.getElementById("card9.1").style.display = "none"
-            document.getElementById("card10").style.display = "block"; break
-        case 10:
-            player.charge.unlocked = true
-            document.getElementById("chargedisp").style.display = 'block'// Shows the charge resource
-            document.getElementById("chargereset").style.display = 'block' // Shows the charge reset
-            break
-        case 11:
-            player.ppc.mult.constants = player.ppc.mult.constants(Math.log10(69))
-            document.getElementById("card12").style.display = "block"; break
-        case 12: document.getElementById("gochargecards").style.display = "block"; break
-        default: devlog("Card effect failure: such card doesn't exist!")
-    }
-}
-
 function chargecardeffect(card) {
     switch (card) {
         case 1: 
@@ -96,12 +37,15 @@ function chargecardeffect(card) {
 function buycard(card) {
     const targetcard = cards.regular[card]
     const hascard = player.card_possession.regular[card]
+    const exists = targetcard !== undefined
     let hassufficientpoints = player.points.gte(targetcard.cost)
-    if (hassufficientpoints && !hascard) {
-        player.points = player.points.sub(targetcard.cost); player.card_possession.regular[card] = true 
-        document.getElementById(`card${card}`).style.display = "none"; cardeffect(card)
-        devlog(`Card ${card} bought succesfully!`)
-    } else devlog(`Card purchase failure: not enough points!`)
+    if (hassufficientpoints && !hascard && exists) {
+        player.points = player.points.sub(targetcard.cost); 
+        player.card_possession.regular[card] = true 
+        document.getElementById(`card${card}`).style.display = "none"; 
+        targetcard.effect(); devlog(`Card ${card} bought succesfully!`)
+    } else devlog(`Card purchase failure. Either: not enough points, 
+already have card, or card doesn't exist.`)
 }
 
 function buychargecard(card) {
