@@ -260,28 +260,20 @@
 
     var scal1 = 1;
 
-    while (n < 10) {scal1 = scal1 * n; ++n;}
+    while (n < 10) scal1 = scal1 * n; ++n;
     n -= 1;
     var l = 0.9189385332046727; //0.5*Math.log(2*Math.PI)
-
     l = l + (n + 0.5) * Math.log(n);
     l = l - n;
     var n2 = n * n;
     var np = n;
-    l = l + 1 / (12 * np);
-    np = np * n2;
-    l = l - 1 / (360 * np);
-    np = np * n2;
-    l = l + 1 / (1260 * np);
-    np = np * n2;
-    l = l - 1 / (1680 * np);
-    np = np * n2;
-    l = l + 1 / (1188 * np);
-    np = np * n2;
-    l = l - 691 / (360360 * np);
-    np = np * n2;
-    l = l + 7 / (1092 * np);
-    np = np * n2;
+    l = l + 1 / (12 * np); np = np * n2;
+    l = l - 1 / (360 * np); np = np * n2;
+    l = l + 1 / (1260 * np); np = np * n2;
+    l = l - 1 / (1680 * np); np = np * n2;
+    l = l + 1 / (1188 * np); np = np * n2;
+    l = l - 691 / (360360 * np); np = np * n2;
+    l = l + 7 / (1092 * np); np = np * n2;
     l = l - 3617 / (122400 * np);
     return Math.exp(l) / scal1;
   };
@@ -296,24 +288,21 @@
   var f_lambertw = function f_lambertw(z) {
     var tol = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1e-10;
     var principal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-    var w;
-    var wn;
-
+    var w, wn;
     if (!Number.isFinite(z)) return z;
     if (principal) {
       if (z === 0) return z;
       if (z === 1) return OMEGA;
-      if (z < 10) {w = 0;}
-      else {w = Math.log(z) - Math.log(Math.log(z));}
+      if (z < 10) w = 0;
+      else w = Math.log(z) - Math.log(Math.log(z));
     } else {
       if (z === 0) return -Infinity;
-      if (z <= -0.1) {w = -2;} 
-      else {w = Math.log(-z) - Math.log(-Math.log(-z));}
+      if (z <= -0.1) w = -2;
+      else w = Math.log(-z) - Math.log(-Math.log(-z));
     }
 
     for (var i = 0; i < 100; ++i) {
       wn = (z * Math.exp(-w) + w * w) / (w + 1);
-
       if (Math.abs(wn - w) < tol * Math.abs(wn)) return wn;
       else w = wn;
     }
@@ -329,17 +318,14 @@
   function d_lambertw(z) {
     var tol = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1e-10;
     var principal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-    var w;
-    var ew, wewz, wn;
+    var w, ew, wewz, wn;
 
     if (!Number.isFinite(z.mag)) return new Decimal(z);
 
     if (principal) {
       if (z.eq(Decimal.dZero)) return FC_NN(0, 0, 0);
-
       if (z.eq(Decimal.dOne)) return Decimal.fromNumber(OMEGA); 
       //Get an initial guess for Halley's method
-
       w = Decimal.ln(z);
     } else {
       if (z.eq(Decimal.dZero)) return new Decimal(Decimal.dNegInf);
@@ -352,7 +338,6 @@
       ew = w.neg().exp();
       wewz = w.sub(z.mul(ew));
       wn = w.sub(wewz.div(w.add(1).sub(w.add(2).mul(wewz).div(Decimal.mul(2, w).add(2)))));
-
       if (Decimal.abs(wn.sub(w)).lt(Decimal.abs(wn).mul(tol))) return wn;
       else w = wn;
     }
@@ -360,10 +345,10 @@
     throw Error("Iteration failed to converge: ".concat(z.toString())); //return Decimal.dNaN;
   }
   /**
-   * The value of the Decimal is sign * 10^10^10...^mag, with (layer) 10s. If the layer is not 0, then negative mag means it's the reciprocal of the corresponding number with positive mag.
+   * The value of the Decimal is sign * 10^10^10...^mag, with (layer) 10s. 
+   * If the layer is not 0, then negative mag means it's the reciprocal 
+   * of the corresponding number with positive mag.
    */
-
-
   var Decimal = /*#__PURE__*/function () {
     function Decimal(value) {
       _classCallCheck(this, Decimal);
@@ -483,7 +468,6 @@
           this.layer = Number.POSITIVE_INFINITY;
           return this;
         } //Handle shifting from layer 0 to negative layers.
-
 
         if (this.layer === 0 && this.mag < FIRST_NEG_LAYER) {
           this.layer += 1;
@@ -1119,17 +1103,11 @@
       value: function abs() {return FC_NN(this.sign === 0 ? 0 : 1, this.layer, this.mag);}
       
     }, {
-      key: "neg", // negate the decimal, same for negate()
+      key: "neg", // negate the decimal, same for negate() & negated()
       value: function neg() {return FC_NN(-this.sign, this.layer, this.mag);}
     }, {
       key: "negate",
-      value: function negate() {
-        return this.neg();
-      }
-      /**
-       * Negates the Decimal it's called on: in other words, when given X, returns -X.
-       */
-
+      value: function negate() {return this.neg();}
     }, {
       key: "negated",
       value: function negated() {return this.neg();} 
@@ -1163,21 +1141,12 @@
           if (this.sign === 1) return FC_NN(1, 0, 1); //The ceiling function called on something tiny like 10^10^-100 should return 1, since 10^10^-100 is still greater than 0
           else return FC_NN(0, 0, 0);
         }
-
         if (this.sign === -1) return this.neg().floor().neg();
-
-        if (this.layer === 0) {
-          return FC(this.sign, 0, Math.ceil(this.mag));
-        }
-
+        if (this.layer === 0) return FC(this.sign, 0, Math.ceil(this.mag));
         return new Decimal(this);
       }
-      /**
-       * Extracts the integer part of the Decimal and returns it. Behaves like floor on positive numbers, but behaves like ceiling on negative numbers.
-       */
-
     }, {
-      key: "trunc",
+      key: "trunc", // integer part of a Decimal
       value: function trunc() {
         if (this.mag < 0) return FC_NN(0, 0, 0);
         if (this.layer === 0) return FC(this.sign, 0, Math.trunc(this.mag));
@@ -1205,8 +1174,8 @@
           return FC_NN(0, 0, 0);
         }
 
-        var a;
-        var b; //Special case: If one of the numbers is layer 2 or higher, just take the bigger number.
+        var a, b;
+        //Special case: If one of the numbers is layer 2 or higher, just take the bigger number.
 
         if (this.layer >= 2 || decimal.layer >= 2) return this.maxabs(decimal);
         if (Decimal.cmpabs(this, decimal) > 0) {
@@ -1361,14 +1330,10 @@
       }
     }, {
       key: "reciprocal", // same as recip()
-      value: function reciprocal() {
-        return this.recip();
-      }
+      value: function reciprocal() {return this.recip();}
     }, {
       key: "reciprocate", // same as recip()
-      value: function reciprocate() {
-        return this.recip();
-      }
+      value: function reciprocate() {return this.recip();}
       /**
        * Returns the remainder of 'this' divided by 'value': for example, 5 mod 2 = 1, because the remainder of 5 / 2 is 1.
        * Uses the "truncated division" modulo, which is the same as JavaScript's native modulo operator (%)...
@@ -1477,29 +1442,19 @@
       value: function neq(value) {return !this.eq(value);}
     }, {
       key: "notEquals", // same as neq(value)
-      value: function notEquals(value) {
-        return this.neq(value);
-      }
+      value: function notEquals(value) {return this.neq(value);}
     }, {
       key: "lt", // check if less than value, return boolean.
-      value: function lt(value) {
-        return this.cmp(value) === -1;
-      }
+      value: function lt(value) {return this.cmp(value) === -1;}
     }, {
       key: "lte", // check if less than or equal, return bool.
-      value: function lte(value) {
-        return !this.gt(value);
-      }
+      value: function lte(value) {return !this.gt(value);}
     }, {
       key: "gt", // check if greater, return bool.
-      value: function gt(value) {
-        return this.cmp(value) === 1;
-      }
+      value: function gt(value) { return this.cmp(value) === 1;}
     }, {
       key: "gte", // check if greater than or equal
-      value: function gte(value) {
-        return !this.lt(value);
-      }
+      value: function gte(value) {return !this.lt(value);}
     }, {
       key: "max", // get higher number
       value: function max(value) {

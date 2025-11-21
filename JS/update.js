@@ -14,11 +14,7 @@ function gamecalculations() {
     if (player.card_possession[9.1]) player.ppc.mult.C9A = new Decimal(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B).sqrt()
     else player.ppc.mult.C9A = new Decimal(1)
     if (player.autoclicker.strength > 5) {
-        switch (player.autoclicker.strength) {
-            case 6: player.ppc.mult.C9B = new Decimal(2); break
-            case 7: player.ppc.mult.C9B = new Decimal(4); break
-            // 67 🤷‍♂️🤷‍♂️🤷‍♂️
-        }
+        player.ppc.mult.C9B = (new Decimal(2)).pow(player.autoclicker.strength - 5)
     } else player.ppc.mult.C9B = new Decimal(1)
     if (player.charge.times === new Decimal(0) || player.charge.unlocked === false) player.charge.persecond = new Decimal(0)
     else if (player.card_possession.charge[2]) player.charge.persecond = new Decimal(2.1).pow(player.charge.times - 1)
