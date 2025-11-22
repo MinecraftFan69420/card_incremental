@@ -1,25 +1,25 @@
+energy_gain_base = new Decimal(2)
+
 function gamecalculations() {
-    player.ppc.mult.totalmanual = new Decimal((player.ppc.mult.C5 * player.ppc.mult.C6A * player.ppc.mult.constants * player.ppc.mult.C9A).toFixed(2))
-    player.ppc.mult.totalauto = new Decimal((player.ppc.mult.C5 * player.ppc.mult.C6B * player.ppc.mult.constants * player.ppc.mult.C9B).toFixed(2))
+    player.ppc.mult.totalmanual = player.ppc.mult.C5.times(player.ppc.mult.C6A).times(player.ppc.mult.constants).times(player.ppc.mult.C9A).toFixed(2)
+    player.ppc.mult.totalauto = player.ppc.mult.C5.times(player.ppc.mult.C6B).times(player.ppc.mult.constants).times(player.ppc.mult.C9B).toFixed(2)
     // autoclicker
     if (player.autoclicker.strength != 0) player.autoclicker.cooldown = player.autoclicker.cooldown.sub(1)
     if (player.autoclicker.cooldown.lte(0)) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
     // Scaling
-    if (!player.card_possession[4]) { player.buyables[1].cost = new Decimal(20 * (1.5 ** player.buyables[1].amount)).floor() }
-    else { player.buyables[1].cost = new Decimal(20 * (1.3 ** player.buyables[1].amount)).floor() }
-    player.buyables[2].cost = new Decimal(100 * (3 ** player.buyables[2].amount)).floor()
-    player.buyables[3].cost = new Decimal(1000 * (1.5 ** player.buyables[3].amount)).floor()
+    if (!player.card_possession[4]) player.buyables[1].cost = new Decimal(20).times(new Decimal(1.5).pow(player.buyables[1].amount)).floor()
+    else player.buyables[1].cost = new Decimal(20).times(new Decimal(1.3).pow(player.buyables[1].amount)).floor()
+    player.buyables[2].cost = new Decimal(100).times(new Decimal(3).pow(player.buyables[2].amount)).floor()
+    player.buyables[3].cost = new Decimal(1000).times(new Decimal(1.5).pow(player.buyables[3].amount)).floor()
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Decimal.min(player.autoclicker.strength,new Decimal(5))]
     if (player.card_possession[9.1]) player.ppc.mult.C9A = new Decimal(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B).sqrt()
     else player.ppc.mult.C9A = new Decimal(1)
-    if (player.autoclicker.strength > 5) {
-        player.ppc.mult.C9B = (new Decimal(2)).pow(player.autoclicker.strength - 5)
-    } else player.ppc.mult.C9B = new Decimal(1)
-    if (player.charge.times === new Decimal(0) || player.charge.unlocked === false) player.charge.persecond = new Decimal(0)
-    else if (player.card_possession.charge[2]) player.charge.persecond = new Decimal(2.1).pow(player.charge.times - 1)
-    else player.charge.persecond = new Decimal(2).pow(player.charge.times - 1)
-    player.autoclicker.cps = 20 / player.defaultcooldowns.current
+    if (player.autoclicker.strength > 5) player.ppc.mult.C9B = new Decimal(2).pow(player.autoclicker.strength - 5)
+    else player.ppc.mult.C9B = new Decimal(1)
+    if (player.charge.times.eq(new Decimal(1)) || player.charge.unlocked === false) player.charge.persecond = new Decimal(0)
+    else player.charge.persecond = energy_gain_base.pow(player.charge.times - 1)
+    player.autoclicker.cps = new Decimal(20).div(player.defaultcooldowns.current)
     player.charge.req = new Decimal(1_000_000).times(new Decimal(10).pow(player.charge.times))
 }
 
@@ -53,8 +53,8 @@ function updateHTML() {
     document.getElementById("ppcmult6a").textContent = player.ppc.mult.C9A.toString()
     document.getElementById("ppcmult6b").textContent = player.ppc.mult.C9B.toString()
     document.getElementById("ppcmult7").textContent = player.card_possession[11] ? Math.log10(69).toFixed(2) : 1
-    document.getElementById("ppcstat").textContent = player.ppc.base * player.ppc.mult.totalmanual.toString()
-    document.getElementById('ppcautostat').textContent = player.ppc.base * player.ppc.mult.totalauto.times(player.autoclicker.cps).toString()
+    document.getElementById("ppcstat").textContent = player.ppc.base.times(player.ppc.mult.totalmanual).toString()
+    document.getElementById('ppcautostat').textContent = player.ppc.base.times(player.ppc.mult.totalauto).times(player.autoclicker.cps).toString()
     document.getElementById('ppcautocps').textContent = player.autoclicker.cps.toString()
     document.getElementById('ppcautocpsstat').textContent = player.autoclicker.cps.toString()
     document.getElementById('charge').textContent = player.charge.amount.toString()

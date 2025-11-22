@@ -121,9 +121,7 @@ const cards = {
         }, // about cost: first element is points, second one is charge
         2: {
             cost: [new Decimal(1_000_000), new Decimal(500)],
-            effect: function() {
-                
-            }
+            effect: function() {energy_gain_base = new Decimal(2.1)}
         }
     }
 }

@@ -36,7 +36,10 @@ const default_player = {
         3: { amount: new Decimal(0), cost: new Decimal(1000), maxpurchases: Infinity }
     },
     autoclicker: { strength: 0, cooldown: new Decimal(1, Infinity, Infinity), cps: 0 }, // Stats, cooldown in ticks. 
-    defaultcooldowns: { 0: Infinity, 1: 20, 2: 10, 3: 5, 4: 2, 5: 1, 6: 1, 7: 1, current: Infinity }, // Default autoclicker cooldowns in ticks
+    defaultcooldowns: { 
+        0: Decimal.dInf, 1: new Decimal(20), 2: new Decimal(10), 3: new Decimal(5), 
+        4: new Decimal(2), 5: new Decimal(1), 6: new Decimal(1), 7: new Decimal(1), 
+        current: Decimal.dInf }, // Default autoclicker cooldowns in ticks
     charge: {amount: new Decimal(0), req: new Decimal(1_000_000), unlocked: false, times: new Decimal(0), persecond: new Decimal(0)}, // Charge resource, requirement to prestige, and how many times the player has prestiged
     consoleunlocked: false
 }
