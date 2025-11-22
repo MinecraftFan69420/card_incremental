@@ -15,7 +15,7 @@
         <script src="JS/script.js" defer></script>
     </head>
     <body>
-        <h1 style="text-align: center">Card Incremental 1.3.8</h1> <hr> 
+        <h1 style="text-align: center">Card Incremental 1.3.9</h1> <hr> 
         <div id="resources" style="text-align: center;"> <!-- The resources -->
             <p>You have <span id="points" style="font-size: 24px; font-weight: bold"></span> point(s)</p>
             <p><span id="ppc"></span> per click</p>
@@ -58,92 +58,8 @@
                 <button onclick="swaptab(3.1)" id="goregcards">Regular cards</button>
                 <button onclick="swaptab(3.2)" id="gochargecards" style="background-color: #ffff40; display: none;">Charge cards</button>
             </div>
-            <div id="cardsubtab-regular" class="cardsubtab" style="display: block">
-                <div id="card1" class="card" onclick="buycard(1)">
-                    <h2>Humble Beginnings</h2> <p>#1</p>
-                    <h3>Effect: </h3> <p>Unlock buyables!</p>
-                    <h3>Cost:</h3> <p>20 points</p>
-                </div>
-                <div id="card2" class="card" onclick="buycard(2)">
-                    <h2>Laziness is key</h2> <p>#2</p>
-                    <h3>Effect: </h3> <p>Unlock the second buyable!</p>
-                    <h3>Cost:</h3> <p>200 points</p>
-                </div>
-                <div id="card3" class="card" onclick="buycard(3)">
-                    <h2>Double Up Points!</h2> <p>#3</p>
-                    <h3>Effect: </h3> <p>Double point gain!</p>
-                    <h3>Cost:</h3> <p>500 points</p>
-                </div>
-                <div id="card4" class="card" onclick="buycard(4)">
-                    <h2>Fast incremental</h2><p>#4</p>
-                    <h3>Effect:</h3><p>Reduce the scaling of buyable 1! <br> (x1.5 &rightarrow; x1.3)</p>
-                    <h3>Cost:</h3><p>2000 points</p>
-                </div>
-                <div id="card5" class="card" onclick="buycard(5)">
-                    <h2>Can you replican?</h2><p>#5</p>
-                    <h3>Effect:</h3><p>Unlock the third buyable!</p>
-                    <h3>Cost:</h3><p>2000 points</p>
-                </div>
-                <p id="card6pairwarning">You can only choose to buy 6A only or 6B only. Not both!</p>
-                <div id="card6.1" class="card" onclick="buycard(6.1)">
-                    <h2>Faster typing</h2><p>#6A </p>
-                    <h3>Effect:</h3><p>Manual click power <br>is tripled</p>
-                    <h3>Cost:</h3><p>5000 points</p>
-                </div>
-                <div id="card6.2" class="card" onclick="buycard(6.2)">
-                    <h2>Faster autoclicker</h2><p>#6B</p>
-                    <h3>Effect:</h3><p>The autoclicker's power is doubled</p>
-                    <h3>Cost:</h3><p>5000 points</p>
-                </div>
-                <div id="card7" class="card" onclick="buycard(7)">
-                    <h2>Cool, replican again!</h2><p>#7</p>
-                    <h3>Effect:</h3><p>Triple point gain</p>
-                    <h3>Cost:</h3><p>10 000 points</p>
-                </div>
-                <div id="card8" class="card" onclick="buycard(8)">
-                    <h2>🇪</h2><p>#8</p>
-                    <h3>Effect:</h3><p>Multiply point gain by e-1</p>
-                    <h3>Cost:</h3><p>31 415 points</p>
-                </div>
-                <p id="card9pairwarning">Same warning for 9A & 9B</p>
-                <div id="card9.1" class="card" onclick="buycard(9.1)">
-                    <h2>Powerful clicking</h2><p>#9A</p>
-                    <h3>Effect:</h3><p>Clicking is more powerful based off of autoclick rate;</p>
-                    <h3>Cost:</h3><p>100 000 points</p>
-                </div>
-                <div id="card9.2" class="card" onclick="buycard(9.2)">
-                    <h2>Faster autoclick</h2><p>#9B</p>
-                    <h3>Effect:</h3><p>Adds 2 to the max purchases of buyable 2 which double the autoclicker power.</p> 
-                    <h3>Cost:</h3><p>100 000 points</p>
-                </div>
-                <div id="card10" class="card" onclick="buycard(10)">
-                    <h2><b>MAXIMUM POWER!!!</b></h2><p>#10</p>
-                    <h3>Effect:</h3><p>Unlock a new prestige layer...</p>
-                    <h3>Cost:</h3><p>500 000 points</p>
-                </div>
-                <div id="card11" class="card" onclick="buycard(11)">
-                    <h2>Funneh numba</h2><p>#11</p>
-                    <h3>Effect:</h3><p>Multiply point gain by log(69)</p>
-                    <h3>Cost:</h3><p>694 200 points</p>
-                </div>
-                <div id="card12" class="card" onclick="buycard(12)">
-                    <h2><b>NOT ENOUGH POWER!! </b></h2><p>#12</p>
-                    <h3>Effect:</h3><p>Unlock a few charge cards</p>
-                    <h3>Cost:</h3><p>1 500 000 points</p>
-                </div>
-            </div>
-            <div id="cardsubtab-charge" class="cardsubtab">
-                <div id="cardc1" class="card-charge" onclick="buychargecard(1)">
-                    <h2>TPOT</h2> <p>#C1</p>
-                    <h3>Effect: </h3> <p>Square card 3's effect</p>
-                    <h3>Cost:</h3> <p>200 charge + 500 000 points</p>
-                </div>
-                <div id="cardc2" class="card-charge" onclick="buychargecard(2)">
-                    <h2>Compound<b>er</b> interest</h2> <p>#C2</p>
-                    <h3>Effect: </h3> <p>Increase the formula of charge gain (2^resets -> 2.1^resets)</p>
-                    <h3>Cost:</h3> <p>500 charge + 1 000 000 points</p>
-                </div>
-            </div>
+            <div id="cardsubtab-regular" class="cardsubtab" style="display: block"></div>
+            <div id="cardsubtab-charge" class="cardsubtab" style="display: none"></div>
         </div>
         <div id="stats" class="tab"> <!-- Stats tab -->
             <h1>Statistics</h1>

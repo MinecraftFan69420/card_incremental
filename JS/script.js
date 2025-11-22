@@ -89,5 +89,8 @@ function reset() {
     if (confirm("Are you sure?")) {resetplayer(); localStorage.removeItem("player"); devlog("Save reset") } 
 }
 
+// HTML setup
+generatecardHTML()
+
 setInterval(update, 50) // A tick is 50 ms
 setInterval(() => {if (player.charge.unlocked) player.charge.amount += player.charge.persecond}, 1000) // Get charge
