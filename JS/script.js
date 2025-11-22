@@ -48,30 +48,12 @@ function buycard(card) {
 already have card, or card doesn't exist.`)
 }
 
-function buychargecard(card) {
-    const targetcard = cards.charge[card]
-    hassufficientresources = player.points.gte(targetcard.cost[0]) && player.charge.amount.gte(targetcard.cost[1])
-    if (hassufficientresources && targetcard.has === false) {
-        player.points = player.points.sub(targetcard.cost[0]); 
-        player.charge.amount = player.points.sub(targetcard.cost[1]); 
-        player.card_possession.charge[card] = true 
-        document.getElementById(`chargecard${card}`).style.display = "none"; cardeffect(card)
-        devlog(`Charge card ${card} bought succesfully!`)
-    } else devlog(`Charge card purchase failure: not enough resources (missing points / charge)`)
-}
-
 function buybuyable(buyable) {
-    const targetbuyable = player.buyables[buyable]
+    const targetbuyable = buyables[buyable]
+    const buyable_amount = player.buyable_amounts[buyable]
     if (player.points.gte(targetbuyable.cost) && targetbuyable.amount.lte(targetbuyable.maxpurchases)) {
-        player.points = player.points.sub(targetbuyable.cost); targetbuyable.amount = targetbuyable.amount.plus(1) 
-        switch (buyable) {
-            case 1: player.ppc.base = player.buyables[1].amount.plus(1); break
-            case 2:
-                player.autoclicker.strength = player.autoclicker.strength.plus(1)
-                player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
-                player.autoclicker.cooldown = player.defaultcooldowns.current; break
-            case 3: player.ppc.mult.C5 = (new Decimal(1.2)).pow(player.buyables[3].amount); break
-        }
+        player.points = player.points.sub(targetbuyable.cost); buyable_amount = buyable_amount.plus(1) 
+        buyables[buyable].effect()
         devlog(`Buyable ${buyable} bought succesfully!`)
     } else devlog(`Buyable purchase failure: not enough points, or hit max purchases`)
 }

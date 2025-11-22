@@ -7,10 +7,10 @@ function gamecalculations() {
     if (player.autoclicker.strength != 0) player.autoclicker.cooldown = player.autoclicker.cooldown.sub(1)
     if (player.autoclicker.cooldown.lte(0)) {autoclick(); player.autoclicker.cooldown = player.defaultcooldowns.current}
     // Scaling
-    if (!player.card_possession[4]) player.buyables[1].cost = new Decimal(20).times(new Decimal(1.5).pow(player.buyables[1].amount)).floor()
-    else player.buyables[1].cost = new Decimal(20).times(new Decimal(1.3).pow(player.buyables[1].amount)).floor()
-    player.buyables[2].cost = new Decimal(100).times(new Decimal(3).pow(player.buyables[2].amount)).floor()
-    player.buyables[3].cost = new Decimal(1000).times(new Decimal(1.5).pow(player.buyables[3].amount)).floor()
+    if (!player.card_possession[4]) buyables[1].cost = new Decimal(20).times(new Decimal(1.5).pow(player.buyable_amounts[1])).floor()
+    else buyables[1].cost = new Decimal(20).times(new Decimal(1.3).pow(player.buyable_amounts[1])).floor()
+    buyables[2].cost = new Decimal(100).times(new Decimal(3).pow(player.buyable_amounts[2])).floor()
+    buyables[3].cost = new Decimal(1000).times(new Decimal(1.5).pow(player.buyable_amounts[3])).floor()
     if (player.autoclicker.strength === 0) player.defaultcooldowns.current = Infinity
     else player.defaultcooldowns.current = player.defaultcooldowns[Decimal.min(player.autoclicker.strength,new Decimal(5))]
     if (player.card_possession[9.1]) player.ppc.mult.C9A = new Decimal(player.autoclicker.cps * player.ppc.mult.C6B*player.ppc.mult.C9B).sqrt()
@@ -28,15 +28,15 @@ function updateHTML() {
     document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
     document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
     document.getElementById("autoclickstr").textContent = player.autoclicker.strength.toString()
-    document.getElementById("buyable1cost").textContent = player.buyables[1].cost.toString()
-    if (player.autoclicker.strength >= player.buyables[2].maxpurchases) {
+    document.getElementById("buyable1cost").textContent = buyables[1].cost.toString()
+    if (player.autoclicker.strength >= buyables[2].maxpurchases) {
         document.getElementById("buyable2cost").textContent = "MAX"
     }
-    else document.getElementById("buyable2cost").textContent = player.buyables[2].cost.toString()
-    document.getElementById("buyable3cost").textContent = player.buyables[3].cost.toString()
+    else document.getElementById("buyable2cost").textContent = buyables[2].cost.toString()
+    document.getElementById("buyable3cost").textContent = buyables[3].cost.toString()
     // Stats
     document.getElementById("buyable3eff").textContent = player.ppc.mult.C5.toFixed(2)
-    document.getElementById("buyable1eff").textContent = player.buyables[1].amount.toString()
+    document.getElementById("buyable1eff").textContent = player.buyable_amounts[1].toString()
     document.getElementById("ppcbasetotal").textContent = player.ppc.base.toString()
     document.getElementById("ppcmultconstantstotal").textContent = player.ppc.mult.constants.toFixed(2)
     document.getElementById("ppcmulttotalmanual").textContent = player.ppc.mult.totalmanual.toString()

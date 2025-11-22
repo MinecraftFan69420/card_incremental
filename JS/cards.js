@@ -125,3 +125,15 @@ const cards = {
         }
     }
 }
+
+function buychargecard(card) {
+    const targetcard = cards.charge[card]
+    hassufficientresources = player.points.gte(targetcard.cost[0]) && player.charge.amount.gte(targetcard.cost[1])
+    if (hassufficientresources && targetcard.has === false) {
+        player.points = player.points.sub(targetcard.cost[0]); 
+        player.charge.amount = player.points.sub(targetcard.cost[1]); 
+        player.card_possession.charge[card] = true 
+        document.getElementById(`chargecard${card}`).style.display = "none"; cardeffect(card)
+        devlog(`Charge card ${card} bought succesfully!`)
+    } else devlog(`Charge card purchase failure: not enough resources (missing points / charge)`)
+}

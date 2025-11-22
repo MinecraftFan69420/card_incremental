@@ -30,10 +30,10 @@ const default_player = {
             1: false // about cost: first element is points, second one is charge
         }
     },
-    buyables: { // Cost of buyables & how many the player has, and maximum purchases. e308 means no limit.
-        1: { amount: new Decimal(0), cost: new Decimal(20), maxpurchases: Infinity},
-        2: { amount: new Decimal(0), cost: new Decimal(100), maxpurchases: 5},
-        3: { amount: new Decimal(0), cost: new Decimal(1000), maxpurchases: Infinity }
+    buyable_amounts: { 
+        1: new Decimal(0),
+        2: new Decimal(0),
+        3: new Decimal(0),
     },
     autoclicker: { strength: 0, cooldown: new Decimal(1, Infinity, Infinity), cps: 0 }, // Stats, cooldown in ticks. 
     defaultcooldowns: { 
