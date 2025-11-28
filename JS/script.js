@@ -20,42 +20,16 @@ function swaptab(tab) { // Switch tabs!
 }
 
 function getpoints() {
-    player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalmanual)); devlog("Manual click success")
+    player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalmanual)); 
+    devlog("Manual click success")
 }
 function autoclick() {
-    player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalauto)); devlog("Autoclicker click success")
+    player.points = player.points.add(player.ppc.base.times(player.ppc.mult.totalauto)); 
+    devlog("Autoclicker click success")
 }
-
-function chargecardeffect(card) {
-    switch (card) {
-        case 1: 
-            player.ppc.mult.C3 = player.ppc.mult.C3.pow(2)
-            document.getElementById("cardc2").style.display = "block"; break
-    }   
-}
-
-function buycard(card) {
-    const targetcard = cards.regular[card]
-    const hascard = player.card_possession.regular[card]
-    const exists = targetcard !== undefined
-    let hassufficientpoints = player.points.gte(targetcard.cost)
-    if (hassufficientpoints && !hascard && exists) {
-        player.points = player.points.sub(targetcard.cost); 
-        player.card_possession.regular[card] = true 
-        document.getElementById(`card${card}`).style.display = "none"; 
-        targetcard.effect(); devlog(`Card ${card} bought succesfully!`)
-    } else devlog(`Card purchase failure. Either: not enough points, 
-already have card, or card doesn't exist.`)
-}
-
-function buybuyable(buyable) {
-    const targetbuyable = buyables[buyable]
-    const buyable_amount = player.buyable_amounts[buyable]
-    if (player.points.gte(targetbuyable.cost) && targetbuyable.amount.lte(targetbuyable.maxpurchases)) {
-        player.points = player.points.sub(targetbuyable.cost); buyable_amount = buyable_amount.plus(1) 
-        buyables[buyable].effect()
-        devlog(`Buyable ${buyable} bought succesfully!`)
-    } else devlog(`Buyable purchase failure: not enough points, or hit max purchases`)
+function getcharge() {
+    player.charge.amount = player.charge.amount.add(player.charge.persecond);
+    devlog("Charge gain success")
 }
 
 function chargeprestige() {
@@ -93,4 +67,4 @@ function reset() {
 generatecardHTML()
 
 setInterval(update, 50) // A tick is 50 ms
-setInterval(() => {if (player.charge.unlocked) player.charge.amount += player.charge.persecond}, 1000) // Get charge
+setInterval(() => {if (player.charge.unlocked) player.charge.amount += player.charge.persecond}, 1000)
