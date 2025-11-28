@@ -67,4 +67,4 @@ function reset() {
 generatecardHTML()
 
 setInterval(update, 50) // A tick is 50 ms
-setInterval(() => {if (player.charge.unlocked) player.charge.amount += player.charge.persecond}, 1000)
+setInterval(() => {if (player.charge.unlocked) getcharge()}, 1000)
