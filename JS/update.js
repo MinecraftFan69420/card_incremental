@@ -22,15 +22,33 @@ function gamecalculations() {
 
 function updateHTML() {
     document.getElementById("points").textContent = player.points.toFixed(2)
-    document.getElementById("ppc").textContent = (player.ppc.base * player.ppc.mult.totalmanual).toFixed(2)
-    document.getElementById("pps").textContent = (player.ppc.base * player.ppc.mult.totalauto * player.autoclicker.cps).toFixed(2)
+    document.getElementById("ppc").textContent = player.ppc.base
+    .times(player.ppc.mult.totalmanual)
+    .toFixed(2)
+    document.getElementById("pps").textContent = player.ppc.base
+    .times(player.ppc.mult.totalauto)
+    .times(player.autoclicker.cps)
+    .toFixed(2)
     document.getElementById("autoclickstr").textContent = player.autoclicker.strength.toString()
-    document.getElementById("buyable1cost").textContent = buyables[1].cost.toString()
-    if (player.autoclicker.strength >= buyables[2].maxpurchases) {
-        document.getElementById("buyable2cost").textContent = "MAX"
+    // buyables
+    for (buyable in buyables) {
+        buyable_el = document.getElementById(`buyable${buyable}cost`)
+        buyable_obj = buyables[buyable]
+        buyable_amt = player.buyable_amounts[buyable]
+        buyable_max = buyable_obj.maxpurchases
+        buyable_cost = buyable_obj.cost
+        if (buyable_amt >= buyable_max) {
+            document.getElementById(`buyable${buyable}cost`).textContent = "MAX"
+        } else {
+            document.getElementById(`buyable${buyable}cost`).textContent = buyable_cost.toString()
+        }
     }
-    else document.getElementById("buyable2cost").textContent = buyables[2].cost.toString()
-    document.getElementById("buyable3cost").textContent = buyables[3].cost.toString()
+    // document.getElementById("buyable1cost").textContent = buyables[1].cost.toString()
+    // if (player.autoclicker.strength >= buyables[2].maxpurchases) {
+    //     document.getElementById("buyable2cost").textContent = "MAX"
+    // }
+    // else document.getElementById("buyable2cost").textContent = buyables[2].cost.toString()
+    // document.getElementById("buyable3cost").textContent = buyables[3].cost.toString()
     // Stats
     document.getElementById("buyable3eff").textContent = player.ppc.mult.C5.toFixed(2)
     document.getElementById("buyable1eff").textContent = player.buyable_amounts[1].toString()

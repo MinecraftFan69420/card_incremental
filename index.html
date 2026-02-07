@@ -15,10 +15,12 @@
         <script src="JS/script.js" defer></script>
     </head>
     <body>
-        <h1 style="text-align: center">Card Incremental 1.3.9</h1> <hr> 
+        <h1 style="text-align: center">Card Incremental 1.3.10</h1> <hr> 
         <div id="resources" style="text-align: center;"> <!-- The resources -->
-            <p>You have <span id="points" style="font-size: 24px; font-weight: bold"></span> point(s)</p>
-            <p><span id="ppc"></span> per click</p>
+            <p>
+You have <span id="points" style="font-size: 24px; font-weight: bold"></span> point(s),
+<span id="ppc"></span> per click.
+            </p>
             <p id="ppsdisp">The autoclicker clicks <span id="pps"></span> per second</p>
             <h2 id="autoclickers">The Auto-Clicker strength level: <span id="autoclickstr"></span>/5</h2>
             <h2 id="chargedisp"><span id="charge"></span> charge</h2>
@@ -34,23 +36,12 @@
         <div id="pointsnstuff" class="tab"> <!-- Main tab -->
             <h1>Points and stuff</h1>
             <button id="getpoints" onclick="getpoints()">Get point(s)</button>
-            <button id="buyable1" class="buyable" onclick="buybuyable(1)">
-                #1: This is what increment means!: Add 1 to the point gain base per purchase. 
-                Cost: <span id="buyable1cost"></span> points 
-            </button>
-            <button id="buyable2" class="buyable" onclick="buybuyable(2)">
-                #2: Click for me!: Buy the autoclicker. Clicks the button for you. Subsequent upgrades speed it up.
-                Cost: <span id="buyable2cost"></span> points
-            </button>
-            <button id="buyable3" class="buyable" onclick="buybuyable(3)">
-                #3: I replican!: Multiply point gain by x1.2 every purchase.
-                Cost: <span id="buyable3cost"></span> points
-            </button>
             <button id="chargereset" class="reset" onclick="chargeprestige()">
                 Reset for charge: Reset your points and buyables for to increase charge gain per second.
                 Charge gain doubles each reset.
                 Requires: <span id="chargereq"></span> points
             </button>
+            <!-- buyables are auto-generated using buyables.js-->
         </div>
         <div id="cards" class="tab"> <!-- Cards tab -->
             <h1>Cards</h1>
@@ -58,6 +49,7 @@
                 <button onclick="swaptab(3.1)" id="goregcards">Regular cards</button>
                 <button onclick="swaptab(3.2)" id="gochargecards" style="background-color: #ffff40; display: none;">Charge cards</button>
             </div>
+            <!--regular cards generated via cards.js, same for charge cards-->
             <div id="cardsubtab-regular" class="cardsubtab" style="display: block"></div>
             <div id="cardsubtab-charge" class="cardsubtab" style="display: none"></div>
         </div>

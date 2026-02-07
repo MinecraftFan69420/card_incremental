@@ -65,6 +65,7 @@ function reset() {
 
 // HTML setup
 generatecardHTML()
+generatebuyableHTML()
 
 setInterval(update, 50) // A tick is 50 ms
 setInterval(function () {if (player.charge.unlocked) getcharge()}, 1000)
