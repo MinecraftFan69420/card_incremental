@@ -1,7 +1,7 @@
 const cardnos = [1, 2, 3, 4, 5, 6.1, 6.2, 7, 8, 9.1, 9.2, 10, 11, 12]
 
 function swaptab(tab) { // Switch tabs!
-    const tabnames = ["pointsnstuff", "cards", "stats", "story", "save", "devconsole"]
+    const tabnames = ["pointsnstuff", "cards", "stats", "save", "devconsole"]
     if ((tab - 1) % 1 === 0) {
         const tabtoswapto = tabnames[tab - 1]
         tabnames.forEach(t => document.getElementById(t).style.display = "none")
