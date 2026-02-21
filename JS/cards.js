@@ -151,8 +151,9 @@ function buycard(card) {
     if (hassufficientpoints && !hascard && exists) {
         player.points = player.points.sub(targetcard.cost); 
         player.card_possession.regular[card] = true 
-        document.getElementById(`card${card}`).style.display = "none"; 
-        targetcard.effect(); devlog(`Card ${card} bought succesfully!`)
+        const cardEl = document.getElementById(`card${card}`)
+        if (cardEl) cardEl.classList.add('bought')
+        targetcard.effect(); updateBoughtVisibility(); devlog(`Card ${card} bought succesfully!`)
     } else devlog(`Card purchase failure. Either: not enough points, 
 already have card, or card doesn't exist.`)
 }
@@ -165,8 +166,10 @@ function buychargecard(card) {
         player.points = player.points.sub(targetcard.cost.pts); 
         player.charge.amount = player.charge.amount.sub(targetcard.cost.charge); 
         player.card_possession.charge[card] = true 
-        document.getElementById(`chargecard${card}`).style.display = "none"; cardeffect(card)
-        devlog(`Charge card ${card} bought succesfully!`)
+        const chargeEl = document.getElementById(`cardc${card}`)
+        if (chargeEl) chargeEl.classList.add('bought')
+        cardeffect(card)
+        updateBoughtVisibility(); devlog(`Charge card ${card} bought succesfully!`)
     } else devlog(`Charge card purchase failure: not enough resources (missing points / charge)`)
 }
 
@@ -178,7 +181,7 @@ function stringify_card_no(card) {
     }
 }
 
-function generatecardHTML() {
+function generatecardHTML() { // maybe should change this name to setupcardHTML, just MAYBE.
     for (card in cards.regular) {
         card_obj = cards.regular[card]
         let carddiv = document.createElement("div")
@@ -192,6 +195,8 @@ function generatecardHTML() {
             <h3>Cost:</h3> <p>${card_obj.cost.toString()} points</p>
         `
         document.getElementById("cardsubtab-regular").appendChild(carddiv)
+        // mark as bought if player already owns it
+        if (player.card_possession && player.card_possession.regular && player.card_possession.regular[card]) carddiv.classList.add('bought')
     }
     for (card in cards.charge) {
         card_obj = cards.charge[card]
@@ -208,5 +213,18 @@ function generatecardHTML() {
             <h3>Cost:</h3> <p>${cost.pts.toString()} points, ${cost.charge.toString()} charge</p>
         `
         document.getElementById("cardsubtab-charge").appendChild(carddiv)
+        if (player.card_possession && player.card_possession.charge && player.card_possession.charge[card]) carddiv.classList.add('bought')
     }
+    // change visibility on checkbox change
+    const chkbox = document.getElementById('showBoughtCheckbox')
+    if (chkbox) chkbox.addEventListener('change', updateBoughtVisibility)
+    updateBoughtVisibility()
+}
+
+function updateBoughtVisibility(){
+    const chkbox = document.getElementById('showBoughtCheckbox')
+    const show = chkbox ? chkbox.checked : false
+    document.querySelectorAll('.card').forEach(el => {
+        if (el.classList.contains('bought')) el.style.display = show ? 'block' : 'none'
+    })
 }

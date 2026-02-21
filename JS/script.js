@@ -44,7 +44,8 @@ function chargeprestige() {
 function applysaveboosts() {
     cardnos.forEach(cardNo => {
         if (player.card_possession.regular[cardNo]) {
-            if (cardNo.neq(10)) document.getElementById(`card${cardNo}`).style.display = 'none';
+            const el = document.getElementById(`card${cardNo}`)
+            if (el) el.classList.add('bought')
             cardeffect(cardNo)
         }
     })
