@@ -3,7 +3,7 @@ function devauthenticate() {
     const correct_password = "\x2a\x23\x26\x2a\x5b\x51\x67\x68\x35\x5d\x37\x24\x79"
     if (!player.consoleunlocked) {
         password_input = prompt("Enter Dev Console password:")
-        if (password_input === correct_password) { alert("Correct!"); swaptab(6); player.consoleunlocked = true }
+        if (password_input === correct_password) { alert("Correct!"); swaptab(5); player.consoleunlocked = true }
         else alert("INCORRECT! Only a developer would know the password!")
     } else swaptab(5)
 }
