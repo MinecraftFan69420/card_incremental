@@ -39,3 +39,8 @@ button#chargereset{display: none; background-color: #ffff80; border-color: black
 }
 
 .card-charge {background-color: #ffff80}
+
+/* Bought card styling: green border when shown */
+.card.bought{
+    border-color: #28a745;
+}
