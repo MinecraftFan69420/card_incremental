@@ -17,7 +17,7 @@ const buyables = {
         effect_str: "Buy an autoclicker that clicks for you. Subsequent purchases increase speed.",
         maxpurchases: new Decimal(5),
         effect: function() {
-            player.autoclicker.strength = player.autoclicker.strength.plus(1)
+            player.autoclicker.strength += 1 // why did I make this into standard number??
             player.defaultcooldowns.current = player.defaultcooldowns[player.autoclicker.strength]
             player.autoclicker.cooldown = player.defaultcooldowns.current
             buyables[2].cost = 
