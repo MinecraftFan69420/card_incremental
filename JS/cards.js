@@ -4,7 +4,7 @@ const cards = {
             cost: new Decimal(0),
             name: "Limited-time card!", effect_str: "Multiply point gain by 10 to start us off",
             effect: function() {
-                window.open("https://www.youtu.be/watch?v=dQw4w9WgXcQ", "_blank")
+                window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank")
                 alert("APRIL FOOLS! no boost for u!")
             }
         },
