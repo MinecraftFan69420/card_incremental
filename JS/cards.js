@@ -1,5 +1,13 @@
 const cards = {
     regular: {
+        0: {// for april fools!!!!!
+            cost: new Decimal(0),
+            name: "Limited-time card!", effect_str: "",
+            effect: function() {
+                window.open("https://www.youtu.be/watch?v=dQw4w9WgXcQ", "_blank")
+                alert("APRIL FOOLS! no boost for u!")
+            }
+        },
         1: {
             cost: new Decimal(20),
             name: "Humble Beginnings", effect_str: "Unlock a buyable!",
@@ -122,14 +130,6 @@ const cards = {
             name: "<b>NOT ENOUGH POWER!!</b>", effect_str: "Unlock charge cards!",
             effect: function() {
                 document.getElementById("gochargecards").style.display = "block";
-            }
-        },
-        13: { // for april fools!!!!!
-            cost: new Decimal(0),
-            name: "Limited-time card!", effect_str: "",
-            effect: function() {
-                window.open("https://www.youtu.be/watch?v=dQw4w9WgXcQ", "_blank")
-                alert("APRIL FOOLS! no boost for u!")
             }
         },
     },
