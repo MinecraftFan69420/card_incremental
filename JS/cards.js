@@ -123,7 +123,15 @@ const cards = {
             effect: function() {
                 document.getElementById("gochargecards").style.display = "block";
             }
-        }
+        },
+        13: { // for april fools!!!!!
+            cost: new Decimal(0),
+            name: "Limited-time card!", effect_str: "",
+            effect: function() {
+                window.open("https://www.youtu.be/watch?v=dQw4w9WgXcQ", "_blank")
+                alert("APRIL FOOLS! no boost for u!")
+            }
+        },
     },
     charge: {
         1: {
